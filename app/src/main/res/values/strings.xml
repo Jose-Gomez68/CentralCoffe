@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">SalesTapApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="supplier_array">
+        <item>Prooveedor 1</item>
+        <item>Proovedor 2</item>
+        <item>Proveedor 3</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>Categoria 1</item>
+        <item>Categoria 2</item>
+        <item>Categoria 3</item>
+    </string-array>
+
+    <string-array name="unitProduct">
+        <item>pz</item>
+        <item>Metro</item>
+        <item>Kg</item>
+    </string-array>
+
+    <!--MENUACTIVITY-->
+    <string name="title_menu_app">MENU</string>
+    <!--ProductFramente String-->
+    <string name="title">Lista de productos</string>
+    <string name="stock_title">Stock</string>
+    <string name="price_title">Precio</string>
+    <string name="btn_delete_title">Eliminar</string>
+    <string name="btn_edit_title">Editar</string>
+
+</resources>
