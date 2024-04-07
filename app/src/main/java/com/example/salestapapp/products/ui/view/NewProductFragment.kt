@@ -1,6 +1,7 @@
 package com.example.salestapapp.products.ui.view
 
 import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -50,6 +51,7 @@ class NewProductFragment : Fragment() {
     private var category = ""
     private var measurement = ""
     private var imageProduct:String? = ""
+    private var listener: OnFragmentChangedListener? = null
 
     val imagePickerMedia = registerForActivityResult(PickVisualMedia()){ uri ->
 
@@ -319,5 +321,16 @@ class NewProductFragment : Fragment() {
         }
         return null
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentChangedListener) {
+            listener = context
+            listener?.onFragmentChanged(this)
+        } else {
+            throw RuntimeException("$context must implement OnFragmentChangedListener")
+        }
+    }
+
 
 }
