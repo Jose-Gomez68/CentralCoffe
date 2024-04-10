@@ -3,6 +3,7 @@ package com.example.salestapapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.salestapapp.menu.ui.view.MenuActivity
 import com.example.salestapapp.products.ui.view.NewProductFragment
 import com.example.salestapapp.products.ui.view.ProductsContainerActivity
 
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         //TODO inciar la db osea has una simple consulta para que la db se inicie al principio
         //y ek app inspector la pueda leer correctamente
         //esta debe mandar a la view de MenuActivity
-        val intent = Intent(this, ProductsContainerActivity::class.java)
+        val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
 
     }
