@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppCompatImageButton_Rounded">
+        <item name="android:background">@drawable/rounded_button_background</item>
+    </style>
+
+    <style name="EditText_Rounded">
+        <item name="android:background">@drawable/edittext_rounded_background</item>
+    </style>
+
+    <style name="ImageView_Rounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item> <!-- Ajusta el radio según sea necesario -->
+    </style>
+</resources>
