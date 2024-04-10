@@ -20,6 +20,7 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //add modules buttons to list// id, Name module, Icon Module, Activity Module
         var menu = listOf(
             MenuItemsModel(1,"Trabajadores", R.drawable.gallery,  ProductsContainerActivity::class.java),
             MenuItemsModel(2,"Productos", R.drawable.gallery,  ProductsContainerActivity::class.java),
