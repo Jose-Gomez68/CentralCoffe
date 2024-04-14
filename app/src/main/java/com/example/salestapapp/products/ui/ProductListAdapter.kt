@@ -2,7 +2,6 @@ package com.example.salestapapp.products.ui
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.salestapapp.R
 import com.example.salestapapp.products.data.model.ProductModel
-import com.example.salestapapp.products.ui.view.ProductsContainerActivity
 
 class ProductListAdapter(private var list: List<ProductModel>, val onItemRemove:(ProductModel) -> Unit):RecyclerView.Adapter<ProductsVH>() {
 
@@ -46,7 +44,7 @@ class ProductListAdapter(private var list: List<ProductModel>, val onItemRemove:
 
 class ProductsVH(view: View):RecyclerView.ViewHolder(view){
 
-    private val ivImage = view.findViewById<ImageView>(R.id.ivSelectImageNewProd)
+    private val ivImage = view.findViewById<ImageView>(R.id.ivImageSupplierCardview)
     private val tvName = view.findViewById<TextView>(R.id.tvNameProductCardiView)
     private val tvCategory = view.findViewById<TextView>(R.id.tvCategoryProductCardiView)
     private val tvSupplier = view.findViewById<TextView>(R.id.tvSupplierProductCardiView)

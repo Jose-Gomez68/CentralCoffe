@@ -28,5 +28,10 @@
     <string name="price_title">Precio</string>
     <string name="btn_delete_title">Eliminar</string>
     <string name="btn_edit_title">Editar</string>
+    <string name="no_data_list">No hay Productos</string>
+    <string name="title_dialog_delete_product">Eliminar Producto %1$s</string>
+    <string name="message_dialog_delete_product">Una vez elimnado el producto no se podra recuperar</string>
+    <string name="btn_dialog_delete_products_list">Eliminar</string>
+    <string name="btn_dialog_cancel_products_list">Cancelar</string>
 
 </resources>

@@ -8,6 +8,7 @@ import com.example.salestapapp.databinding.ActivityMainBinding
 import com.example.salestapapp.menu.data.model.MenuItemsModel
 import com.example.salestapapp.menu.data.model.adapter.MenuItemsAdapter
 import com.example.salestapapp.products.ui.view.ProductsContainerActivity
+import com.example.salestapapp.supplier.view.SupplierContainerActivity
 
 class MenuActivity : AppCompatActivity() {
 
@@ -23,7 +24,7 @@ class MenuActivity : AppCompatActivity() {
         val menu = listOf(
             MenuItemsModel(1,"Trabajadores", R.drawable.gallery,  ProductsContainerActivity::class.java),
             MenuItemsModel(2,"Productos", R.drawable.gallery,  ProductsContainerActivity::class.java),
-            MenuItemsModel(3,"Proovedores", R.drawable.gallery,  ProductsContainerActivity::class.java)
+            MenuItemsModel(3,"Proovedores", R.drawable.gallery,  SupplierContainerActivity::class.java)
         )
 
         menuAdapter = MenuItemsAdapter(menu)

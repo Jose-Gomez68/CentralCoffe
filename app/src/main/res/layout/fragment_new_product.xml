@@ -59,6 +59,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -74,8 +75,8 @@
                         style="@style/EditText_Rounded"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
                         android:hint="Nombre del producto"
                         android:paddingHorizontal="10dp" />
 
@@ -83,109 +84,102 @@
                         android:id="@+id/spSupplierNewProd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:paddingHorizontal="10dp"
                         android:layout_marginHorizontal="15dp"
-                        />
+                        android:layout_marginTop="20dp"
+                        android:paddingHorizontal="10dp" />
+
                     <TextView
                         android:id="@+id/spSupplierError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:text="Debes seleccionar un proovedor"
                         android:textColor="@color/red"
                         android:textSize="15sp"
-                        android:text="Debes seleccionar un proovedor"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <Spinner
                         android:id="@+id/spCategoryNewProd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="20dp"
                         android:paddingHorizontal="10dp"
-                        android:layout_marginHorizontal="15dp"
-                        />
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/spCategoryError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:text="Debes seleccionar una categoria"
                         android:textColor="@color/red"
                         android:textSize="15sp"
-                        android:text="Debes seleccionar una categoria"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivSelectImageNewProd"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:layout_marginTop="30dp"
                         android:layout_gravity="center"
-                        app:shapeAppearance="@style/ImageView_Rounded"
+                        android:layout_marginTop="30dp"
                         android:src="@drawable/gallery"
-                        />
+                        app:shapeAppearance="@style/ImageView_Rounded" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnDeleteImage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
                         android:layout_gravity="center"
-                        android:text="Borrar"
-                        android:paddingHorizontal="60dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/red"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/rounded_button"
-                        />
+                        android:backgroundTint="@color/red"
+                        android:paddingHorizontal="60dp"
+                        android:text="Borrar"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cantidad"
-                        android:layout_marginTop="40dp"
                         android:layout_gravity="center"
-                        />
+                        android:layout_marginTop="40dp"
+                        android:text="Cantidad" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/btnMinusQuantityNewProd"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:paddingEnd="15dp"
                             android:layout_marginRight="10dp"
-                            android:src="@drawable/baseline_horizontal_rule_24"
                             android:backgroundTint="@color/white"
+                            android:paddingEnd="15dp"
+                            android:src="@drawable/baseline_horizontal_rule_24"
                             android:textAlignment="center" />
 
                         <EditText
                             android:id="@+id/etQuantityNewProd"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
                             android:text="0"
-                            />
+                            android:textAlignment="center" />
 
                         <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/btnAddQuantityNewProd"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:paddingStart="15dp"
                             android:layout_marginLeft="10dp"
-                            android:src="@drawable/baseline_add_24"
                             android:backgroundTint="@color/white"
+                            android:paddingStart="15dp"
+                            android:src="@drawable/baseline_add_24"
                             android:textAlignment="center" />
 
                     </LinearLayout>
@@ -194,62 +188,67 @@
                         android:id="@+id/spUnitMensurement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:paddingHorizontal="10dp"
                         android:layout_marginHorizontal="15dp"
-                        />
+                        android:layout_marginTop="20dp"
+                        android:paddingHorizontal="10dp" />
+
                     <TextView
                         android:id="@+id/spUnitMensurementError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:text="Debes seleccionar una unidad"
                         android:textColor="@color/red"
                         android:textSize="15sp"
-                        android:text="Debes seleccionar una unidad"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="30dp"
                         android:text="Precio Unitario Sin Iva"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
                         android:textAlignment="center"
-                        />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
                     <EditText
                         android:id="@+id/etUnitPricesNewProd"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="0.0"
-                        />
+                        android:textAlignment="center" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnRegisterProduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="30dp"
-                        android:layout_gravity="center"
-                        android:text="Guardar"
-                        android:paddingHorizontal="60dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/blue"
                         android:background="@drawable/rounded_button"
-                        />
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Guardar"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
-
+                <ProgressBar
+                    android:id="@+id/pgSaveProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

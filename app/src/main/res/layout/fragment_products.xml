@@ -7,6 +7,15 @@
     android:background="@color/myBackground"
     tools:context=".products.ui.view.ProductsFragment">
 
+    <TextView
+        android:id="@+id/tvNoDataListProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_data_list"
+        android:textSize="35dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        />
 
     <ScrollView
         android:layout_width="match_parent"

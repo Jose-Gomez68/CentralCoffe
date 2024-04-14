@@ -90,8 +90,6 @@ class NewProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Acceder al TextView utilizando ViewBinding
-        val textView = binding.tvTitelNewProduct
 
         initSpinnerSupplier()
         initSpinnerMeasurement()
@@ -105,6 +103,18 @@ class NewProductFragment : Fragment() {
             Log.e("SE INSERTO", "" + result.category)
             Log.e("SE INSERTO", "" + result.supplier)
             Log.e("SE INSERTO", "" + result.createDate)
+            if (result.name.isNotEmpty()){
+                binding.pgSaveProduct.visibility = View.GONE
+                binding.etProductNameNewProd.setText("")
+                binding.etQuantityNewProd.setText("0")
+                binding.etUnitPricesNewProd.setText("0.0")
+                binding.spSupplierNewProd.setSelection(0)
+                binding.spCategoryNewProd.setSelection(0)
+                binding.spCategoryNewProd.visibility = View.GONE
+                binding.spUnitMensurement.setSelection(0)
+                binding.ivSelectImageNewProd.setImageResource(R.drawable.gallery)
+                imageProduct = null
+            }
         }
 
         //asi se usa el room
@@ -176,6 +186,7 @@ class NewProductFragment : Fragment() {
             measurement,
             dateFormat.format(dateCreate)
         )
+        binding.pgSaveProduct.visibility = View.VISIBLE
         viewModel.onCreate(product)
 
     }
