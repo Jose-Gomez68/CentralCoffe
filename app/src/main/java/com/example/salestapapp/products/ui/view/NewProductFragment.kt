@@ -46,7 +46,6 @@ class NewProductFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var db: CyberCoffeDatabase // Cambiamos a lateinit
     private lateinit var viewModel: NewProductViewModel
-    private var insertProductUseCase: InsertProductUseCase? = null
     private var supplier = ""
     private var category = ""
     private var measurement = ""
@@ -86,7 +85,6 @@ class NewProductFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

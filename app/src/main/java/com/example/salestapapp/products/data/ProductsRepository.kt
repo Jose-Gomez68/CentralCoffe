@@ -13,6 +13,10 @@ class ProductsRepository(private var db: CyberCoffeDatabase) {
         return db.productsDao().insertOne(product).toInt()
     }
 
+    suspend fun editProduct (product: ProductsEntity): Int{
+        return db.productsDao().editProduct(product).toInt()
+    }
+
     suspend fun getProductById(productID: Int): ProductsEntity{
         return db.productsDao().getProductByID(productID)
     }

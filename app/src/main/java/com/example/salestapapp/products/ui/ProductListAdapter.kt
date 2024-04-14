@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.salestapapp.R
 import com.example.salestapapp.products.data.model.ProductModel
 
-class ProductListAdapter(private var list: List<ProductModel>, val onItemRemove:(ProductModel) -> Unit):RecyclerView.Adapter<ProductsVH>() {
+class ProductListAdapter(private var list: List<ProductModel>,
+                         val onItemRemove:(ProductModel,) -> Unit):RecyclerView.Adapter<ProductsVH>() {
 
     private lateinit var context: Context
     //https://www.youtube.com/watch?v=8_3m2Ijp76o
@@ -65,9 +66,10 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
         tvStock.text = productModel.quantity.toString()
         tvPrice.text = productModel.price.toString()
         btnEdit.setOnClickListener {
-           /* val intent = Intent(context, ProductsContainerActivity::class.java)
-            intent.putExtra("idProduct", productModel.id)
-            context.startActivity(intent)*/
+            val navController = context.findNavController()
+
+            // Navega al destino del fragmento de edición
+            navController.navigate(R.id.action_fragmentActual_to_fragmentDeEdicion)
         }
         btnDelete.setOnClickListener {
             //modificar el entity de prodcutos para agrear la columna de enviado y la columna de Eliminado

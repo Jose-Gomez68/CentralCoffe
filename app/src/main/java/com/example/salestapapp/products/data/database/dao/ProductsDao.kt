@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.salestapapp.products.data.database.entities.ProductsEntity
 
 @Dao
@@ -20,6 +21,9 @@ interface ProductsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)//aqui le digo que si hay uno igual que lo remplaze
     suspend fun insertOne(product:ProductsEntity):Long
+
+    @Update
+    suspend fun editProduct(product:ProductsEntity):Long
 
     @Query("DELETE FROM Products WHERE id = :productId")
     suspend fun deleteProductById(productId: Int)

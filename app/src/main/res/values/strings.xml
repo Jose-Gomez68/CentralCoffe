@@ -33,5 +33,8 @@
     <string name="message_dialog_delete_product">Una vez elimnado el producto no se podra recuperar</string>
     <string name="btn_dialog_delete_products_list">Eliminar</string>
     <string name="btn_dialog_cancel_products_list">Cancelar</string>
+    <!--EditProductFragment Strings-->
+    <string name="btn_save_edit_product">Editar</string>
+    <string name="btn_s_edit_product">Editar</string>
 
 </resources>

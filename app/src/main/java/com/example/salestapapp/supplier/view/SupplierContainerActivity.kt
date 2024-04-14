@@ -3,12 +3,13 @@ package com.example.salestapapp.supplier.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.ActivitySupplierContainerBinding
 
-class SupplierContainerActivity : AppCompatActivity() {
+class SupplierContainerActivity : AppCompatActivity(), OnSupplierFragmentChangeListener {
 
     private lateinit var binding: ActivitySupplierContainerBinding
     private lateinit var fragmentManager: FragmentManager
@@ -42,6 +43,14 @@ class SupplierContainerActivity : AppCompatActivity() {
         if (currentFragment is SupplierFragment){
             binding.fbAddSupplier.visibility = View.VISIBLE
         }else if (currentFragment is NewSupplierFragment){
+            binding.fbAddSupplier.visibility = View.GONE
+        }
+    }
+
+    override fun onSupplierFragmentChangeListener(fragment: Fragment) {
+        if (fragment is SupplierFragment){
+            binding.fbAddSupplier.visibility = View.VISIBLE
+        }else if (fragment is NewSupplierFragment){
             binding.fbAddSupplier.visibility = View.GONE
         }
     }
