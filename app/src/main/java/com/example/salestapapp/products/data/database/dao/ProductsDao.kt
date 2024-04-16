@@ -23,7 +23,7 @@ interface ProductsDao {
     suspend fun insertOne(product:ProductsEntity):Long
 
     @Update
-    suspend fun editProduct(product:ProductsEntity):Long
+    suspend fun editProduct(product:ProductsEntity):Int
 
     @Query("DELETE FROM Products WHERE id = :productId")
     suspend fun deleteProductById(productId: Int)

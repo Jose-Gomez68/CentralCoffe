@@ -75,10 +75,24 @@ class ProductsFragment : Fragment() {
 
         viewModel.productModel.observe(viewLifecycleOwner) { result ->
 
-            productAdap = ProductListAdapter(result){
+            /*productAdap = ProductListAdapter(result){
                 deleteDialog(it, result)
                 Log.e("ELIMINANDO1", ""+result.size)
-            }
+            }*/
+            productAdap = ProductListAdapter(result,
+                onItemRemove = { product ->
+                    deleteDialog(product, result)
+                    Log.e("ELIMINANDO1", ""+result.size)
+                },
+                onItemGoEdit = { product ->
+                    Log.e("MOVIENDOME", "A OTRO FRAGMENTO")
+                    val nuevoFragmento = EditProductFragment()
+                    val transaction = requireFragmentManager().beginTransaction()
+                    transaction.replace(R.id.productsContainerFragment, nuevoFragmento)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                })
+
             binding.rvProductsFragProduct.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = productAdap

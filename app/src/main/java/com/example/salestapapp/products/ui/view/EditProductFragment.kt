@@ -66,6 +66,7 @@ class EditProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        /*NO SE ESCONDE EL FLOATING BUTTON*/
         _binding = FragmentEditProductBinding.inflate(inflater, container, false)
         val repository: ProductsRepository = ProductsRepository(db)
         val viewModelProviderFactory = EditProductViewModelFactory(EditProductUseCase(repository))

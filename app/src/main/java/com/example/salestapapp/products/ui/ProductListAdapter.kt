@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.salestapapp.R
 import com.example.salestapapp.products.data.model.ProductModel
 
-class ProductListAdapter(private var list: List<ProductModel>, val onItemRemove:(ProductModel) -> Unit):RecyclerView.Adapter<ProductsVH>() {
+class ProductListAdapter(private var list: List<ProductModel>,
+val onItemRemove:(ProductModel) -> Unit, val onItemGoEdit: (ProductModel) ->
+Unit):RecyclerView.Adapter<ProductsVH>() {
 
     private lateinit var context: Context
     //https://www.youtube.com/watch?v=8_3m2Ijp76o
@@ -36,7 +38,7 @@ class ProductListAdapter(private var list: List<ProductModel>, val onItemRemove:
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ProductsVH, position: Int) {
-        holder.render(list[position], context, onItemRemove)
+        holder.render(list[position], context, onItemRemove, onItemGoEdit)
     }
 
 
@@ -53,7 +55,11 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
     private val btnEdit = view.findViewById<Button>(R.id.btnEditProdCardView)
     private val btnDelete = view.findViewById<Button>(R.id.btnDeleteProductCardView)
 
-    fun render(productModel: ProductModel, context: Context, onItemRemove: (ProductModel) -> Unit) {
+    fun render(
+        productModel: ProductModel, context: Context,
+        onItemRemove: (ProductModel) -> Unit,
+        onItemGoEdit: (ProductModel) -> Unit
+    ) {
         if (productModel.image.isNotEmpty()) {
             ivImage.setImageBitmap(convertBase64ToBitmap(productModel.image))
         }else{
@@ -68,6 +74,7 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
            /* val intent = Intent(context, ProductsContainerActivity::class.java)
             intent.putExtra("idProduct", productModel.id)
             context.startActivity(intent)*/
+            onItemGoEdit(productModel)
         }
         btnDelete.setOnClickListener {
             //modificar el entity de prodcutos para agrear la columna de enviado y la columna de Eliminado
