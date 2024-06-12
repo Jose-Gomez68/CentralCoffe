@@ -28,7 +28,7 @@
     <string name="price_title">Precio</string>
     <string name="btn_delete_title">Eliminar</string>
     <string name="btn_edit_title">Editar</string>
-    <string name="no_data_list">No hay Productos</string>
+    <string name="no_data_list_product">No hay Productos</string>
     <string name="title_dialog_delete_product">Eliminar Producto %1$s</string>
     <string name="message_dialog_delete_product">Una vez elimnado el producto no se podra recuperar</string>
     <string name="btn_dialog_delete_products_list">Eliminar</string>
@@ -37,5 +37,17 @@
     <string name="title_edit_product">Editar Producto</string>
     <string name="btn_save_edit_product">Editar</string>
     <string name="btn_s_edit_product">Editar</string>
+
+    <!--SUPPLIER STRINGS-->
+    <string name="title_supplier">Lista Proveedores</string>
+    <string name="title_new_supplier">Nuevo Proveedores</string>
+    <string name="hint_new_name_supp">Nombre del Proveedores</string>
+    <string name="hint_new_addres_supp">Direccinion</string>
+    <string name="hint_new_tel_supp">Telefono</string>
+    <string name="btn_save_sup">Guardar</string>
+    <string name="btn_delete_img">Borrar</string>
+    <!--fragment list supplier-->
+    <string name="no_data_list_supplier">No hay Proveedores</string>
+    <string name="search_by_name_supp">Buscar por nombre</string>
 
 </resources>

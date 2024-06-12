@@ -23,8 +23,15 @@ class NewSupplierFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding = FragmentNewSupplierBinding.inflate(inflater, container,false)
+
+        binding.btnReturnNewSupplier.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_supplier, container, false)
+        return binding.root
     }
 
     /*listener of the fragments to

@@ -22,8 +22,14 @@ class SupplierFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentSupplierBinding.inflate(inflater, container,false)
+
+        binding.btnReturnSupp.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_supplier, container, false)
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
