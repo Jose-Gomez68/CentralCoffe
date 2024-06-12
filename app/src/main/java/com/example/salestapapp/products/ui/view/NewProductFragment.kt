@@ -81,6 +81,11 @@ class NewProductFragment : Fragment() {
             this,
             viewModelProviderFactory
         )[NewProductViewModel::class.java]
+
+        binding.btnReturnNewProd.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         // Retornar la vista raíz del diseño inflado
         return binding.root
     }

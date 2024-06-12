@@ -11,7 +11,7 @@
         android:id="@+id/tvNoDataListProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_data_list"
+        android:text="@string/no_data_list_product"
         android:textSize="35dp"
         android:layout_gravity="center"
         android:visibility="visible"
@@ -35,6 +35,7 @@
                 >
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btnReturnProd"
                     style="@style/AppCompatImageButton_Rounded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -65,6 +65,10 @@ class ProductsFragment : Fragment() {
         )[ProductsListViewModel::class.java]
         viewModel.onCreate()
 
+        binding.btnReturnProd.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         /*binding.fbAddProduct.setOnClickListener {
             *//*val ramdom = Random.nextInt(10000)
             val prod = ProductModel(ramdom,"coca cola$ramdom", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024")
