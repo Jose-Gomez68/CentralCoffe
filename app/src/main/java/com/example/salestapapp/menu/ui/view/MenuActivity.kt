@@ -22,9 +22,11 @@ class MenuActivity : AppCompatActivity() {
 
         //add modules buttons to list// id, Name module, Icon Module, Activity Module
         val menu = listOf(
-            MenuItemsModel(1,"Trabajadores", R.drawable.gallery,  ProductsContainerActivity::class.java),
-            MenuItemsModel(2,"Productos", R.drawable.gallery,  ProductsContainerActivity::class.java),
-            MenuItemsModel(3,"Proovedores", R.drawable.gallery,  SupplierContainerActivity::class.java)
+            MenuItemsModel(1,"Trabajadores", R.drawable.worker,  ProductsContainerActivity::class.java),
+            MenuItemsModel(2,"Productos", R.drawable.products,  ProductsContainerActivity::class.java),
+            MenuItemsModel(3,"Proovedores", R.drawable.suppliers,  SupplierContainerActivity::class.java),
+            MenuItemsModel(4,"Ventas", R.drawable.gallery,  SupplierContainerActivity::class.java),
+            MenuItemsModel(5,"Unidad Medidas", R.drawable.gallery,  SupplierContainerActivity::class.java)
         )
 
         menuAdapter = MenuItemsAdapter(menu)
