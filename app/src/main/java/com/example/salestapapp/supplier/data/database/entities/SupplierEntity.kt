@@ -3,6 +3,7 @@ package com.example.salestapapp.supplier.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.salestapapp.supplier.data.model.SuppliersModel
 
 @Entity(tableName = "Suppliers")
 data class SupplierEntity(
@@ -17,4 +18,12 @@ data class SupplierEntity(
     val address: String,
     @ColumnInfo(name = "CreateDate")
     val createDate: String,
+)
+
+fun  SuppliersModel.toDatabase() = SupplierEntity(
+    id = id,
+    name = name,
+    phone = phone,
+    address = address,
+    createDate = createDate
 )

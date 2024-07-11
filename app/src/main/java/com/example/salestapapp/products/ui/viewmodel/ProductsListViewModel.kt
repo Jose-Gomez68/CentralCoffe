@@ -11,7 +11,10 @@ import com.example.salestapapp.products.data.domain.InsertProductUseCase
 import com.example.salestapapp.products.data.model.ProductModel
 import kotlinx.coroutines.launch
 
-class ProductsListViewModel(private val getProduct: GetProductsUseCase, private val deleteProduct: DeleteProductByIdUseCase): ViewModel() {
+class ProductsListViewModel(
+    private val getProduct: GetProductsUseCase,
+    private val deleteProduct: DeleteProductByIdUseCase
+) : ViewModel() {
 
     private val _productModel = MutableLiveData<List<ProductModel>>()
     val productModel: LiveData<List<ProductModel>> = _productModel
