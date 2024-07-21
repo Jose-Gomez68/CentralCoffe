@@ -18,6 +18,8 @@ data class SupplierEntity(
     val address: String,
     @ColumnInfo(name = "CreateDate")
     val createDate: String,
+    @ColumnInfo(name = "ImageSupplier")
+    val imageSupplier: String,
 )
 
 fun  SuppliersModel.toDatabase() = SupplierEntity(
@@ -25,5 +27,6 @@ fun  SuppliersModel.toDatabase() = SupplierEntity(
     name = name,
     phone = phone,
     address = address,
-    createDate = createDate
+    createDate = createDate,
+    imageSupplier = imageSupplier
 )

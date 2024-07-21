@@ -1,9 +1,9 @@
 package com.example.salestapapp.supplier.data.model
 
-import com.example.salestapapp.supplier.data.database.entities.SupplierEntity
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class SuppliersModel (
+data class SupplierBundleModel (
     @SerializedName("ID")
     val id: Int = 0,
     @SerializedName("Name")
@@ -16,13 +16,4 @@ data class SuppliersModel (
     val createDate: String,
     @SerializedName("ImageSupplier")
     val imageSupplier: String,
-)
-
-fun SupplierEntity.toDomain() = SuppliersModel(
-    id = id,
-    name = name,
-    phone = phone,
-    address = address,
-    createDate = createDate,
-    imageSupplier = imageSupplier
-)
+):Serializable
