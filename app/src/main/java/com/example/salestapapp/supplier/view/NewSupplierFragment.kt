@@ -6,16 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentNewSupplierBinding
+import com.example.salestapapp.rom.CyberCoffeAppDatabase
+import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.supplier.data.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.SaveSupplierUseCase
 import com.example.salestapapp.supplier.data.model.SupplierBundleModel
 import com.example.salestapapp.supplier.data.model.SuppliersModel
+import com.example.salestapapp.supplier.data.viewmodel.NewSupplierViewModel
+import com.example.salestapapp.supplier.data.viewmodel.NewSupplierViewModelFactory
 
 class NewSupplierFragment : Fragment() {
 
     private lateinit var binding: FragmentNewSupplierBinding
     private var listener: OnSupplierFragmentChangeListener? = null
     private var supplier: SuppliersModel? = null
+    private lateinit var viewModel: NewSupplierViewModel
+    private lateinit var db: CyberCoffeDatabase
 
     companion object {
         private const val ARG_SUPPLIER = "supplier"
@@ -30,6 +39,7 @@ class NewSupplierFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        db = CyberCoffeAppDatabase.CyberCoffeAppDatabase.getInstance(requireContext())
         supplier = arguments?.getSerializable(ARG_SUPPLIER) as? SuppliersModel
         if (supplier != null && supplier!!.name.isNotEmpty() && supplier!!.phone.isNotEmpty()) {
             // El objeto supplier contiene información
@@ -44,6 +54,13 @@ class NewSupplierFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val repository = SupplierRepository(db)
+        val viewModelFactory = NewSupplierViewModelFactory(SaveSupplierUseCase(repository))
+        viewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        )[NewSupplierViewModel::class.java]
 
         binding = FragmentNewSupplierBinding.inflate(inflater, container,false)
 
@@ -65,6 +82,10 @@ class NewSupplierFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement OnFragmentChangedListener")
         }
+    }
+
+    private fun saveSupplier() {
+
     }
 
 }

@@ -13,6 +13,9 @@ interface SuppliersDao {
     @Query("SELECT *FROM Suppliers ORDER BY Name DESC")
     suspend fun  getAllSupplier(): List<SupplierEntity>
 
+    @Query("SELECT *FROM Suppliers WHERE id = :supplierID")
+    suspend fun  getSupplierByID(supplierID: Int): SupplierEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)//aqui le digo que si hay uno igual que lo remplaze
     suspend fun addSupplier(suppliers:SupplierEntity):Long
 

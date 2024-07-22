@@ -14,6 +14,10 @@ class SupplierRepository(private var db: CyberCoffeDatabase) {
         return db.suppliersDao().getAllSupplier()
     }
 
+    suspend fun getSupplierByID(supplierID: Int): SupplierEntity {
+        return db.suppliersDao().getSupplierByID(supplierID)
+    }
+
     suspend fun deleteByID(supplierID: Int): Boolean {
         return try {
             db.suppliersDao().deleteSupplierByID(supplierID)
