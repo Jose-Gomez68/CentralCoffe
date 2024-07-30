@@ -42,7 +42,7 @@
     <string name="title_supplier">Lista Proveedores</string>
     <string name="title_new_supplier">Nuevo Proveedores</string>
     <string name="hint_new_name_supp">Nombre del Proveedores</string>
-    <string name="hint_new_addres_supp">Direccinion</string>
+    <string name="hint_new_addres_supp">Dirección</string>
     <string name="hint_new_tel_supp">Telefono</string>
     <string name="btn_save_sup">Guardar</string>
     <string name="btn_delete_img">Borrar</string>
