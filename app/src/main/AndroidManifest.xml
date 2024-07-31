@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SalesTapApp"
         tools:targetApi="31">
         <activity
+            android:name=".login.view.ui.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".supplier.view.SupplierContainerActivity"
             android:exported="false" />
         <activity

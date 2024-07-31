@@ -40,7 +40,7 @@
 
     <!--SUPPLIER STRINGS-->
     <string name="title_supplier">Lista Proveedores</string>
-    <string name="title_new_supplier">Nuevo Proveedores</string>
+    <string name="title_new_supplier">Nuevo Proveedoor</string>
     <string name="hint_new_name_supp">Nombre del Proveedores</string>
     <string name="hint_new_addres_supp">Dirección</string>
     <string name="hint_new_tel_supp">Telefono</string>
@@ -49,5 +49,7 @@
     <!--fragment list supplier-->
     <string name="no_data_list_supplier">No hay Proveedores</string>
     <string name="search_by_name_supp">Buscar por nombre</string>
+    <!--fragment edit supplier-->
+    <string name="title_edit_supplier">Editar Proveedoor</string>
 
 </resources>
