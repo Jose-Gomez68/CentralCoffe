@@ -20,8 +20,8 @@ import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentNewSupplierBinding
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
-import com.example.salestapapp.supplier.data.SupplierRepository
-import com.example.salestapapp.supplier.data.domain.SaveSupplierUseCase
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.usecase.SaveSupplierUseCase
 import com.example.salestapapp.supplier.data.model.SupplierBundleModel
 import com.example.salestapapp.supplier.data.model.SuppliersModel
 import com.example.salestapapp.supplier.data.viewmodel.NewSupplierViewModel

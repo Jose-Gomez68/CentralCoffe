@@ -1,6 +1,6 @@
-package com.example.salestapapp.supplier.data.domain
+package com.example.salestapapp.supplier.data.domain.usecase
 
-import com.example.salestapapp.supplier.data.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
 import com.example.salestapapp.supplier.data.database.entities.toDatabase
 import com.example.salestapapp.supplier.data.model.SuppliersModel
 import com.example.salestapapp.supplier.data.model.toDomain

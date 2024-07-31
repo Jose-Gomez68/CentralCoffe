@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.salestapapp.supplier.data.domain.SaveSupplierUseCase
+import com.example.salestapapp.supplier.data.domain.usecase.SaveSupplierUseCase
 import com.example.salestapapp.supplier.data.model.SuppliersModel
 import kotlinx.coroutines.launch
 

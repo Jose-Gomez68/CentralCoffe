@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.salestapapp.supplier.data.domain.DeleteSupplierByIDUseCase
-import com.example.salestapapp.supplier.data.domain.GetSuppliersUseCase
+import com.example.salestapapp.supplier.data.domain.usecase.DeleteSupplierByIDUseCase
+import com.example.salestapapp.supplier.data.domain.usecase.GetSuppliersUseCase
 import com.example.salestapapp.supplier.data.model.SuppliersModel
 import kotlinx.coroutines.launch
 

@@ -13,9 +13,9 @@ import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentSupplierBinding
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
-import com.example.salestapapp.supplier.data.SupplierRepository
-import com.example.salestapapp.supplier.data.domain.DeleteSupplierByIDUseCase
-import com.example.salestapapp.supplier.data.domain.GetSuppliersUseCase
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.usecase.DeleteSupplierByIDUseCase
+import com.example.salestapapp.supplier.data.domain.usecase.GetSuppliersUseCase
 import com.example.salestapapp.supplier.data.model.SuppliersModel
 import com.example.salestapapp.supplier.data.viewmodel.SupplierViewModel
 import com.example.salestapapp.supplier.data.viewmodel.SupplierViewModelFactory
@@ -41,7 +41,8 @@ class SupplierFragment : Fragment() {
         binding = FragmentSupplierBinding.inflate(inflater, container,false)
 
         val repository = SupplierRepository(db)
-        val viewModelProviderFactory = SupplierViewModelFactory(GetSuppliersUseCase(repository),
+        val viewModelProviderFactory = SupplierViewModelFactory(
+            GetSuppliersUseCase(repository),
             DeleteSupplierByIDUseCase(repository)
         )
         viewModel = ViewModelProvider(
