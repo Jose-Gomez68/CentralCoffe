@@ -43,6 +43,9 @@ class EditSupplierFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEditSupplierBinding.inflate(inflater, container, false)
+
+        initView()
+
         // Inflate the layout for this fragment
         return binding.root
     }

@@ -23,6 +23,6 @@ interface SuppliersDao {
     suspend fun deleteSupplierByID(supplierID: Int)
 
     @Update
-    suspend fun editSupplier(suppliers: SupplierEntity):Long
+    suspend fun editSupplier(suppliers: SupplierEntity):Int
 
 }
