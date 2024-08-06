@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.MotionEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.ActivityLoginBinding
 
