@@ -6,22 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".login.view.ui.LoginActivity">
 
+    <ImageView
+        android:id="@+id/ivLogin"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/coffeimage"
+        android:background="@drawable/border_rounded_image_view"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toTopOf="@+id/etUserLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
+
     <EditText
         android:id="@+id/etUserLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="60dp"
+        android:backgroundTint="@color/gray"
         android:drawableStart="@drawable/baseline_email_24"
         android:drawablePadding="5dp"
         android:hint="User"
         android:textColorHint="@color/gray"
-        android:backgroundTint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26"
-        />
+        app:layout_constraintVertical_bias="0.36" />
 
 
     <RelativeLayout
