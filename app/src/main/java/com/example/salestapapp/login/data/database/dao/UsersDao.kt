@@ -10,8 +10,8 @@ import com.example.salestapapp.login.data.database.entities.UsersEntity
 @Dao
 interface UsersDao {
  //falta agrergar ala db
-    @Query("SELECT *FROM Suppliers ORDER BY Name DESC")
-    suspend fun  getAllUsers():List<UsersEntity>
+    @Query("SELECT *FROM Users ORDER BY Name DESC")
+    suspend fun  getAllUsers(): List<UsersEntity>
 
     @Query("SELECT *FROM Users WHERE id = :userID")
     suspend fun  getUserByID(userID: Int): UsersEntity
