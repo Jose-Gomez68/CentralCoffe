@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //TODO inciar la db osea has una simple consulta para que la db se inicie al principio
         //y ek app inspector la pueda leer correctamente
-        //esta debe mandar a la view de MenuActivity
-        val intent = Intent(this, LoginActivity::class.java)
+        //esta debe mandar a la view de MenuActivity LoginActivity
+        val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
 
     }
