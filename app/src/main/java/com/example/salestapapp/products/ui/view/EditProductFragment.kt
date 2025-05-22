@@ -22,6 +22,7 @@ import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentEditProductBinding
 import com.example.salestapapp.products.data.ProductsRepository
 import com.example.salestapapp.products.data.domain.EditProductUseCase
+import com.example.salestapapp.products.data.domain.GetProductByIdUseCase
 import com.example.salestapapp.products.data.model.ProductModel
 import com.example.salestapapp.products.ui.viewmodel.EditProductViewModel
 import com.example.salestapapp.products.ui.viewmodel.EditProductViewModelFactory
@@ -44,6 +45,7 @@ class EditProductFragment : Fragment() {
     private var measurement = ""
     private var imageProduct:String? = ""
     private var listener: OnFragmentChangedListener? = null
+    private var productID: Int = 0
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
 
@@ -69,7 +71,8 @@ class EditProductFragment : Fragment() {
         /*NO SE ESCONDE EL FLOATING BUTTON*/
         _binding = FragmentEditProductBinding.inflate(inflater, container, false)
         val repository: ProductsRepository = ProductsRepository(db)
-        val viewModelProviderFactory = EditProductViewModelFactory(EditProductUseCase(repository))
+        val viewModelProviderFactory = EditProductViewModelFactory(EditProductUseCase(repository),
+            GetProductByIdUseCase(repository))
         viewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
@@ -84,6 +87,28 @@ class EditProductFragment : Fragment() {
         initSpinnerMeasurement()
         initSpinnerCategory()
         initViews()
+        productID = arguments?.getInt("productID") ?: return
+        viewModel.getProduct(productID)
+        Log.e("AQUI EDIT", productID.toString())
+        viewModel.productModel.observe(viewLifecycleOwner) { result ->
+            Log.e("AQUI EDIT", result.id.toString())
+            binding.etProductNameEditProd.setText(result.name)
+            binding.etQuantityEditProd.setText("${result.quantity}")
+            binding.etUnitPricesEditProd.setText("${result.price}")
+
+            // Seleccionar item correspondiente en el Spinner de proveedor
+            val supplierIndex = resources.getStringArray(R.array.supplier_array).indexOf(result.supplier)
+            if (supplierIndex >= 0) binding.spSupplierEditProd.setSelection(supplierIndex)
+
+// Categoría
+            val categoryIndex = resources.getStringArray(R.array.category_array).indexOf(result.category)
+            if (categoryIndex >= 0) binding.spCategoryEditProd.setSelection(categoryIndex)
+
+// Unidad de medida
+            val unitIndex = resources.getStringArray(R.array.unitProduct).indexOf(result.measurement)
+            if (unitIndex >= 0) binding.spEditUnitMensurement.setSelection(unitIndex)
+
+        }
 
         viewModel.editProdModel.observe(viewLifecycleOwner) { result ->
             // Manejar el resultado aquí
@@ -127,6 +152,10 @@ class EditProductFragment : Fragment() {
     }
 
     private fun initViews () {
+
+        binding.btnReturnEditProduct.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         //selec Image
         binding.ivSelectImageEditProd.setOnClickListener {
             imagePickerMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -167,25 +196,21 @@ class EditProductFragment : Fragment() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
 
         val product = ProductModel(
-            0,
+            productID,
             binding.etProductNameEditProd.text.toString(),
             binding.etQuantityEditProd.text.toString().toFloat(),
             binding.etUnitPricesEditProd.text.toString().toDouble(),
             imageProduct ?: "",
-            1,
+            2,
             category,
             1,
             supplier,
-            1,
+            2,
             measurement,
             dateFormat.format(dateCreate)
         )
         binding.pgSaveEditProduct.visibility = View.VISIBLE
         viewModel.onCreate(product)
-    }
-
-    private fun getEditData() {
-
     }
 
     private fun initSpinnerCategory() {
@@ -250,7 +275,7 @@ class EditProductFragment : Fragment() {
         }else if (measurement == "Selecciona un Unidad"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spEditUnitMensurementError.visibility = View.VISIBLE
             return false
-        }else if (binding.etQuantityEditProd.text.toString().isEmpty() || binding.etQuantityEditProd.text.toString().toInt() <= 0){
+        }else if (binding.etQuantityEditProd.text.toString().isEmpty() || binding.etQuantityEditProd.text.toString().toFloat() <= 0){
             binding.etQuantityEditProd.error = "La cantidad no puede ser vacio ó 0"
             return false
         }else if (binding.etUnitPricesEditProd.text.toString().isEmpty() || binding.etUnitPricesEditProd.text.toString().toDouble() <= 0.0 && unitPrice <= 0.9){

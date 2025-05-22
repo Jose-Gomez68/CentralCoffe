@@ -62,6 +62,11 @@ class ProductsContainerActivity : AppCompatActivity(), OnFragmentChangedListener
             // Oculta el botón flotante
             Log.e("NO VISIBLE","")
             binding.fbAddProduct.visibility = View.GONE
+        }  else if (fragment is EditProductFragment) {
+            // Estás en NewProductFragment
+            // Oculta el botón flotante
+            Log.e("NO VISIBLE","")
+            binding.fbAddProduct.visibility = View.GONE
         }
     }
 

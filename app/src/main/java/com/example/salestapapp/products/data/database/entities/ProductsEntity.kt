@@ -36,6 +36,7 @@ data class ProductsEntity(
 
 
 fun ProductModel.toDatabase() = ProductsEntity(
+    id = id,
     name = name,
     quantity = quantity,
     price = price,

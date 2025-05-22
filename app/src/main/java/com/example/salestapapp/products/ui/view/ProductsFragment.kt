@@ -90,7 +90,13 @@ class ProductsFragment : Fragment() {
                 },
                 onItemGoEdit = { product ->
                     Log.e("MOVIENDOME", "A OTRO FRAGMENTO")
+                    val bundle = Bundle().apply {
+                        putInt("productID", product.id)
+                    }
+
                     val nuevoFragmento = EditProductFragment()
+                    nuevoFragmento.arguments = bundle
+
                     val transaction = requireFragmentManager().beginTransaction()
                     transaction.replace(R.id.productsContainerFragment, nuevoFragmento)
                     transaction.addToBackStack(null)

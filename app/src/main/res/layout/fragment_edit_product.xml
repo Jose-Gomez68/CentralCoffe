@@ -34,6 +34,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btnReturnEditProduct"
                         style="@style/AppCompatImageButton_Rounded"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
