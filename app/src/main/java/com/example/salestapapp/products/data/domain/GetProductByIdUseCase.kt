@@ -12,6 +12,27 @@ class GetProductByIdUseCase(private val repository: ProductsRepository) {
             ?: ProductModel(
                 id = 0,
                 name = "",
+                quantity = 0,
+                price = 0.0,
+                image = "",
+                categoryID = 0,
+                category = "",
+                supplierID = 0,
+                supplier = "",
+                createDate = ""
+            )
+
+    }
+
+}
+
+/*
+* suspend operator fun invoke(productID: Int): ProductModel {
+
+        return repository.getProductById(productID).toDomain()
+            ?: ProductModel(
+                id = 0,
+                name = "",
                 quantity = 0f,
                 price = 0.0,
                 image = "",
@@ -24,6 +45,4 @@ class GetProductByIdUseCase(private val repository: ProductsRepository) {
                 createDate = ""
             )
 
-    }
-
-}
+    }*/

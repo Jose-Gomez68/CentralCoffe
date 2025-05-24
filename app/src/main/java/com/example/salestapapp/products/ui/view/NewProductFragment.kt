@@ -93,7 +93,7 @@ class NewProductFragment : Fragment() {
 
 
         initSpinnerSupplier()
-        initSpinnerMeasurement()
+        //initSpinnerMeasurement()
         initSpinnerCategory()
         initViews()
 
@@ -112,7 +112,7 @@ class NewProductFragment : Fragment() {
                 binding.spSupplierNewProd.setSelection(0)
                 binding.spCategoryNewProd.setSelection(0)
                 binding.spCategoryNewProd.visibility = View.GONE
-                binding.spUnitMensurement.setSelection(0)
+                //binding.spUnitMensurement.setSelection(0)
                 binding.ivSelectImageNewProd.setImageResource(R.drawable.gallery)
                 imageProduct = null
             }
@@ -176,6 +176,20 @@ class NewProductFragment : Fragment() {
         val product = ProductModel(
             0,
             binding.etProductNameNewProd.text.toString(),
+            binding.etQuantityNewProd.text.toString().toInt(),
+            binding.etUnitPricesNewProd.text.toString().toDouble(),
+            imageProduct ?: "",
+            1,
+            category,
+            1,
+            supplier,
+            dateFormat.format(dateCreate)
+        )
+
+        /*
+        * val product = ProductModel(
+            0,
+            binding.etProductNameNewProd.text.toString(),
             binding.etQuantityNewProd.text.toString().toFloat(),
             binding.etUnitPricesNewProd.text.toString().toDouble(),
             imageProduct ?: "",
@@ -186,7 +200,7 @@ class NewProductFragment : Fragment() {
             1,
             measurement,
             dateFormat.format(dateCreate)
-        )
+        )*/
         binding.pgSaveProduct.visibility = View.VISIBLE
         viewModel.onCreate(product)
 
@@ -242,7 +256,7 @@ class NewProductFragment : Fragment() {
         }
     }
 
-    private fun initSpinnerMeasurement() {
+    /*private fun initSpinnerMeasurement() {
         var items = resources.getStringArray(R.array.unitProduct)
         items[0] = "Selecciona un Unidad"
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -253,8 +267,8 @@ class NewProductFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = items[position]
                 measurement = selectedItem.toString()
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
+                *//*val selectedId = selectedItem.id
+                val selectedValue = selectedItem.value*//*
                 // Haz lo que necesites con el ID y el valor seleccionados
             }
 
@@ -263,7 +277,7 @@ class NewProductFragment : Fragment() {
             }
         }
     }
-
+*/
     private fun validationsForm(): Boolean {
         val etEmpty = "El campo no puede ser vacio"
         val unitPrice = binding.etUnitPricesNewProd.text.toString().toDouble()
@@ -279,10 +293,10 @@ class NewProductFragment : Fragment() {
         }else if (category == "Selecciona una Categoria"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spCategoryError.visibility = View.VISIBLE
             return false
-        }else if (measurement == "Selecciona un Unidad"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+        }/*else if (measurement == "Selecciona un Unidad"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spUnitMensurementError.visibility = View.VISIBLE
             return false
-        }else if (binding.etQuantityNewProd.text.toString().isEmpty() || binding.etQuantityNewProd.text.toString().toInt() <= 0){
+        }*/else if (binding.etQuantityNewProd.text.toString().isEmpty() || binding.etQuantityNewProd.text.toString().toInt() <= 0){
             binding.etQuantityNewProd.error = "La cantidad no puede ser vacio ó 0"
             return false
         }else if (binding.etUnitPricesNewProd.text.toString().isEmpty() || binding.etUnitPricesNewProd.text.toString().toDouble() <= 0.0 && unitPrice <= 0.9){
@@ -293,7 +307,7 @@ class NewProductFragment : Fragment() {
         binding.etProductNameNewProd.error = null
         binding.spSupplierError.visibility = View.GONE
         binding.spCategoryError.visibility = View.GONE
-        binding.spUnitMensurementError.visibility = View.GONE
+        //binding.spUnitMensurementError.visibility = View.GONE
         binding.etQuantityNewProd.error = null
         binding.etUnitPricesNewProd.error = null
 

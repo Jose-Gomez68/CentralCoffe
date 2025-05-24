@@ -185,13 +185,13 @@
 
                     </LinearLayout>
 
-                    <Spinner
+                    <!--<Spinner
                         android:id="@+id/spUnitMensurement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="15dp"
                         android:layout_marginTop="20dp"
-                        android:paddingHorizontal="10dp" />
+                        android:paddingHorizontal="10dp" />-->
 
                     <TextView
                         android:id="@+id/spUnitMensurementError"

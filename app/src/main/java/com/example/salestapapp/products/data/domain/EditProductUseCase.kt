@@ -9,8 +9,6 @@ import com.example.salestapapp.products.data.model.toDomain
 class EditProductUseCase(private val repository: ProductsRepository) {
 
     suspend operator fun invoke(product: ProductModel): ProductModel {
-        Log.e("AQUI A", "${product}")
-        Log.e("AQUI A", "${product.toDatabase()}")
         val rowsUpdated = repository.editProduct(product.toDatabase())
         return if (rowsUpdated > 0) {
             repository.getProductById(product.id)?.toDomain()

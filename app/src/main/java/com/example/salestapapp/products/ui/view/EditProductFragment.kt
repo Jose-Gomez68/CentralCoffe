@@ -28,6 +28,7 @@ import com.example.salestapapp.products.ui.viewmodel.EditProductViewModel
 import com.example.salestapapp.products.ui.viewmodel.EditProductViewModelFactory
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.util.UtilsFunctions
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -46,6 +47,7 @@ class EditProductFragment : Fragment() {
     private var imageProduct:String? = ""
     private var listener: OnFragmentChangedListener? = null
     private var productID: Int = 0
+    private lateinit var utilsFunctions: UtilsFunctions
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
 
@@ -83,8 +85,9 @@ class EditProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        utilsFunctions = UtilsFunctions()
         initSpinnerSupplier()
-        initSpinnerMeasurement()
+        //initSpinnerMeasurement()
         initSpinnerCategory()
         initViews()
         productID = arguments?.getInt("productID") ?: return
@@ -105,8 +108,8 @@ class EditProductFragment : Fragment() {
             if (categoryIndex >= 0) binding.spCategoryEditProd.setSelection(categoryIndex)
 
 // Unidad de medida
-            val unitIndex = resources.getStringArray(R.array.unitProduct).indexOf(result.measurement)
-            if (unitIndex >= 0) binding.spEditUnitMensurement.setSelection(unitIndex)
+           /* val unitIndex = resources.getStringArray(R.array.unitProduct).indexOf(result.measurement)
+            if (unitIndex >= 0) binding.spEditUnitMensurement.setSelection(unitIndex)*/
 
         }
 
@@ -154,7 +157,19 @@ class EditProductFragment : Fragment() {
     private fun initViews () {
 
         binding.btnReturnEditProduct.setOnClickListener {
-            requireActivity().onBackPressed()
+            utilsFunctions.showConfirmDialog(requireActivity(),
+                "Estas Seguro de Salir?",
+                "Una vez saliendo no podras recurar la informacion que escribiste.!!",
+                "Salir",
+                "Cancelar",
+                onConfirm = {
+                    requireActivity().onBackPressed()
+                },
+                onCancel = {
+
+                }
+            )
+
         }
         //selec Image
         binding.ivSelectImageEditProd.setOnClickListener {
@@ -198,6 +213,19 @@ class EditProductFragment : Fragment() {
         val product = ProductModel(
             productID,
             binding.etProductNameEditProd.text.toString(),
+            binding.etQuantityEditProd.text.toString().toInt(),
+            binding.etUnitPricesEditProd.text.toString().toDouble(),
+            imageProduct ?: "",
+            2,
+            category,
+            1,
+            supplier,
+            dateFormat.format(dateCreate)
+        )
+
+        /*val product = ProductModel(
+            productID,
+            binding.etProductNameEditProd.text.toString(),
             binding.etQuantityEditProd.text.toString().toFloat(),
             binding.etUnitPricesEditProd.text.toString().toDouble(),
             imageProduct ?: "",
@@ -208,7 +236,7 @@ class EditProductFragment : Fragment() {
             2,
             measurement,
             dateFormat.format(dateCreate)
-        )
+        )*/
         binding.pgSaveEditProduct.visibility = View.VISIBLE
         viewModel.onCreate(product)
     }
@@ -235,7 +263,7 @@ class EditProductFragment : Fragment() {
         }
     }
 
-    private fun initSpinnerMeasurement() {
+    /*private fun initSpinnerMeasurement() {
         var items = resources.getStringArray(R.array.unitProduct)
         items[0] = "Selecciona un Unidad"
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -246,8 +274,8 @@ class EditProductFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = items[position]
                 measurement = selectedItem.toString()
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
+                *//*val selectedId = selectedItem.id
+                val selectedValue = selectedItem.value*//*
                 // Haz lo que necesites con el ID y el valor seleccionados
             }
 
@@ -255,7 +283,7 @@ class EditProductFragment : Fragment() {
                 // Manejar el caso en que no se ha seleccionado nada
             }
         }
-    }
+    }*/
 
     private fun validationsForm(): Boolean {
         val etEmpty = "El campo no puede ser vacio"
@@ -272,10 +300,10 @@ class EditProductFragment : Fragment() {
         }else if (category == "Selecciona una Categoria"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spEditCategoryError.visibility = View.VISIBLE
             return false
-        }else if (measurement == "Selecciona un Unidad"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+        }/*else if (measurement == "Selecciona un Unidad"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spEditUnitMensurementError.visibility = View.VISIBLE
             return false
-        }else if (binding.etQuantityEditProd.text.toString().isEmpty() || binding.etQuantityEditProd.text.toString().toFloat() <= 0){
+        }*/else if (binding.etQuantityEditProd.text.toString().isEmpty() || binding.etQuantityEditProd.text.toString().toFloat() <= 0){
             binding.etQuantityEditProd.error = "La cantidad no puede ser vacio ó 0"
             return false
         }else if (binding.etUnitPricesEditProd.text.toString().isEmpty() || binding.etUnitPricesEditProd.text.toString().toDouble() <= 0.0 && unitPrice <= 0.9){
@@ -286,7 +314,7 @@ class EditProductFragment : Fragment() {
         binding.etQuantityEditProd.error = null
         binding.spEditSupplierError.visibility = View.GONE
         binding.spEditCategoryError.visibility = View.GONE
-        binding.spEditUnitMensurementError.visibility = View.GONE
+        //binding.spEditUnitMensurementError.visibility = View.GONE
         binding.etQuantityEditProd.error = null
         binding.etUnitPricesEditProd.error = null
 

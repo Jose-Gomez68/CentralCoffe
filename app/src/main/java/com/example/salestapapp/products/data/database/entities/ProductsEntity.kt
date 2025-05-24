@@ -13,6 +13,46 @@ data class ProductsEntity(
     @ColumnInfo(name = "Name")
     val name: String,
     @ColumnInfo(name = "Quantity")
+    val quantity: Int,
+    @ColumnInfo(name = "Price")
+    val price: Double,
+    @ColumnInfo(name = "Image")
+    val image: String,
+    @ColumnInfo(name = "CategoryID")
+    val categoryID: Int,
+    @ColumnInfo(name = "Category")
+    val category: String,
+    @ColumnInfo(name = "SupplierID")
+    val supplierID: Int,
+    @ColumnInfo(name = "Supplier")
+    val supplier: String,
+    @ColumnInfo(name = "CreateDate")
+    val createDate: String,
+)
+
+
+fun ProductModel.toDatabase() = ProductsEntity(
+    id = id,
+    name = name,
+    quantity = quantity,
+    price = price,
+    image = image,
+    categoryID = categoryID,
+    category = category,
+    supplierID = supplierID,
+    supplier = supplier,
+    createDate = createDate
+)
+
+/*
+* @Entity(tableName = "Products")
+data class ProductsEntity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "ID")
+    val id: Int = 0,
+    @ColumnInfo(name = "Name")
+    val name: String,
+    @ColumnInfo(name = "Quantity")
     val quantity: Float,
     @ColumnInfo(name = "Price")
     val price: Double,
@@ -48,4 +88,4 @@ fun ProductModel.toDatabase() = ProductsEntity(
     measurementID = measurementID,
     measurement = measurement,
     createDate = createDate
-)
+)*/

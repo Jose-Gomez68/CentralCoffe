@@ -10,6 +10,30 @@ data class ProductModel(
     @SerializedName("Name")
     val name: String,
     @SerializedName("Quantity")
+    val quantity: Int,
+    @SerializedName("Price")
+    val price: Double,
+    @SerializedName("Image")
+    val image: String,
+    @SerializedName("CategoryID")
+    val categoryID: Int,
+    @SerializedName("Category")
+    val category: String,
+    @SerializedName("SupplierID")
+    val supplierID: Int,
+    @SerializedName("Supplier")
+    val supplier: String,
+    @SerializedName("CreateDate")
+    val createDate: String,
+)
+
+/*
+* ProductModel(
+    @SerializedName("ID")
+    val id: Int,
+    @SerializedName("Name")
+    val name: String,
+    @SerializedName("Quantity")
     val quantity: Float,
     @SerializedName("Price")
     val price: Double,
@@ -29,9 +53,10 @@ data class ProductModel(
     val measurement: String,
     @SerializedName("CreateDate")
     val createDate: String,
-)
+)*/
 
-fun ProductsEntity.toDomain() = ProductModel(
+/*
+* fun ProductsEntity.toDomain() = ProductModel(
     id = id,
     name = name,
     quantity = quantity,
@@ -43,5 +68,18 @@ fun ProductsEntity.toDomain() = ProductModel(
     supplier = supplier,
     measurementID = measurementID,
     measurement = measurement,
+    createDate = createDate
+)*/
+
+fun ProductsEntity.toDomain() = ProductModel(
+    id = id,
+    name = name,
+    quantity = quantity,
+    price = price,
+    image = image,
+    categoryID = categoryID,
+    category = category,
+    supplierID = supplierID,
+    supplier = supplier,
     createDate = createDate
 )
