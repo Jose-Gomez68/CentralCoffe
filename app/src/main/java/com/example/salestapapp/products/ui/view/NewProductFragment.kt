@@ -28,6 +28,7 @@ import com.example.salestapapp.products.ui.viewmodel.NewProductViewModel
 import com.example.salestapapp.products.ui.viewmodel.NewProductViewModelFactory
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.util.UtilsFunctions
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -49,6 +50,7 @@ class NewProductFragment : Fragment() {
     private var measurement = ""
     private var imageProduct:String? = ""
     private var listener: OnFragmentChangedListener? = null
+    private lateinit var utilsFunctions: UtilsFunctions
 
     val imagePickerMedia = registerForActivityResult(PickVisualMedia()){ uri ->
 
@@ -81,7 +83,18 @@ class NewProductFragment : Fragment() {
         )[NewProductViewModel::class.java]
 
         binding.btnReturnNewProd.setOnClickListener {
-            requireActivity().onBackPressed()
+            utilsFunctions.showConfirmDialog(requireActivity(),
+                "Estas Seguro de Salir?",
+                "Una vez saliendo no podras recurar la informacion que escribiste.!!",
+                "Salir",
+                "Cancelar",
+                onConfirm = {
+                    requireActivity().onBackPressed()
+                },
+                onCancel = {
+
+                }
+            )
         }
 
         // Retornar la vista raíz del diseño inflado
@@ -91,7 +104,7 @@ class NewProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        utilsFunctions = UtilsFunctions()
         initSpinnerSupplier()
         //initSpinnerMeasurement()
         initSpinnerCategory()
