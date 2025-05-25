@@ -22,6 +22,7 @@ import com.example.salestapapp.products.ui.viewmodel.ProductListViewModelFactory
 import com.example.salestapapp.products.ui.viewmodel.ProductsListViewModel
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.util.UtilsFunctions
 
 class ProductsFragment : Fragment() {
 
@@ -31,6 +32,7 @@ class ProductsFragment : Fragment() {
     private lateinit var db: CyberCoffeDatabase
     private lateinit var viewModel: ProductsListViewModel
     private var listener: OnFragmentChangedListener? = null
+    private lateinit var util: UtilsFunctions
 
    /* var products = listOf(
         ProductModel(1,"coca cola", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
@@ -56,6 +58,7 @@ class ProductsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
+        util = UtilsFunctions()
         val repository: ProductsRepository = ProductsRepository(db)
         val viewModelProviderFactory = ProductListViewModelFactory(GetProductsUseCase(repository),
             DeleteProductByIdUseCase(repository)
@@ -85,7 +88,18 @@ class ProductsFragment : Fragment() {
             }*/
             productAdap = ProductListAdapter(result,
                 onItemRemove = { product ->
-                    deleteDialog(product, result)
+                    util.deleteDialog(
+                        requireContext(),
+                        getString(R.string.title_dialog_delete_product, product.name),
+                        getString(R.string.message_dialog_delete_product),
+                        "Eliminar",
+                        "Cancelar",
+                        onConfirm = {
+                            viewModel.removeProduct(product)
+                            productAdap.updateList(result)
+                        }
+
+                    )
                     Log.e("ELIMINANDO1", ""+result.size)
                 },
                 onItemGoEdit = { product ->
@@ -137,7 +151,7 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    private fun deleteDialog(it: ProductModel, result: List<ProductModel>) {
+    /*private fun deleteDialog(it: ProductModel, result: List<ProductModel>) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.title_dialog_delete_product, it.name))
         builder.setMessage(getString(R.string.message_dialog_delete_product))
@@ -153,6 +167,6 @@ class ProductsFragment : Fragment() {
             dialog.cancel()
         }
         builder.show()
-    }
+    }*/
 
 }

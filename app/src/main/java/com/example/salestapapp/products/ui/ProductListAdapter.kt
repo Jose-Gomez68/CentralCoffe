@@ -56,7 +56,8 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
     private val btnDelete = view.findViewById<Button>(R.id.btnDeleteProductCardView)
 
     fun render(
-        productModel: ProductModel, context: Context,
+        productModel: ProductModel,
+        context: Context,
         onItemRemove: (ProductModel) -> Unit,
         onItemGoEdit: (ProductModel) -> Unit
     ) {
@@ -87,21 +88,6 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
     private fun convertBase64ToBitmap(base64String: String): Bitmap? {
         val decodedByteArray: ByteArray = Base64.decode(base64String, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.size)
-    }
-
-    private fun dialogDelete (context: Context, name: String, id:Int) {
-        val builder = AlertDialog.Builder(context)
-        builder.setMessage("Deseas eleminar el producto $name")
-            .setPositiveButton("Eliminar") { dialog, id ->
-                //delete db
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancelar") { dialog, id ->
-                dialog.dismiss()
-            }
-
-        builder.create()
-        builder.show()
     }
 
 }
