@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.salestapapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.salestapapp"
@@ -40,6 +40,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.activity:activity:1.10.1")
     //var
     val lifecycle_version = "2.7.0"
     val room_version = "2.6.1"

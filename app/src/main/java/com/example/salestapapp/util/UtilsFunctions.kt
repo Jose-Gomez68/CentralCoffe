@@ -2,6 +2,8 @@ package com.example.salestapapp.util
 
 import android.app.AlertDialog
 import android.content.Context
+import com.example.salestapapp.R
+import com.example.salestapapp.products.data.model.ProductModel
 
 class UtilsFunctions {
 
@@ -26,6 +28,32 @@ class UtilsFunctions {
             dialog.dismiss()
         }
         builder.setCancelable(false)
+        builder.show()
+    }
+
+    fun deleteDialog(
+        context: Context,
+        title: String = "¿Estás seguro de eliminar?",
+        message: String = "¿Deseas eliminar el item?",
+        confirmText: String = "Eliminar",
+        cancelText: String = "Cancelar",
+        onConfirm: () -> Unit,
+        onCancel: (() -> Unit)? = null
+        ) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton(confirmText) { dialog, which ->
+            onConfirm()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(cancelText) { dialog, which ->
+            onCancel?.invoke()
+            dialog.dismiss()
+            dialog.cancel()
+        }
         builder.show()
     }
 

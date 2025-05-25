@@ -52,4 +52,10 @@
     <!--fragment edit supplier-->
     <string name="title_edit_supplier">Editar Proveedoor</string>
 
+    <!--CATEGORY STRINGS-->
+    <string name="title_category">Lista Categorias</string>
+    <string name="title_new_category">Nueva Categoria</string>
+    <string name="hint_new_name_category">Nombre de la categoria</string>
+    <string name="no_data_list_category">No hay Categorias</string>
+
 </resources>
