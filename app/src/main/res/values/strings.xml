@@ -57,5 +57,7 @@
     <string name="title_new_category">Nueva Categoria</string>
     <string name="hint_new_name_category">Nombre de la categoria</string>
     <string name="no_data_list_category">No hay Categorias</string>
+    <string name="title_dialog_delete_category">Eliminar Categoria %1$s</string>
+    <string name="message_dialog_delete_category">Una vez elimnado la categoria no se podra recuperar</string>
 
 </resources>

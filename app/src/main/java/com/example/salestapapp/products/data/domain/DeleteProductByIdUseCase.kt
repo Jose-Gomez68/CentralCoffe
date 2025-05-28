@@ -12,7 +12,7 @@ class DeleteProductByIdUseCase(private val repository: ProductsRepository)  {
             return true
         } else {
             return false
-            throw Exception("Failed to insert product into database")
+            throw Exception("Failed to delete product into database")
         }
     }
 

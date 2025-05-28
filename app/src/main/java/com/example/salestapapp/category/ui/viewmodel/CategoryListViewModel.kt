@@ -5,11 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.salestapapp.category.data.domain.DeleteCategoryByIdUseCase
+import com.example.salestapapp.category.data.domain.GetCategoryUseCase
 import com.example.salestapapp.category.data.model.CategoryModel
 import kotlinx.coroutines.launch
 
 class CategoryListViewModel (
-
+private val getCategory: GetCategoryUseCase,
+private val deleteCategory: DeleteCategoryByIdUseCase
 ): ViewModel(){
 
     private val _categoryModel = MutableLiveData<List<CategoryModel>>()
@@ -17,7 +20,7 @@ class CategoryListViewModel (
 
     fun onCreate() {
         viewModelScope.launch {
-//            val result =
+            val result = getCategory.invoke()
             if (!result.isNullOrEmpty()){
                 _categoryModel.postValue(result)
             }
