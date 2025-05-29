@@ -76,14 +76,13 @@ class CategoryFragment : Fragment() {
                         putInt("categoryID", category.id)
                     }
 
-                    /*
-                    * val nuevoFragmento = EditCategoryFragment()
+                    val nuevoFragmento = EditCategoryFragment()
                     nuevoFragmento.arguments = bundle
 
                     val transaction = requireFragmentManager().beginTransaction()
                     transaction.replace(R.id.categoryContainerFragment, nuevoFragmento)
                     transaction.addToBackStack(null)
-                    transaction.commit()*/
+                    transaction.commit()
 
                 })
         }

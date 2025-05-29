@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import com.example.salestapapp.R
 import com.example.salestapapp.products.data.model.ProductModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class UtilsFunctions {
 
@@ -57,5 +60,10 @@ class UtilsFunctions {
         builder.show()
     }
 
+    fun getCurrentFormattedDate(): String {
+        val dateCreate = Date()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(dateCreate)
+    }
 
 }

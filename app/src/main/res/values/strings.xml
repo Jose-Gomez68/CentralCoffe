@@ -59,5 +59,14 @@
     <string name="no_data_list_category">No hay Categorias</string>
     <string name="title_dialog_delete_category">Eliminar Categoria %1$s</string>
     <string name="message_dialog_delete_category">Una vez elimnado la categoria no se podra recuperar</string>
+    <!--edit category-->
+    <string name="title_edit_category">Editar Categoria</string>
+    <string name="title_edit_category_hint_name">Nombre Categoria</string>
+
+    <!--UTILS-->
+    <string name="title_message_return_view_util">Estas Seguro de Salir?</string>
+    <string name="message_return_view_util">Una vez saliendo no podras recurar la informacion que escribiste.!!</string>
+    <string name="exit_message_return_view_util">Salir</string>
+    <string name="cancel_message_return_view_util">Cancelar</string>
 
 </resources>

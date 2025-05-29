@@ -7,11 +7,17 @@ data class CategoryModel(
     @SerializedName("ID")
     val id: Int,
     @SerializedName("Name")
-    val name: String
+    val name: String,
+    @SerializedName("CreateDate")
+    val createDate: String,
+    @SerializedName("UpdateDate")
+    val updateDate: String
 )
 
 
 fun CategoryEntity.toDomain() = CategoryModel(
     id = id,
-    name = name
+    name = name,
+    createDate = createDate,
+    updateDate = updateDate
 )

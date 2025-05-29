@@ -23,7 +23,7 @@
                 >
 
                 <LinearLayout
-                    android:id="@+id/EditProductlinearLayout"
+                    android:id="@+id/EditCategoryLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="20dp"
@@ -68,7 +68,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/EditProductlinearLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/EditCategoryLinearLayout"
                     app:layout_constraintVertical_bias="0.060000002">
 
                     <EditText

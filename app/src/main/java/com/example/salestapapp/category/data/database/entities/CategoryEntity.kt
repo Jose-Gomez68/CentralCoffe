@@ -11,11 +11,18 @@ data class CategoryEntity(
     @ColumnInfo(name = "ID")
     val id: Int = 0,
     @ColumnInfo(name = "Name")
-    val name: String
+    val name: String,
+    @ColumnInfo(name = "CreateDate")
+    val createDate: String,
+    @ColumnInfo(name = "UpdateDate")
+    val updateDate: String
+
 )
 
 
 fun CategoryModel.toDatabase() = CategoryEntity(
     id = id,
-    name = name
+    name = name,
+    createDate = createDate,
+    updateDate = updateDate
 )

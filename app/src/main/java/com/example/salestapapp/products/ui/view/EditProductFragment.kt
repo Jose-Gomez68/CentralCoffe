@@ -70,7 +70,6 @@ class EditProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        /*NO SE ESCONDE EL FLOATING BUTTON*/
         _binding = FragmentEditProductBinding.inflate(inflater, container, false)
         val repository: ProductsRepository = ProductsRepository(db)
         val viewModelProviderFactory = EditProductViewModelFactory(EditProductUseCase(repository),
@@ -79,6 +78,7 @@ class EditProductFragment : Fragment() {
             this,
             viewModelProviderFactory
         )[EditProductViewModel::class.java]
+
             return binding.root
     }
 
@@ -158,10 +158,10 @@ class EditProductFragment : Fragment() {
 
         binding.btnReturnEditProduct.setOnClickListener {
             utilsFunctions.showConfirmDialog(requireActivity(),
-                "Estas Seguro de Salir?",
-                "Una vez saliendo no podras recurar la informacion que escribiste.!!",
-                "Salir",
-                "Cancelar",
+                getString(R.string.title_message_return_view_util),
+                getString(R.string.message_return_view_util),
+                getString(R.string.exit_message_return_view_util),
+                getString(R.string.cancel_message_return_view_util),
                 onConfirm = {
                     requireActivity().onBackPressed()
                 },
@@ -207,8 +207,8 @@ class EditProductFragment : Fragment() {
     }
 
     private fun editProduct() {
-        val dateCreate = Date()
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        /*val dateCreate = Date()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())*/
 
         val product = ProductModel(
             productID,
@@ -220,7 +220,7 @@ class EditProductFragment : Fragment() {
             category,
             1,
             supplier,
-            dateFormat.format(dateCreate)
+            utilsFunctions.getCurrentFormattedDate()
         )
 
         /*val product = ProductModel(
