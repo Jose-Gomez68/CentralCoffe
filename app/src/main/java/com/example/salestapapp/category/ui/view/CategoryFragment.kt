@@ -93,11 +93,11 @@ class CategoryFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnCategoryFragmentChangeListener) {
+       /* if (context is OnCategoryFragmentChangeListener) {
             listener = context
             listener?.onCategoryFragmentChangeListener(this)
         } else {
             throw RuntimeException("$context must implement OnCategoryFragmentChangeListener")
-        }
+        }*/
     }
 }

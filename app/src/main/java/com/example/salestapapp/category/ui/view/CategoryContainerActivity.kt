@@ -22,23 +22,26 @@ class CategoryContainerActivity : AppCompatActivity() {
         binding = ActivityCategoryContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.fbAddCategory.visibility = View.VISIBLE
-//        val fragment =
 
-        binding.fbAddCategory.setOnClickListener {
+        val fragment = CategoryFragment()
+        fragmentManager = supportFragmentManager
+        fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.categoryContainerFragment, fragment)
+        fragmentTransaction.commit()
 
-        }
-        /*enableEdgeToEdge()
-        setContentView(R.layout.activity_category_container)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        /*binding.fbAddCategory.setOnClickListener {
+            val newCategory = NewCategoryFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.categoryContainerFragment, newCategory)
+                .addToBackStack(null)// Opcional: agrega el fragmento actual a la pila de retroceso
+                .commit()
         }*/
+
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.productsContainerFragment)
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.categoryContainerFragment)
         if (currentFragment is ProductsFragment) {
             binding.fbAddCategory.visibility = View.VISIBLE
         } else if (currentFragment is NewProductFragment) {

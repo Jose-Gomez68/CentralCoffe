@@ -35,7 +35,7 @@
     <string name="btn_dialog_cancel_products_list">Cancelar</string>
     <!--EditProductFragment Strings-->
     <string name="title_edit_product">Editar Producto</string>
-    <string name="btn_save_edit_product">Editar</string>
+    <string name="btn_save_edit_product">Guardar</string>
     <string name="btn_s_edit_product">Editar</string>
 
     <!--SUPPLIER STRINGS-->
@@ -62,6 +62,10 @@
     <!--edit category-->
     <string name="title_edit_category">Editar Categoria</string>
     <string name="title_edit_category_hint_name">Nombre Categoria</string>
+    <string name="btn_edit_new_category">Editar</string>
+    <!--new category-->
+    <string name="btn_save_new_category">Guardar</string>
+
 
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>

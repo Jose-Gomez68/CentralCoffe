@@ -84,10 +84,10 @@ class NewProductFragment : Fragment() {
 
         binding.btnReturnNewProd.setOnClickListener {
             utilsFunctions.showConfirmDialog(requireActivity(),
-                "Estas Seguro de Salir?",
-                "Una vez saliendo no podras recurar la informacion que escribiste.!!",
-                "Salir",
-                "Cancelar",
+                getString(R.string.title_message_return_view_util),
+                getString(R.string.message_return_view_util),
+                getString(R.string.exit_message_return_view_util),
+                getString(R.string.cancel_message_return_view_util),
                 onConfirm = {
                     requireActivity().onBackPressed()
                 },
