@@ -1,33 +1,36 @@
 package com.example.salestapapp.category.ui.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
 import com.example.salestapapp.category.data.CategoryRepository
+import com.example.salestapapp.category.data.domain.EditCategoryUseCase
+import com.example.salestapapp.category.data.domain.GetCategoryByIdUseCase
 import com.example.salestapapp.category.data.model.CategoryModel
-import com.example.salestapapp.databinding.FragmentCategoryBinding
+import com.example.salestapapp.category.ui.viewmodel.EditCategoryViewModel
+import com.example.salestapapp.category.ui.viewmodel.EditCategoryViewModelFactory
 import com.example.salestapapp.databinding.FragmentEditCategoryBinding
-import com.example.salestapapp.databinding.FragmentEditProductBinding
-import com.example.salestapapp.products.data.ProductsRepository
-import com.example.salestapapp.products.ui.viewmodel.EditProductViewModel
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.util.UtilsFunctions
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 class EditCategoryFragment : Fragment() {
 
     private lateinit var _binding: FragmentEditCategoryBinding
     private val binding get() = _binding!!
     private lateinit var db: CyberCoffeDatabase
-    //private lateinit var viewModel: EditProductViewModel
+    private lateinit var viewModel: EditCategoryViewModel
     private lateinit var utilsFunctions: UtilsFunctions
+    private var listener: OnCategoryFragmentChangeListener? = null
     private var categoryID: Int = 0
+    private var createdDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,13 @@ class EditCategoryFragment : Fragment() {
     ): View? {
         _binding = FragmentEditCategoryBinding.inflate(inflater, container,false)
         val repository: CategoryRepository = CategoryRepository(db)
+        val viewModelProviderFactory = EditCategoryViewModelFactory(EditCategoryUseCase(repository),
+            GetCategoryByIdUseCase(repository)
+        )
+        viewModel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        )[EditCategoryViewModel::class.java]
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -49,6 +59,7 @@ class EditCategoryFragment : Fragment() {
 
         categoryID = arguments?.getInt("categoryID") ?: return
         utilsFunctions = UtilsFunctions()
+        viewModel.getCategory(categoryID)
         binding.btnReturnEditCategory.setOnClickListener {
             utilsFunctions.showConfirmDialog(requireActivity(),
                 getString(R.string.title_message_return_view_util),
@@ -64,6 +75,12 @@ class EditCategoryFragment : Fragment() {
             )
         }
 
+        viewModel.categoryModel.observe(viewLifecycleOwner) { result ->
+            Log.e("AQUI EDIT", result.id.toString())
+            createdDate = result.createDate
+            binding.etCategoryNameEdit.setText(result.name)
+        }
+
         binding.btnEditCategory.setOnClickListener {
             if (validationsForms()){
                 editCategory()
@@ -77,12 +94,12 @@ class EditCategoryFragment : Fragment() {
         val category = CategoryModel(
             categoryID,
             binding.etCategoryNameEdit.text.toString(),
-            utilsFunctions.getCurrentFormattedDate(),
+            createdDate,
             utilsFunctions.getCurrentFormattedDate()
         )
 
         binding.pgSaveEditCategory.visibility = View.VISIBLE
-        //viewModel.onCreate(category)
+        viewModel.onCreate(category)
     }
 
     private fun validationsForms(): Boolean {
@@ -98,6 +115,16 @@ class EditCategoryFragment : Fragment() {
 
         binding.etCategoryNameEdit.error = null
         return true
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnCategoryFragmentChangeListener) {
+            listener = context
+            listener?.onCategoryFragmentChangeListener(this)
+        } else {
+            throw RuntimeException("$context must implement onCategoryFragmentChangeListener")
+        }
     }
 
 }
