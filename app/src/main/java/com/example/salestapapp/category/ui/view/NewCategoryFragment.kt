@@ -15,12 +15,11 @@ import com.example.salestapapp.category.data.model.CategoryModel
 import com.example.salestapapp.category.ui.viewmodel.NewCategoryViewModel
 import com.example.salestapapp.category.ui.viewmodel.NewCategoryViewModelFactory
 import com.example.salestapapp.databinding.FragmentNewCategortyBinding
-import com.example.salestapapp.products.ui.view.OnFragmentChangedListener
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.util.UtilsFunctions
 
-class NewCategortyFragment : Fragment() {
+class NewCategoryFragment : Fragment() {
 
     private var _binding: FragmentNewCategortyBinding? = null
     private val binding get() = _binding!!

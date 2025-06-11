@@ -79,6 +79,13 @@ class EditCategoryFragment : Fragment() {
             Log.e("AQUI EDIT", result.id.toString())
             createdDate = result.createDate
             binding.etCategoryNameEdit.setText(result.name)
+
+        }
+
+        viewModel.editCategoryModel.observe(viewLifecycleOwner) { result ->
+            if (result.name.isNotEmpty()){
+                requireActivity().supportFragmentManager.popBackStack();
+            }
         }
 
         binding.btnEditCategory.setOnClickListener {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salestapapp.R
 import com.example.salestapapp.category.data.CategoryRepository
 import com.example.salestapapp.category.data.domain.DeleteCategoryByIdUseCase
@@ -85,6 +86,20 @@ class CategoryFragment : Fragment() {
                     transaction.commit()
 
                 })
+
+            binding.rvCategoryFrag.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = categoryAdap
+            }
+
+            if (result.isEmpty()) {
+                binding.rvCategoryFrag.visibility = View.INVISIBLE
+                binding.tvNoDataListCategory.visibility = View.VISIBLE
+            }else {
+                binding.rvCategoryFrag.visibility = View.VISIBLE
+                binding.tvNoDataListCategory.visibility = View.INVISIBLE
+            }
+
         }
 
         // Inflate the layout for this fragment
@@ -93,11 +108,11 @@ class CategoryFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-       /* if (context is OnCategoryFragmentChangeListener) {
+        if (context is OnCategoryFragmentChangeListener) {
             listener = context
             listener?.onCategoryFragmentChangeListener(this)
         } else {
             throw RuntimeException("$context must implement OnCategoryFragmentChangeListener")
-        }*/
+        }
     }
 }
