@@ -47,6 +47,7 @@ class EditProductFragment : Fragment() {
     private var imageProduct:String? = ""
     private var listener: OnFragmentChangedListener? = null
     private var productID: Int = 0
+    private var createdDate: String = ""
     private lateinit var utilsFunctions: UtilsFunctions
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
@@ -98,6 +99,7 @@ class EditProductFragment : Fragment() {
             binding.etProductNameEditProd.setText(result.name)
             binding.etQuantityEditProd.setText("${result.quantity}")
             binding.etUnitPricesEditProd.setText("${result.price}")
+            createdDate = result.createDate
 
             // Seleccionar item correspondiente en el Spinner de proveedor
             val supplierIndex = resources.getStringArray(R.array.supplier_array).indexOf(result.supplier)
@@ -220,6 +222,7 @@ class EditProductFragment : Fragment() {
             category,
             1,
             supplier,
+            createdDate,
             utilsFunctions.getCurrentFormattedDate()
         )
 

@@ -25,6 +25,8 @@ data class ProductModel(
     val supplier: String,
     @SerializedName("CreateDate")
     val createDate: String,
+    @SerializedName("UpdateDate")
+    val updateDate: String
 )
 
 /*
@@ -81,5 +83,6 @@ fun ProductsEntity.toDomain() = ProductModel(
     category = category,
     supplierID = supplierID,
     supplier = supplier,
-    createDate = createDate
+    createDate = createDate,
+    updateDate = updateDate
 )

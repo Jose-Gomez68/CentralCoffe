@@ -196,6 +196,7 @@ class NewProductFragment : Fragment() {
             category,
             1,
             supplier,
+            dateFormat.format(dateCreate),
             dateFormat.format(dateCreate)
         )
 

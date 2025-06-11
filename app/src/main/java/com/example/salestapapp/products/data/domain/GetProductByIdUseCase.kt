@@ -19,7 +19,8 @@ class GetProductByIdUseCase(private val repository: ProductsRepository) {
                 category = "",
                 supplierID = 0,
                 supplier = "",
-                createDate = ""
+                createDate = "",
+                updateDate = ""
             )
 
     }

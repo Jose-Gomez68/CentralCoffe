@@ -28,6 +28,8 @@ data class ProductsEntity(
     val supplier: String,
     @ColumnInfo(name = "CreateDate")
     val createDate: String,
+    @ColumnInfo(name = "UpdateDate")
+    val updateDate: String,
 )
 
 
@@ -41,7 +43,8 @@ fun ProductModel.toDatabase() = ProductsEntity(
     category = category,
     supplierID = supplierID,
     supplier = supplier,
-    createDate = createDate
+    createDate = createDate,
+    updateDate = updateDate
 )
 
 /*
