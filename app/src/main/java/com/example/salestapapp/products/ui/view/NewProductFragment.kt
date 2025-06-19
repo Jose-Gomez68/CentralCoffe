@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.salestapapp.R
+import com.example.salestapapp.category.data.CategoryRepository
+import com.example.salestapapp.category.data.domain.GetCategoryUseCase
+import com.example.salestapapp.category.data.model.CategoryModel
 import com.example.salestapapp.databinding.FragmentNewProductBinding
 import com.example.salestapapp.products.data.ProductsRepository
 import com.example.salestapapp.products.data.domain.InsertProductUseCase
@@ -28,8 +29,10 @@ import com.example.salestapapp.products.ui.viewmodel.NewProductViewModel
 import com.example.salestapapp.products.ui.viewmodel.NewProductViewModelFactory
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.usecase.GetSuppliersUseCase
+import com.example.salestapapp.supplier.data.model.SuppliersModel
 import com.example.salestapapp.util.UtilsFunctions
-import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -51,6 +54,8 @@ class NewProductFragment : Fragment() {
     private var imageProduct:String? = ""
     private var listener: OnFragmentChangedListener? = null
     private lateinit var utilsFunctions: UtilsFunctions
+    private var supplierID = 0
+    private var categoryID = 0
 
     val imagePickerMedia = registerForActivityResult(PickVisualMedia()){ uri ->
 
@@ -76,11 +81,20 @@ class NewProductFragment : Fragment() {
     ): View? {
         _binding = FragmentNewProductBinding.inflate(inflater, container, false)
         val repository: ProductsRepository = ProductsRepository(db)
-        val viewModelProviderFactory = NewProductViewModelFactory(InsertProductUseCase(repository))
+        val repositoryCategory: CategoryRepository = CategoryRepository(db)
+        val repositorySupplier: SupplierRepository = SupplierRepository(db)
+        val viewModelProviderFactory = NewProductViewModelFactory(
+            InsertProductUseCase(repository),
+            GetCategoryUseCase(repositoryCategory),
+            GetSuppliersUseCase(repositorySupplier)
+        )
         viewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
         )[NewProductViewModel::class.java]
+
+        viewModel.getCategory()
+        viewModel.getSupplier()
 
         binding.btnReturnNewProd.setOnClickListener {
             utilsFunctions.showConfirmDialog(requireActivity(),
@@ -105,9 +119,16 @@ class NewProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         utilsFunctions = UtilsFunctions()
-        initSpinnerSupplier()
+        viewModel.categoryModel.observe(viewLifecycleOwner) { result ->
+            initSpinnerCategory(result)
+        }
+
+        viewModel.supplierModel.observe(viewLifecycleOwner) { result ->
+            initSpinnerSupplier(result)
+        }
+
         //initSpinnerMeasurement()
-        initSpinnerCategory()
+
         initViews()
 
 
@@ -125,12 +146,6 @@ class NewProductFragment : Fragment() {
                 binding.ivSelectImageNewProd.setImageResource(R.drawable.gallery)
                 imageProduct = null
             }
-        }
-
-        //asi se usa el room
-        lifecycleScope.launch {
-            // Ahora puedes trabajar con el TextView
-            //textView.text = db.getProductsDao().getAllProducts().toString()
         }
 
     }
@@ -183,17 +198,17 @@ class NewProductFragment : Fragment() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
 
         val product = ProductModel(
-            0,
-            binding.etProductNameNewProd.text.toString(),
-            binding.etQuantityNewProd.text.toString().toInt(),
-            binding.etUnitPricesNewProd.text.toString().toDouble(),
-            imageProduct ?: "",
-            1,
-            category,
-            1,
-            supplier,
-            dateFormat.format(dateCreate),
-            dateFormat.format(dateCreate)
+            id = 0,
+            name = binding.etProductNameNewProd.text.toString(),
+            quantity = binding.etQuantityNewProd.text.toString().toInt(),
+            price = binding.etUnitPricesNewProd.text.toString().toDouble(),
+            image = imageProduct ?: "",
+            categoryID = categoryID,
+            category = category,
+            supplierID = supplierID,
+            supplier = supplier,
+            createDate = dateFormat.format(dateCreate),
+            updateDate = dateFormat.format(dateCreate)
         )
 
         /*
@@ -216,9 +231,12 @@ class NewProductFragment : Fragment() {
 
     }
 
-    private fun initSpinnerSupplier() {
-        var items = resources.getStringArray(R.array.supplier_array)
-        items[0] = "Selecciona un Proovedor"
+    private fun initSpinnerSupplier(suppliers: List<SuppliersModel>) {
+        // Llenar spinner con categorías
+        val supplierList = suppliers // esta es la lista de CategoryModel
+        val items = mutableListOf("Selecciona una Proovedor")
+        items.addAll(supplierList.map { it.name })
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spSupplierNewProd.adapter = adapter
@@ -227,14 +245,17 @@ class NewProductFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = items[position]
                 supplier = selectedItem.toString()
-                if (supplier != "Selecciona un Proovedor"){
+                if (supplier != "Selecciona una Proovedor"){
                     binding.spCategoryNewProd.visibility = View.VISIBLE
                 }else{
                     binding.spCategoryNewProd.visibility = View.GONE
                 }
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
-                // Haz lo que necesites con el ID y el valor seleccionados
+
+                supplierList.map {
+                    if (items[position] == it.name)
+                        supplierID = it.id
+                }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -244,9 +265,12 @@ class NewProductFragment : Fragment() {
 
     }
 
-    private fun initSpinnerCategory() {
-        var items = resources.getStringArray(R.array.category_array)
-        items[0] = "Selecciona una Categoria"
+    private fun initSpinnerCategory(categories: List<CategoryModel>) {
+        // Llenar spinner con categorías
+        val categoryList = categories // esta es la lista de CategoryModel
+        val items = mutableListOf("Selecciona una Categoria")
+        items.addAll(categoryList.map { it.name })
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spCategoryNewProd.adapter = adapter
@@ -255,9 +279,10 @@ class NewProductFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = items[position]
                 category = selectedItem.toString()
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
-                // Haz lo que necesites con el ID y el valor seleccionados
+                categoryList.map {
+                    if (items[position] == it.name)
+                        categoryID = it.id
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

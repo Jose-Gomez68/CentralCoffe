@@ -72,15 +72,9 @@ class ProductsVH(view: View):RecyclerView.ViewHolder(view){
         tvStock.text = productModel.quantity.toString()
         tvPrice.text = productModel.price.toString()
         btnEdit.setOnClickListener {
-           /* val intent = Intent(context, ProductsContainerActivity::class.java)
-            intent.putExtra("idProduct", productModel.id)
-            context.startActivity(intent)*/
             onItemGoEdit(productModel)
         }
         btnDelete.setOnClickListener {
-            //modificar el entity de prodcutos para agrear la columna de enviado y la columna de Eliminado
-            //llamar un Dialog para preguntar si se va elimar el producto
-            //dialogDelete(context,productModel.name, productModel.id)
             onItemRemove(productModel)// mando el evento clic a fragmento o activity
         }
     }

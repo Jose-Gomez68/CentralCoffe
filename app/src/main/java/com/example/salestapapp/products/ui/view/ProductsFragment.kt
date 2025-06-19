@@ -1,6 +1,5 @@
 package com.example.salestapapp.products.ui.view
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salestapapp.R
@@ -33,20 +32,21 @@ class ProductsFragment : Fragment() {
     private lateinit var viewModel: ProductsListViewModel
     private var listener: OnFragmentChangedListener? = null
     private lateinit var util: UtilsFunctions
+    private var fullProductList: List<ProductModel> = emptyList()
 
-   /* var products = listOf(
-        ProductModel(1,"coca cola", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(2,"coca cola2", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(3,"coca cola3", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(4,"coca cola4", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(5,"coca cola5", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(6,"coca cola6", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(7,"coca cola7", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(8,"coca cola8", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(9,"coca cola9", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(10,"coca cola10", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-        ProductModel(11,"coca cola11", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
-    )*/
+    /* var products = listOf(
+         ProductModel(1,"coca cola", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(2,"coca cola2", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(3,"coca cola3", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(4,"coca cola4", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(5,"coca cola5", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(6,"coca cola6", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(7,"coca cola7", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(8,"coca cola8", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(9,"coca cola9", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(10,"coca cola10", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+         ProductModel(11,"coca cola11", 10.0F,20.3,"", 1,"refrescos",1, "cocacola sa",1, "pz", "23/03/2024"),
+     )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +82,7 @@ class ProductsFragment : Fragment() {
 
         viewModel.productModel.observe(viewLifecycleOwner) { result ->
 
+            fullProductList = result
             /*productAdap = ProductListAdapter(result){
                 deleteDialog(it, result)
                 Log.e("ELIMINANDO1", ""+result.size)
@@ -121,6 +122,25 @@ class ProductsFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = productAdap
             }
+
+            binding.searchVProduct.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val filteredList = if (newText.isNullOrBlank()) {
+                        fullProductList
+                    } else {
+                        fullProductList.filter {
+                            it.name.contains(newText.trim(), ignoreCase = true)
+                        }
+                    }
+                    productAdap.updateList(filteredList)
+                    return true
+                }
+
+            })
 
             if (result.isEmpty()){
                 binding.rvProductsFragProduct.visibility = View.INVISIBLE
