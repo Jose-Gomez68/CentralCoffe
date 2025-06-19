@@ -175,8 +175,8 @@ class NewSupplierFragment : Fragment() {
         }else if (binding.etTelNewSup.text.toString().isEmpty()){
             binding.etTelNewSup.error = etEmpty
             return false
-        }else if (!regex.matches(binding.etAddresNewSup.text.toString())){
-            binding.etAddresNewSup.error = "El numero de telefono debe de ser 10 digitos"
+        }else if (!regex.matches(binding.etTelNewSup.text.toString())){
+            binding.etTelNewSup.error = "El numero de telefono debe de ser 10 digitos"
             return false
         }
 

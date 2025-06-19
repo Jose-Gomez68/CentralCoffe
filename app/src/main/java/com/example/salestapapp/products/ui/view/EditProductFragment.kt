@@ -19,6 +19,9 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
+import com.example.salestapapp.category.data.CategoryRepository
+import com.example.salestapapp.category.data.domain.GetCategoryUseCase
+import com.example.salestapapp.category.data.model.CategoryModel
 import com.example.salestapapp.databinding.FragmentEditProductBinding
 import com.example.salestapapp.products.data.ProductsRepository
 import com.example.salestapapp.products.data.domain.EditProductUseCase
@@ -28,12 +31,12 @@ import com.example.salestapapp.products.ui.viewmodel.EditProductViewModel
 import com.example.salestapapp.products.ui.viewmodel.EditProductViewModelFactory
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.usecase.GetSuppliersUseCase
+import com.example.salestapapp.supplier.data.model.SuppliersModel
 import com.example.salestapapp.util.UtilsFunctions
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class EditProductFragment : Fragment() {
 
@@ -49,6 +52,9 @@ class EditProductFragment : Fragment() {
     private var productID: Int = 0
     private var createdDate: String = ""
     private lateinit var utilsFunctions: UtilsFunctions
+    private var categoryID = 0
+    private var supplierID = 0
+
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
 
@@ -73,8 +79,12 @@ class EditProductFragment : Fragment() {
     ): View? {
         _binding = FragmentEditProductBinding.inflate(inflater, container, false)
         val repository: ProductsRepository = ProductsRepository(db)
+        val repositoryCategory: CategoryRepository = CategoryRepository(db)
+        val repositorySupplier: SupplierRepository = SupplierRepository(db)
         val viewModelProviderFactory = EditProductViewModelFactory(EditProductUseCase(repository),
-            GetProductByIdUseCase(repository))
+            GetProductByIdUseCase(repository), GetCategoryUseCase(repositoryCategory),
+            GetSuppliersUseCase(repositorySupplier)
+        )
         viewModel = ViewModelProvider(
             this,
             viewModelProviderFactory
@@ -87,40 +97,30 @@ class EditProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         utilsFunctions = UtilsFunctions()
-        initSpinnerSupplier()
-        //initSpinnerMeasurement()
-        initSpinnerCategory()
         initViews()
         productID = arguments?.getInt("productID") ?: return
-        viewModel.getProduct(productID)
-        Log.e("AQUI EDIT", productID.toString())
-        viewModel.productModel.observe(viewLifecycleOwner) { result ->
-            Log.e("AQUI EDIT", result.id.toString())
-            binding.etProductNameEditProd.setText(result.name)
-            binding.etQuantityEditProd.setText("${result.quantity}")
-            binding.etUnitPricesEditProd.setText("${result.price}")
-            createdDate = result.createDate
+        viewModel.loadData(productID)
 
-            // Seleccionar item correspondiente en el Spinner de proveedor
-            val supplierIndex = resources.getStringArray(R.array.supplier_array).indexOf(result.supplier)
-            if (supplierIndex >= 0) binding.spSupplierEditProd.setSelection(supplierIndex)
+        viewModel.combinedData.observe(viewLifecycleOwner) { (product, categories, suppliers) ->
+            // Ya tienes ambos datos listos aquí
 
-// Categoría
-            val categoryIndex = resources.getStringArray(R.array.category_array).indexOf(result.category)
-            if (categoryIndex >= 0) binding.spCategoryEditProd.setSelection(categoryIndex)
+            // Llenar campos
+            binding.etProductNameEditProd.setText(product.name)
+            binding.etQuantityEditProd.setText("${product.quantity}")
+            binding.etUnitPricesEditProd.setText("${product.price}")
+            createdDate = product.createDate
 
-// Unidad de medida
-           /* val unitIndex = resources.getStringArray(R.array.unitProduct).indexOf(result.measurement)
-            if (unitIndex >= 0) binding.spEditUnitMensurement.setSelection(unitIndex)*/
+            initSpinnerSupplier(suppliers, product.supplierID)
+            initSpinnerCategory(categories, product.categoryID)
+
 
         }
 
+
+
+
         viewModel.editProdModel.observe(viewLifecycleOwner) { result ->
             // Manejar el resultado aquí
-            Log.e("SE EDIT", "" + result.name)
-            Log.e("SE EDIT", "" + result.category)
-            Log.e("SE EDIT", "" + result.supplier)
-            Log.e("SE EDIT", "" + result.createDate)
             if (result.name.isNotEmpty()){
                 requireActivity().supportFragmentManager.popBackStack();
             }
@@ -128,30 +128,39 @@ class EditProductFragment : Fragment() {
 
     }
 
-    private fun initSpinnerSupplier() {
-        var items = resources.getStringArray(R.array.supplier_array)
-        items[0] = "Selecciona un Proovedor"
+    private fun initSpinnerSupplier(suppliers: List<SuppliersModel>, prodSupplier: Int) {
+        // Llenar spinner con categorías
+        val supplierList = suppliers // esta es la lista de CategoryModel
+        val items = mutableListOf("Selecciona una Proovedor")
+        items.addAll(supplierList.map { it.name })
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spSupplierEditProd.adapter = adapter
 
+        // Seleccionar categoría del producto
+        val supplierIndex = supplierList.indexOfFirst { it.id == prodSupplier }
+        val adjustedIndex = if (supplierIndex >= 0) supplierIndex + 1 else -1 // +1 por "Selecciona una Categoria"
+        if (adjustedIndex >= 0) {
+            binding.spSupplierEditProd.setSelection(adjustedIndex)
+        }
+
+        // Spinner listener
         binding.spSupplierEditProd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = items[position]
-                supplier = selectedItem.toString()
+                supplier = items[position]
                 if (supplier != "Selecciona un Proovedor"){
                     binding.spCategoryEditProd.visibility = View.VISIBLE
                 }else{
                     binding.spCategoryEditProd.visibility = View.GONE
                 }
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
-                // Haz lo que necesites con el ID y el valor seleccionados
+                supplierList.map {
+                    if (items[position] == it.name)
+                        supplierID = it.id
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso en que no se ha seleccionado nada
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
     }
@@ -218,9 +227,9 @@ class EditProductFragment : Fragment() {
             binding.etQuantityEditProd.text.toString().toInt(),
             binding.etUnitPricesEditProd.text.toString().toDouble(),
             imageProduct ?: "",
-            2,
+            categoryID,
             category,
-            1,
+            supplierID,
             supplier,
             createdDate,
             utilsFunctions.getCurrentFormattedDate()
@@ -244,25 +253,34 @@ class EditProductFragment : Fragment() {
         viewModel.onCreate(product)
     }
 
-    private fun initSpinnerCategory() {
-        var items = resources.getStringArray(R.array.category_array)
-        items[0] = "Selecciona una Categoria"
+    private fun initSpinnerCategory(categories: List<CategoryModel>, prodCategory: Int) {
+        // Llenar spinner con categorías
+        val categoryList = categories // esta es la lista de CategoryModel
+        val items = mutableListOf("Selecciona una Categoria")
+        items.addAll(categoryList.map { it.name })
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spCategoryEditProd.adapter = adapter
 
+        // Seleccionar categoría del producto
+        val categoryIndex = categoryList.indexOfFirst { it.id == prodCategory }
+        val adjustedIndex = if (categoryIndex >= 0) categoryIndex + 1 else -1 // +1 por "Selecciona una Categoria"
+        if (adjustedIndex >= 0) {
+            binding.spCategoryEditProd.setSelection(adjustedIndex)
+        }
+
+        // Spinner listener
         binding.spCategoryEditProd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = items[position]
-                category = selectedItem.toString()
-                /*val selectedId = selectedItem.id
-                val selectedValue = selectedItem.value*/
-                // Haz lo que necesites con el ID y el valor seleccionados
+                category = items[position]
+                categoryList.map {
+                    if (items[position] == it.name)
+                        categoryID = it.id
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Manejar el caso en que no se ha seleccionado nada
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
@@ -359,5 +377,6 @@ class EditProductFragment : Fragment() {
             throw RuntimeException("$context must implement OnFragmentChangedListener")
         }
     }
+
 
 }

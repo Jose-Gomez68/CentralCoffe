@@ -113,10 +113,6 @@ class NewProductFragment : Fragment() {
 
         viewModel.newProdModel.observe(viewLifecycleOwner) { result ->
             // Manejar el resultado aquí
-            Log.e("SE INSERTO", "" + result.name)
-            Log.e("SE INSERTO", "" + result.category)
-            Log.e("SE INSERTO", "" + result.supplier)
-            Log.e("SE INSERTO", "" + result.createDate)
             if (result.name.isNotEmpty()){
                 binding.pgSaveProduct.visibility = View.GONE
                 binding.etProductNameNewProd.setText("")
@@ -328,13 +324,6 @@ class NewProductFragment : Fragment() {
         return true
     }
 
-    //asi convierto la imagen a ByteArray cuando este en string en la db
-    //val byteArray: ByteArray = Base64.decode(varDe la bd imagen, Base64.DEFAULT)
-    //imageView.setImageBitmap(bitmap)
-    private fun convertBase64ToBitmap(base64String: String): Bitmap? {
-        val decodedByteArray: ByteArray = Base64.decode(base64String, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.size)
-    }
 
     private fun convertImageToByteArray(uri:Uri): String? {
         var inputStream: InputStream? = null
