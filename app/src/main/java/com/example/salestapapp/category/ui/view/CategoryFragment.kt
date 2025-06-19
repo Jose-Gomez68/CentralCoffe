@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salestapapp.R
 import com.example.salestapapp.category.data.CategoryRepository
 import com.example.salestapapp.category.data.domain.DeleteCategoryByIdUseCase
 import com.example.salestapapp.category.data.domain.GetCategoryUseCase
+import com.example.salestapapp.category.data.model.CategoryModel
 import com.example.salestapapp.category.ui.CategoryListAdapter
 import com.example.salestapapp.category.ui.viewmodel.CategoryListViewModel
 import com.example.salestapapp.category.ui.viewmodel.CategoryListViewModelFactory
@@ -31,6 +33,7 @@ class CategoryFragment : Fragment() {
     private lateinit var viewModel: CategoryListViewModel
     private var listener: OnCategoryFragmentChangeListener? = null
     private lateinit var util: UtilsFunctions
+    private var fullCategoryList: List<CategoryModel> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,8 @@ class CategoryFragment : Fragment() {
         }
 
         viewModel.categoryModel.observe(viewLifecycleOwner) { result ->
+
+            fullCategoryList = result
             categoryAdap = CategoryListAdapter(result,
                 onItemRemove = { category ->
                     util.deleteDialog(
@@ -101,6 +106,25 @@ class CategoryFragment : Fragment() {
             }
 
         }
+
+        binding.searchVCategory.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = if (newText.isNullOrBlank()) {
+                    fullCategoryList
+                } else {
+                    fullCategoryList.filter {
+                        it.name.contains(newText.trim(), ignoreCase = true)
+                    }
+                }
+                categoryAdap.updateList(filteredList)
+                return true
+            }
+
+        })
 
         // Inflate the layout for this fragment
         return binding.root

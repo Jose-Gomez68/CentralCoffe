@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salestapapp.R
@@ -29,6 +30,7 @@ class SupplierFragment : Fragment() {
 
     private lateinit var viewModel: SupplierViewModel
     private lateinit var db: CyberCoffeDatabase
+    private var fullSupplier: List<SuppliersModel> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,25 @@ class SupplierFragment : Fragment() {
 
         recyclerViewInit()
 
+        binding.searchVSupplier.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = if (newText.isNullOrBlank()) {
+                    fullSupplier
+                } else {
+                    fullSupplier.filter {
+                        it.name.contains(newText.trim(), ignoreCase = true)
+                    }
+                }
+                supplierAdap.updateList(filteredList)
+                return true
+            }
+
+        })
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -72,14 +93,20 @@ class SupplierFragment : Fragment() {
 
     private fun recyclerViewInit() {
         viewModel.supplierModel.observe(viewLifecycleOwner) { result ->
-            Log.e("AQUII",  result.toString())
+            fullSupplier = result
             supplierAdap = SupplierListAdapter(
                 result,
                 onItemRemove = { supplier ->
                     deleteDialog(supplier, result)
                 },
                 onItemGoEdit = { supplier ->
-                    val editSupplier = NewSupplierFragment()
+
+                    val bundle = Bundle().apply {
+                        putInt("supplierID", supplier.id)
+                    }
+
+                    val editSupplier = EditSupplierFragment()
+                    editSupplier.arguments = bundle
                     val transaction = requireFragmentManager().beginTransaction()
                     transaction.replace(R.id.supplierContainerFragment, editSupplier)
                     transaction.addToBackStack(null)
