@@ -21,8 +21,8 @@ class SupplierViewModel(
     fun onCreate() {
         viewModelScope.launch {
             val result = getSuppliers.invoke()
-
-            if (!result.isNotEmpty()){
+            Log.e("AQUII1",  result.toString())
+            if (!result.isNullOrEmpty()){
                 _supplierModel.postValue(result)
             }
         }

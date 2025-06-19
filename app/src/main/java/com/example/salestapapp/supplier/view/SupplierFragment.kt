@@ -3,6 +3,7 @@ package com.example.salestapapp.supplier.view
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,8 @@ class SupplierFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
+        recyclerViewInit()
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -69,6 +72,7 @@ class SupplierFragment : Fragment() {
 
     private fun recyclerViewInit() {
         viewModel.supplierModel.observe(viewLifecycleOwner) { result ->
+            Log.e("AQUII",  result.toString())
             supplierAdap = SupplierListAdapter(
                 result,
                 onItemRemove = { supplier ->
