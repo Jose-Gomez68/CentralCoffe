@@ -26,6 +26,7 @@ class EditSupplierFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var db: CyberCoffeDatabase
     private var imageSupplier: String? = ""
+    private var supplierID: Int = 0
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
@@ -48,6 +49,13 @@ class EditSupplierFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        supplierID = arguments?.getInt("supplierID") ?: return
+
     }
 
     private fun initView() {
