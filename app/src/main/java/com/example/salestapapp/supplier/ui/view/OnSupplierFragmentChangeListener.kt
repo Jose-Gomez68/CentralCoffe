@@ -1,4 +1,4 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
 import androidx.fragment.app.Fragment
 

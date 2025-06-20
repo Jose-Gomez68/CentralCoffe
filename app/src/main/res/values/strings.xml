@@ -66,6 +66,9 @@
     <!--new category-->
     <string name="btn_save_new_category">Guardar</string>
 
+    <!--EDIT SUPPLIER-->
+    <string name="title_dialog_delete_supplier">Eliminar Proveedor %1$s</string>
+    <string name="message_dialog_delete_supplier">Una vez elimnado el proveedor no se podra recuperar</string>
 
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>

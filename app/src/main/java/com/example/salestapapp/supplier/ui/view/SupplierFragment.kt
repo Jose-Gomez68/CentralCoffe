@@ -1,9 +1,7 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,11 +17,13 @@ import com.example.salestapapp.supplier.data.domain.repository.SupplierRepositor
 import com.example.salestapapp.supplier.data.domain.usecase.DeleteSupplierByIDUseCase
 import com.example.salestapapp.supplier.data.domain.usecase.GetSuppliersUseCase
 import com.example.salestapapp.supplier.data.model.SuppliersModel
-import com.example.salestapapp.supplier.data.viewmodel.SupplierViewModel
-import com.example.salestapapp.supplier.data.viewmodel.SupplierViewModelFactory
+import com.example.salestapapp.supplier.ui.viewmodel.SupplierViewModel
+import com.example.salestapapp.supplier.ui.viewmodel.SupplierViewModelFactory
+import com.example.salestapapp.util.UtilsFunctions
 
 class SupplierFragment : Fragment() {
 
+    private lateinit var utilsFunctions: UtilsFunctions
     private lateinit var binding: FragmentSupplierBinding
     private var listener: OnSupplierFragmentChangeListener? = null
     private lateinit var supplierAdap: SupplierListAdapter
@@ -48,6 +48,7 @@ class SupplierFragment : Fragment() {
             GetSuppliersUseCase(repository),
             DeleteSupplierByIDUseCase(repository)
         )
+        utilsFunctions = UtilsFunctions()
         viewModel = ViewModelProvider(
             this,viewModelProviderFactory
         )[SupplierViewModel::class.java]
@@ -97,7 +98,17 @@ class SupplierFragment : Fragment() {
             supplierAdap = SupplierListAdapter(
                 result,
                 onItemRemove = { supplier ->
-                    deleteDialog(supplier, result)
+                    utilsFunctions.deleteDialog(
+                        requireContext(),
+                        getString(R.string.title_dialog_delete_supplier, supplier.name),
+                        getString(R.string.message_dialog_delete_supplier),
+                        "Eliminar",
+                        "Cancelar",
+                        onConfirm = {
+                            viewModel.removeSuppliers(supplier)
+                            supplierAdap.updateList(result)
+                        }
+                    )
                 },
                 onItemGoEdit = { supplier ->
 
@@ -127,24 +138,6 @@ class SupplierFragment : Fragment() {
                 binding.tvNoDataListSupp.visibility = View.INVISIBLE
             }
         }
-    }
-
-    private fun deleteDialog(it: SuppliersModel, result: List<SuppliersModel>){
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("")
-        builder.setMessage("")
-
-        builder.setPositiveButton("Eliminar") { dialog, which ->
-            viewModel.removeSuppliers(it)
-            //mi adaptador para borrar el listado
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Cancelar") { dialog, which ->
-            dialog.dismiss()
-            dialog.cancel()
-        }
-        builder.show()
-
     }
 
 }

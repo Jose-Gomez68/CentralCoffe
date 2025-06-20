@@ -113,6 +113,14 @@ class EditProductFragment : Fragment() {
             initSpinnerSupplier(suppliers, product.supplierID)
             initSpinnerCategory(categories, product.categoryID)
 
+            if (product.image.isNotEmpty()) {
+                val decodedBytes = Base64.decode(product.image, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                binding.ivSelectImageEditProd.setImageBitmap(bitmap)
+
+                // 🔁 IMPORTANTE: también guardas esta imagen como actual
+                imageProduct = product.image
+            }
 
         }
 
@@ -122,7 +130,7 @@ class EditProductFragment : Fragment() {
         viewModel.editProdModel.observe(viewLifecycleOwner) { result ->
             // Manejar el resultado aquí
             if (result.name.isNotEmpty()){
-                requireActivity().supportFragmentManager.popBackStack();
+                requireActivity().onBackPressed()
             }
         }
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/myBackground"
-    tools:context=".supplier.view.SupplierFragment">
+    tools:context=".supplier.ui.view.SupplierFragment">
 
     <TextView
         android:id="@+id/tvNoDataListSupp"

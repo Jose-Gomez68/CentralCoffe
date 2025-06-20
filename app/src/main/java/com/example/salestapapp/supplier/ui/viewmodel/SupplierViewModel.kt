@@ -1,4 +1,4 @@
-package com.example.salestapapp.supplier.data.viewmodel
+package com.example.salestapapp.supplier.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

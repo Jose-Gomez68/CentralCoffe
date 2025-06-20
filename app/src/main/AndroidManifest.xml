@@ -19,7 +19,7 @@
             android:name=".login.view.ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".supplier.view.SupplierContainerActivity"
+            android:name=".supplier.ui.view.SupplierContainerActivity"
             android:exported="false" />
         <activity
             android:name=".products.ui.view.ProductsContainerActivity"

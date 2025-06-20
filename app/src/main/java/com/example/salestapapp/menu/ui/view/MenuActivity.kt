@@ -9,7 +9,7 @@ import com.example.salestapapp.databinding.ActivityMainBinding
 import com.example.salestapapp.menu.data.model.MenuItemsModel
 import com.example.salestapapp.menu.data.model.adapter.MenuItemsAdapter
 import com.example.salestapapp.products.ui.view.ProductsContainerActivity
-import com.example.salestapapp.supplier.view.SupplierContainerActivity
+import com.example.salestapapp.supplier.ui.view.SupplierContainerActivity
 
 class MenuActivity : AppCompatActivity() {
 

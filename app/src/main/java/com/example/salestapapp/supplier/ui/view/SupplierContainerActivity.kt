@@ -1,4 +1,4 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -51,6 +51,8 @@ class SupplierContainerActivity : AppCompatActivity(), OnSupplierFragmentChangeL
         if (fragment is SupplierFragment){
             binding.fbAddSupplier.visibility = View.VISIBLE
         }else if (fragment is NewSupplierFragment){
+            binding.fbAddSupplier.visibility = View.GONE
+        }else if (fragment is EditSupplierFragment){
             binding.fbAddSupplier.visibility = View.GONE
         }
     }

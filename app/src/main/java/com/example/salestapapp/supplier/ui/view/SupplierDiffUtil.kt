@@ -1,4 +1,4 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.salestapapp.supplier.data.model.SuppliersModel

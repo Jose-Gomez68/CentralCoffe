@@ -19,7 +19,6 @@ import com.example.salestapapp.databinding.FragmentEditCategoryBinding
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.util.UtilsFunctions
-import java.util.Date
 
 class EditCategoryFragment : Fragment() {
 

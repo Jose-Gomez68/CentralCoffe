@@ -1,6 +1,7 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
 import android.content.ContentResolver
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -12,10 +13,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentEditSupplierBinding
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
+import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
+import com.example.salestapapp.supplier.data.domain.usecase.EditSupplierUseCase
+import com.example.salestapapp.supplier.data.domain.usecase.GetSupplierByIdUseCase
+import com.example.salestapapp.supplier.data.model.SuppliersModel
+import com.example.salestapapp.supplier.ui.viewmodel.EditSupplierViewModel
+import com.example.salestapapp.supplier.ui.viewmodel.EditSupplierViewModelFactory
+import com.example.salestapapp.util.UtilsFunctions
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
@@ -25,8 +34,12 @@ class EditSupplierFragment : Fragment() {
     private var _binding: FragmentEditSupplierBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: CyberCoffeDatabase
+    private lateinit var viewModel: EditSupplierViewModel
+    private var listener: OnSupplierFragmentChangeListener? = null
+    private lateinit var utilsFunctions: UtilsFunctions
     private var imageSupplier: String? = ""
     private var supplierID: Int = 0
+    private var createdDate: String = ""
 
     val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
@@ -44,8 +57,18 @@ class EditSupplierFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEditSupplierBinding.inflate(inflater, container, false)
-
         initView()
+
+        val editRepository: SupplierRepository = SupplierRepository(db)
+        val viewModelProviderFactory = EditSupplierViewModelFactory(
+            EditSupplierUseCase(editRepository),
+            GetSupplierByIdUseCase(editRepository)
+        )
+
+        viewModel = ViewModelProvider(
+            this,
+            viewModelProviderFactory
+        )[EditSupplierViewModel::class.java]
 
         // Inflate the layout for this fragment
         return binding.root
@@ -55,6 +78,31 @@ class EditSupplierFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         supplierID = arguments?.getInt("supplierID") ?: return
+        viewModel.getSupplier(supplierID)
+        utilsFunctions = UtilsFunctions()
+
+        viewModel.supplierModel.observe(viewLifecycleOwner) { result ->
+            createdDate = result.createDate
+            binding.etNameSupplierEditSup.setText(result.name)
+            binding.etAddresEditSup.setText(result.address)
+            binding.etTelEditSup.setText(result.phone)
+
+            if (result.imageSupplier.isNotEmpty()) {
+                val decodedBytes = Base64.decode(result.imageSupplier, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+                binding.ivSelectImageEditSup.setImageBitmap(bitmap)
+
+                // 🔁 IMPORTANTE: también guardas esta imagen como actual
+                imageSupplier = result.imageSupplier
+            }
+
+        }
+
+        viewModel.editSupplierModel.observe(viewLifecycleOwner) { result ->
+            if (result.name.isNotEmpty()){
+                requireActivity().onBackPressed()
+            }
+        }
 
     }
 
@@ -69,12 +117,23 @@ class EditSupplierFragment : Fragment() {
         }
 
         binding.btnReturnEditSupplier.setOnClickListener {
-            requireActivity().onBackPressed()
+            utilsFunctions.showConfirmDialog(requireActivity(),
+                getString(R.string.title_message_return_view_util),
+                getString(R.string.message_return_view_util),
+                getString(R.string.exit_message_return_view_util),
+                getString(R.string.cancel_message_return_view_util),
+                onConfirm = {
+                    requireActivity().onBackPressed()
+                },
+                onCancel = {
+
+                }
+            )
         }
 
         binding.btnRegisterEditSupp.setOnClickListener {
             if (validationForm()){
-
+                editSupplier()
             }
         }
     }
@@ -97,8 +156,8 @@ class EditSupplierFragment : Fragment() {
         }else if (binding.etTelEditSup.text.toString().isEmpty()){
             binding.etTelEditSup.error = etEmpty
             return false
-        }else if (!regex.matches(binding.etAddresEditSup.text.toString())){
-            binding.etAddresEditSup.error = "El numero de telefono debe de ser 10 digitos"
+        }else if (!regex.matches(binding.etTelEditSup.text.toString())){
+            binding.etTelEditSup.error = "El numero de telefono debe de ser 10 digitos"
             return false
         }
 
@@ -108,6 +167,20 @@ class EditSupplierFragment : Fragment() {
 
         return true
 
+    }
+
+    private fun editSupplier() {
+        val supplier = SuppliersModel(
+            supplierID,
+            binding.etNameSupplierEditSup.text.toString(),
+            binding.etTelEditSup.text.toString(),
+            binding.etAddresEditSup.text.toString(),
+            createdDate,
+            imageSupplier ?: ""
+        )
+
+        //binding.pgresbar
+        viewModel.onCreate(supplier)
     }
 
     private fun convertImageToByteArray(uri: Uri): String? {
@@ -134,6 +207,16 @@ class EditSupplierFragment : Fragment() {
             }
         }
         return null
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnSupplierFragmentChangeListener) {
+            listener = context
+            listener?.onSupplierFragmentChangeListener(this)
+        } else {
+            throw RuntimeException("$context must implement OnFragmentChangedListener")
+        }
     }
 
 }

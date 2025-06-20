@@ -1,4 +1,4 @@
-package com.example.salestapapp.supplier.view
+package com.example.salestapapp.supplier.ui.view
 
 import android.content.ContentResolver
 import android.content.Context
@@ -24,8 +24,8 @@ import com.example.salestapapp.supplier.data.domain.repository.SupplierRepositor
 import com.example.salestapapp.supplier.data.domain.usecase.SaveSupplierUseCase
 import com.example.salestapapp.supplier.data.model.SupplierBundleModel
 import com.example.salestapapp.supplier.data.model.SuppliersModel
-import com.example.salestapapp.supplier.data.viewmodel.NewSupplierViewModel
-import com.example.salestapapp.supplier.data.viewmodel.NewSupplierViewModelFactory
+import com.example.salestapapp.supplier.ui.viewmodel.NewSupplierViewModel
+import com.example.salestapapp.supplier.ui.viewmodel.NewSupplierViewModelFactory
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.Date
