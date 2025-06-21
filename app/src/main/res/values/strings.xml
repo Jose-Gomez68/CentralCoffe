@@ -66,9 +66,16 @@
     <!--new category-->
     <string name="btn_save_new_category">Guardar</string>
 
-    <!--EDIT SUPPLIER-->
+    <!--edit supplier-->
     <string name="title_dialog_delete_supplier">Eliminar Proveedor %1$s</string>
     <string name="message_dialog_delete_supplier">Una vez elimnado el proveedor no se podra recuperar</string>
+
+    <!--USERS-->
+    <string name="no_data_list_user">No hay Trabajadores</string>
+    <string name="search_by_name_user">Buscar por nombre</string>
+    <string name="title_user">Lista Trabajadores</string>
+    <string name="title_new_user">Nuevo Trabajador</string>
+    <string name="hint_new_name_user">Nombre del Trabajador</string>
 
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>
