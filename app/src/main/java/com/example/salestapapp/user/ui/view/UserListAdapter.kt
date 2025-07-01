@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.salestapapp.R
 import com.example.salestapapp.login.data.model.UsersModel
@@ -15,7 +18,27 @@ import com.example.salestapapp.login.data.model.UsersModel
 class UserListAdapter(
     private var list: List<UsersModel>,
     val onItemRemove:(UsersModel) -> Unit, val onItemGoEdit: (UsersModel) -> Unit
-) {
+): RecyclerView.Adapter<UserVH>() {
+
+    private lateinit var context: Context
+
+    fun updateList(newList: List<UsersModel>) {
+        val userDiff = UserDiffUtil(list, newList)
+        val result = DiffUtil.calculateDiff(userDiff)
+        list = newList
+        result.dispatchUpdatesTo(this)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserVH {
+        context = parent.context
+        return UserVH(LayoutInflater.from(parent.context).inflate(R.layout.user_list_cardview, parent, false))
+    }
+
+    override fun getItemCount(): Int = list.size
+
+    override fun onBindViewHolder(holder: UserVH, position: Int) {
+        holder.render(list[position], context, onItemRemove, onItemGoEdit)
+    }
 }
 
 class UserVH(view: View): RecyclerView.ViewHolder(view){

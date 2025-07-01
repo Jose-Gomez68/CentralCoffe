@@ -1,5 +1,6 @@
 package com.example.salestapapp.login.data.model
 
+import com.example.salestapapp.login.data.database.entities.UsersEntity
 import com.google.gson.annotations.SerializedName
 
 data class UsersModel(
@@ -15,4 +16,13 @@ data class UsersModel(
     val phone: String,
     @SerializedName("CreateDate")
     val createDate: String,
+)
+
+fun UsersEntity.toDomain() = UsersModel(
+    id = id,
+    name = name,
+    lastName = lastName,
+    userName = userName,
+    phone = phone,
+    createDate = createDate
 )

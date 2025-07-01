@@ -77,6 +77,9 @@
     <string name="title_new_user">Nuevo Trabajador</string>
     <string name="hint_new_name_user">Nombre del Trabajador</string>
 
+    <string name="title_dialog_delete_user">Eliminar Usuario %1$s</string>
+    <string name="message_dialog_delete_user">Una vez elimnado el usuario no se podra recuperar</string>
+
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>
     <string name="message_return_view_util">Una vez saliendo no podras recurar la informacion que escribiste.!!</string>
