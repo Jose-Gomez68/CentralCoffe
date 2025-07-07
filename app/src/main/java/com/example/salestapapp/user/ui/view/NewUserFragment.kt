@@ -11,17 +11,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.lifecycle.ViewModelProvider
-import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentNewUserBinding
 import com.example.salestapapp.login.data.UserRepository
 import com.example.salestapapp.login.data.model.UsersModel
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
-import com.example.salestapapp.supplier.data.domain.repository.SupplierRepository
-import com.example.salestapapp.supplier.ui.view.OnSupplierFragmentChangeListener
 import com.example.salestapapp.user.data.domain.usecase.SaveUserUseCase
 import com.example.salestapapp.user.ui.viewmodel.NewUserViewModel
 import com.example.salestapapp.user.ui.viewmodel.NewUserViewModelFactory
