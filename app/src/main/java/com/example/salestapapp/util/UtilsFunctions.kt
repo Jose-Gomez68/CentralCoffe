@@ -3,8 +3,6 @@ package com.example.salestapapp.util
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
-import com.example.salestapapp.R
-import com.example.salestapapp.products.data.model.ProductModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
