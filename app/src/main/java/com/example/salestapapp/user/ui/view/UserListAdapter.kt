@@ -61,7 +61,7 @@ class UserVH(view: View): RecyclerView.ViewHolder(view){
             ivImage.setImageResource(R.drawable.gallery)
         }*/
 
-        tvName.text = userModel.name + userModel.lastName
+        tvName.text = "${userModel.name} ${userModel.lastName}"
         tvDated.text = userModel.createDate
         tvEmail.text = userModel.userName
         btnEdit.setOnClickListener {

@@ -69,7 +69,8 @@ class UserFragment : Fragment() {
                     fullUser
                 } else {
                     fullUser.filter {
-                        it.name.contains(newText.trim(), ignoreCase = true)
+                        val fullName = "${it.name} ${it.lastName}".trim()
+                        fullName.contains(newText.trim(), ignoreCase = true)
                     }
                 }
                 userAdapter.updateList(filteredList)
@@ -78,7 +79,7 @@ class UserFragment : Fragment() {
 
         })
 
-        return inflater.inflate(R.layout.fragment_user, container, false)
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -134,7 +135,7 @@ class UserFragment : Fragment() {
                 binding.tvNoDataListUser.visibility = View.VISIBLE
             }else{
                 binding.rvUserFrag.visibility = View.VISIBLE
-                binding.tvNoDataListUser.visibility = View.INVISIBLE
+                binding.tvNoDataListUser.visibility = View.GONE
             }
         }
     }
