@@ -113,6 +113,7 @@ class CategoryFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (!::categoryAdap.isInitialized) return false
                 val filteredList = if (newText.isNullOrBlank()) {
                     fullCategoryList
                 } else {

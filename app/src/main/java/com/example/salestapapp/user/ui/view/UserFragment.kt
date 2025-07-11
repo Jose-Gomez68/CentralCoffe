@@ -65,6 +65,7 @@ class UserFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (!::userAdapter.isInitialized) return false
                 val filteredList = if (newText.isNullOrBlank()) {
                     fullUser
                 } else {
