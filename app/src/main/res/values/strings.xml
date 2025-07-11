@@ -82,6 +82,8 @@
 
     <string name="title_dialog_delete_user">Eliminar Usuario %1$s</string>
     <string name="message_dialog_delete_user">Una vez elimnado el usuario no se podra recuperar</string>
+    <string name="create_date_user_title">Fecha de Creacion</string>
+    <string name="update_date_user_title">Modificacion</string>
 
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>
