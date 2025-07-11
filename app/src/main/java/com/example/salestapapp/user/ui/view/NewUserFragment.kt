@@ -169,6 +169,7 @@ class NewUserFragment : Fragment() {
                 binding.etApNewUser.text.toString(),
                 binding.etUserNameNewUser.text.toString(),
                 binding.etPhoneNewUser.text.toString(),
+                utilsFunctions.getCurrentFormattedDate(),
                 utilsFunctions.getCurrentFormattedDate()
             )
             viewModel.onCreate(user)
