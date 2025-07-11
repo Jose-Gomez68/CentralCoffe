@@ -16,6 +16,8 @@ data class UsersModel(
     val phone: String,
     @SerializedName("CreateDate")
     val createDate: String,
+    @SerializedName("UpdateDate")
+    val updateDate: String
 )
 
 fun UsersEntity.toDomain() = UsersModel(
@@ -24,5 +26,6 @@ fun UsersEntity.toDomain() = UsersModel(
     lastName = lastName,
     userName = userName,
     phone = phone,
-    createDate = createDate
+    createDate = createDate,
+    updateDate = updateDate
 )

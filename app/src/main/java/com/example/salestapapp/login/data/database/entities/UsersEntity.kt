@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.salestapapp.login.data.model.UsersModel
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "Users")
 data class UsersEntity(
@@ -20,6 +21,8 @@ data class UsersEntity(
     val phone: String,
     @ColumnInfo("CreateDate")
     val createDate: String,
+    @SerializedName("UpdateDate")
+    val updateDate: String
 )
 
 fun UsersModel.toDatabase() = UsersEntity(
@@ -28,5 +31,6 @@ fun UsersModel.toDatabase() = UsersEntity(
     lastName = lastName,
     userName = userName,
     phone = phone,
-    createDate = createDate
+    createDate = createDate,
+    updateDate = updateDate
 )

@@ -47,6 +47,7 @@ class UserVH(view: View): RecyclerView.ViewHolder(view){
     private val tvName = view.findViewById<TextView>(R.id.tvNameUserCardiView)
     private val tvDated = view.findViewById<TextView>(R.id.tvDatedUserCardiView)
     private val tvEmail = view.findViewById<TextView>(R.id.tvEmailUserCardView)
+    private val tvUpdateDateUser = view.findViewById<TextView>(R.id.tvUpdDatedUserCardiView)
     private val btnEdit = view.findViewById<Button>(R.id.btnEditUserCardView)
     private val btnDelete = view.findViewById<Button>(R.id.btnDeleteUserCardView)
 
@@ -64,6 +65,7 @@ class UserVH(view: View): RecyclerView.ViewHolder(view){
         tvName.text = "${userModel.name} ${userModel.lastName}"
         tvDated.text = userModel.createDate
         tvEmail.text = userModel.userName
+        tvUpdateDateUser.text = userModel.updateDate
         btnEdit.setOnClickListener {
             onItemGoEdit(userModel)
         }
