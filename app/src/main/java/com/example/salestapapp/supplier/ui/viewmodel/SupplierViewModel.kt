@@ -33,6 +33,7 @@ class SupplierViewModel(
             deleteSupplier.invoke(supplier)
             val currentList = _supplierModel.value.orEmpty().toMutableList()
             currentList.remove(supplier)
+            _supplierModel.postValue(currentList)
             Log.e("Eliminando proovedor", "${currentList.size}")
         }
     }

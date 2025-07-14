@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.salestapapp.products.data.domain.DeleteProductByIdUseCase
 import com.example.salestapapp.products.data.domain.GetProductsUseCase
-import com.example.salestapapp.products.data.domain.InsertProductUseCase
 import com.example.salestapapp.products.data.model.ProductModel
 import kotlinx.coroutines.launch
 

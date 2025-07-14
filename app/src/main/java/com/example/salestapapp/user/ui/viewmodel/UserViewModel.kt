@@ -32,8 +32,9 @@ class UserViewModel(
         viewModelScope.launch {
             deleteUser.invoke(user)
             val currentList = _usersModel.value.orEmpty().toMutableList()
-            currentList.remove(user)
-            Log.e("Eliminando usuario", "${currentList.size}")
+            //currentList.remove(user)
+            currentList.removeAll { it.id == user.id }
+            _usersModel.postValue(currentList)
         }
     }
 
