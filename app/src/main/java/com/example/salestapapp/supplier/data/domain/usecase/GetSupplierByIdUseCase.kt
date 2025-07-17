@@ -15,7 +15,7 @@ class GetSupplierByIdUseCase(
             val result = repository.getSupplierByID(supplierID)
             result.toDomain()
         }catch (e: SQLiteException) {
-            Log.e("GetCategoryByIdUseCase", "Error de base de datos: ${e.message}", e)
+            Log.e("GetSupplierByIdUseCase", "Error de base de datos: ${e.message}", e)
             e.printStackTrace()
             SuppliersModel(
                 0,

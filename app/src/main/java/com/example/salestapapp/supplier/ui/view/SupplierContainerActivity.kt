@@ -44,7 +44,9 @@ class SupplierContainerActivity : AppCompatActivity(), OnSupplierFragmentChangeL
             binding.fbAddSupplier.visibility = View.VISIBLE
         }else if (currentFragment is NewSupplierFragment){
             binding.fbAddSupplier.visibility = View.GONE
-        }
+        }else if (currentFragment is EditSupplierFragment){
+        binding.fbAddSupplier.visibility = View.GONE
+    }
     }
 
     override fun onSupplierFragmentChangeListener(fragment: Fragment) {

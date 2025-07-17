@@ -46,14 +46,14 @@ class UserContainerActivity : AppCompatActivity(), OnUserFragmentChangeListener 
 
     override fun onBackPressed() {
         super.onBackPressed()
-        /*val currentFragment = supportFragmentManager.findFragmentById(R.id.userContainerFragment)
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.userContainerFragment)
         if (currentFragment is UserFragment){
             binding.fbAddUser.visibility = View.VISIBLE
         }else if (currentFragment is NewUserFragment){
             binding.fbAddUser.visibility = View.GONE
         }else if (currentFragment is EditUserFragment){
             binding.fbAddUser.visibility = View.GONE
-        }*/
+        }
     }
 
     override fun onUserFragmentChangeListener(fragment: Fragment) {

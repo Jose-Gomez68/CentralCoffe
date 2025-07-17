@@ -75,6 +75,7 @@
     <string name="search_by_name_user">Buscar por nombre</string>
     <string name="title_user">Lista Trabajadores</string>
     <string name="title_new_user">Nuevo Trabajador</string>
+    <string name="title_edit_user">Editar Trabajador</string>
     <string name="hint_new_name_user">Nombre del Trabajador</string>
     <string name="hint_new_name_user2">Nombre</string>
     <string name="hint_new_lastname_user">Apellidos</string>
