@@ -8,6 +8,8 @@ import com.example.salestapapp.login.data.database.dao.UsersDao
 import com.example.salestapapp.login.data.database.entities.UsersEntity
 import com.example.salestapapp.products.data.database.dao.ProductsDao
 import com.example.salestapapp.products.data.database.entities.ProductsEntity
+import com.example.salestapapp.sales.data.database.dao.SalesDao
+import com.example.salestapapp.sales.data.database.dao.SalesDetailDao
 import com.example.salestapapp.supplier.data.database.dao.SuppliersDao
 import com.example.salestapapp.supplier.data.database.entities.SupplierEntity
 
@@ -24,5 +26,9 @@ abstract class CyberCoffeDatabase : RoomDatabase() {
     abstract fun usersDao(): UsersDao
 
     abstract fun categoryDao(): CategoryDao
+
+    abstract fun salesDao(): SalesDao
+
+    abstract fun salesDetailDao(): SalesDetailDao
 
 }
