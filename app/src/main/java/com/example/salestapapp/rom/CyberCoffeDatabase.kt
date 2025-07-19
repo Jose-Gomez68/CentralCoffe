@@ -10,11 +10,13 @@ import com.example.salestapapp.products.data.database.dao.ProductsDao
 import com.example.salestapapp.products.data.database.entities.ProductsEntity
 import com.example.salestapapp.sales.data.database.dao.SalesDao
 import com.example.salestapapp.sales.data.database.dao.SalesDetailDao
+import com.example.salestapapp.sales.data.database.entities.SalesDetailEntity
+import com.example.salestapapp.sales.data.database.entities.SalesEntity
 import com.example.salestapapp.supplier.data.database.dao.SuppliersDao
 import com.example.salestapapp.supplier.data.database.entities.SupplierEntity
 
 @Database(entities = [ProductsEntity::class, SupplierEntity::class, UsersEntity::class,
-                     CategoryEntity::class], version = 1)//recuerda subir la version con cada tabla nueva que agreges ó columnas nuevas
+                     CategoryEntity::class, SalesEntity::class, SalesDetailEntity::class], version = 1)//recuerda subir la version con cada tabla nueva que agreges ó columnas nuevas
 abstract class CyberCoffeDatabase : RoomDatabase() {
 
     abstract fun productsDao(): ProductsDao
