@@ -9,6 +9,7 @@ import com.example.salestapapp.databinding.ActivityMainBinding
 import com.example.salestapapp.menu.data.model.MenuItemsModel
 import com.example.salestapapp.menu.data.model.adapter.MenuItemsAdapter
 import com.example.salestapapp.products.ui.view.ProductsContainerActivity
+import com.example.salestapapp.sales.ui.view.SaleContainerActivity
 import com.example.salestapapp.supplier.ui.view.SupplierContainerActivity
 import com.example.salestapapp.user.ui.view.UserContainerActivity
 
@@ -27,7 +28,7 @@ class MenuActivity : AppCompatActivity() {
             MenuItemsModel(1,"Trabajadores", R.drawable.worker,  UserContainerActivity::class.java),
             MenuItemsModel(2,"Productos", R.drawable.products,  ProductsContainerActivity::class.java),
             MenuItemsModel(3,"Proovedores", R.drawable.suppliers,  SupplierContainerActivity::class.java),
-            MenuItemsModel(4,"Ventas", R.drawable.gallery,  SupplierContainerActivity::class.java),
+            MenuItemsModel(4,"Ventas", R.drawable.gallery,  SaleContainerActivity::class.java),
             MenuItemsModel(5,"Categorias", R.drawable.gallery,  CategoryContainerActivity::class.java)
         )
 
