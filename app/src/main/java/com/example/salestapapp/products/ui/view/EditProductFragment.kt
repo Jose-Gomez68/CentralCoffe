@@ -40,6 +40,9 @@ import java.io.InputStream
 
 class EditProductFragment : Fragment() {
 
+    /*VERIFICAR POR POR QUE CUANDO SE CREA SION SELECCIONAR PROVEEDOR Y CATEOGRIA
+    * SE ASIGNAN AQUI SIN CON SELECCIONA UN ITEM */
+
     private lateinit var _binding: FragmentEditProductBinding
     private val binding get() = _binding!!
     private lateinit var db: CyberCoffeDatabase
@@ -139,7 +142,7 @@ class EditProductFragment : Fragment() {
     private fun initSpinnerSupplier(suppliers: List<SuppliersModel>, prodSupplier: Int) {
         // Llenar spinner con categorías
         val supplierList = suppliers // esta es la lista de CategoryModel
-        val items = mutableListOf("Selecciona una Proovedor")
+        val items = mutableListOf("Selecciona un Proveedor")
         items.addAll(supplierList.map { it.name })
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -148,7 +151,7 @@ class EditProductFragment : Fragment() {
 
         // Seleccionar categoría del producto
         val supplierIndex = supplierList.indexOfFirst { it.id == prodSupplier }
-        val adjustedIndex = if (supplierIndex >= 0) supplierIndex + 1 else -1 // +1 por "Selecciona una Categoria"
+        val adjustedIndex = if (supplierIndex >= 0) supplierIndex + 1 else -1 // +1 por "Selecciona un Proveedor"
         if (adjustedIndex >= 0) {
             binding.spSupplierEditProd.setSelection(adjustedIndex)
         }
@@ -157,7 +160,7 @@ class EditProductFragment : Fragment() {
         binding.spSupplierEditProd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 supplier = items[position]
-                if (supplier != "Selecciona un Proovedor"){
+                if (supplier != "Selecciona un Proveedor"){
                     binding.spCategoryEditProd.visibility = View.VISIBLE
                 }else{
                     binding.spCategoryEditProd.visibility = View.GONE
@@ -323,7 +326,7 @@ class EditProductFragment : Fragment() {
         }else if (binding.etProductNameEditProd.text.toString().length <= 2 ){
             binding.etProductNameEditProd.error = "El nombre no puede ser 2 caracteres"
             return false
-        }else if (supplier == "Selecciona un Proovedor"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+        }else if (supplier == "Selecciona un Proveedor"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spEditSupplierError.visibility = View.VISIBLE
             return false
         }else if (category == "Selecciona una Categoria"){//DESPUES DE ESTRA VA EL DE LA IMAGEN

@@ -42,6 +42,8 @@ import java.util.Locale
 
 class NewProductFragment : Fragment() {
 
+    /*VERIFICAR POR QUE DEJA REGISTRAR SIN SELECCIONAR LOS SPINNER DE CATEGORIA Y PROVEEDOR*/
+
     private var _binding: FragmentNewProductBinding? = null
 
     // Acceso seguro al enlace de vista a través de esta propiedad
@@ -234,7 +236,7 @@ class NewProductFragment : Fragment() {
     private fun initSpinnerSupplier(suppliers: List<SuppliersModel>) {
         // Llenar spinner con categorías
         val supplierList = suppliers // esta es la lista de CategoryModel
-        val items = mutableListOf("Selecciona una Proovedor")
+        val items = mutableListOf("Selecciona un Proveedor")
         items.addAll(supplierList.map { it.name })
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
@@ -245,7 +247,7 @@ class NewProductFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = items[position]
                 supplier = selectedItem.toString()
-                if (supplier != "Selecciona una Proovedor"){
+                if (supplier != "Selecciona un Proveedor"){
                     binding.spCategoryNewProd.visibility = View.VISIBLE
                 }else{
                     binding.spCategoryNewProd.visibility = View.GONE
@@ -322,7 +324,7 @@ class NewProductFragment : Fragment() {
         }else if (binding.etProductNameNewProd.text.toString().length <= 2 ){
             binding.etProductNameNewProd.error = "El nombre no puede ser 2 caracteres"
             return false
-        }else if (supplier == "Selecciona un Proovedor"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+        }else if (supplier == "Selecciona un Proveedor"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
             binding.spSupplierError.visibility = View.VISIBLE
             return false
         }else if (category == "Selecciona una Categoria"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
