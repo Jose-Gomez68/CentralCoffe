@@ -18,13 +18,13 @@ data class SalesDetailsModel(
     val productName: String, // Opcional, por si quieres mantener una copia del nombre
 
     @SerializedName("Quantity")
-    val quantity: Int, //cantidad del producto
+    var quantity: Int, //cantidad del producto
 
     @SerializedName("UnitPrice")
     val unitPrice: Double, // Precio unitario del producto al momento de la venta
 
     @SerializedName("TotalPrice")
-    val totalPrice: Double // unitPrice * quantity
+    var totalPrice: Double // unitPrice * quantity
 )
 
 fun SalesDetailEntity.toDomain() = SalesDetailsModel(

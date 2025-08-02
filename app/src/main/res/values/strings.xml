@@ -86,6 +86,9 @@
     <string name="create_date_user_title">Fecha de Creacion</string>
     <string name="update_date_user_title">Modificacion</string>
 
+    <!--SALES VIEW-->
+    <string name="title_new_sales">Nueva Venta</string>
+
     <!--UTILS-->
     <string name="title_message_return_view_util">Estas Seguro de Salir?</string>
     <string name="message_return_view_util">Una vez saliendo no podras recurar la informacion que escribiste.!!</string>

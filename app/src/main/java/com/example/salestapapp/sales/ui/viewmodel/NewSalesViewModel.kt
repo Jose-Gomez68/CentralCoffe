@@ -1,5 +1,6 @@
 package com.example.salestapapp.sales.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,6 +33,7 @@ class NewSalesViewModel(
     fun getALlProducts() {
         viewModelScope.launch {
             val products = getAllProductsUseCase.invoke()
+            Log.e("AQUI2", "AAAA"+products)
             _productModel.postValue(products)
         }
     }

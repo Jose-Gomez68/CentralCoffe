@@ -29,6 +29,12 @@ class ProductListSalesAdapter(
         val result = DiffUtil.calculateDiff(salesDetailDiff)
         list = newList
         result.dispatchUpdatesTo(this)
+
+
+    }
+
+    fun notifyAdapter() {
+        notifyDataSetChanged()
     }
 
     fun getItemAt(position: Int): SalesDetailsModel = list[position]

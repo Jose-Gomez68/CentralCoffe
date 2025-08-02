@@ -72,7 +72,9 @@ class SupplierFragment : Fragment() {
                         it.name.contains(newText.trim(), ignoreCase = true)
                     }
                 }
-                supplierAdap.updateList(filteredList)
+                if (::supplierAdap.isInitialized) {
+                    supplierAdap.updateList(filteredList)
+                }
                 return true
             }
 
