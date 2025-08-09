@@ -3,6 +3,10 @@ package com.example.salestapapp.util
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
+import com.dantsu.escposprinter.EscPosPrinter
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
+import com.dantsu.escposprinter.connection.tcp.TcpConnection
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -74,5 +78,59 @@ class UtilsFunctions {
             null
         }
     }
+
+    fun generatePosTicket(
+        orderId: String,
+        items: List<Pair<String, Double>>,
+        total: Double
+    ): String {
+        val sb = StringBuilder()
+        sb.appendLine("[C]<b>*** TIENDA XYZ ***</b>")
+        sb.appendLine("[C]RFC: XXX-XXXX-XXX")
+        sb.appendLine("[C]Fecha: ${java.time.LocalDateTime.now()}")
+        sb.appendLine("[C]-------------------------------")
+        items.forEach { (name, price) ->
+            sb.appendLine("[L]$name[R]$${"%.2f".format(price)}")
+        }
+        sb.appendLine("[C]-------------------------------")
+        sb.appendLine("[R]<b>TOTAL: $${"%.2f".format(total)}</b>")
+        sb.appendLine("[C]Gracias por su compra")
+        sb.appendLine("\n\n\n") // Espacios para corte
+        return sb.toString()
+    }
+
+
+    fun printViaBluetooth(context: Context, ticket: String) {
+        Thread {
+            try {
+                val printer = EscPosPrinter(
+                    BluetoothPrintersConnections.selectFirstPaired(),
+                    203,
+                    48f,
+                    32
+                )
+                printer.printFormattedText(ticket)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
+    }
+
+    fun printViaTcpIp(context: Context, ticket: String, ip: String, port: Int = 9100, timeout: Int = 5) {
+        Thread {
+            try {
+                val printer = EscPosPrinter(
+                    TcpConnection(ip, port, timeout),
+                    203,   // Resolución en DPI
+                    48f,   // Ancho en mm
+                    32     // Caracteres por línea
+                )
+                printer.printFormattedText(ticket)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
+    }
+
 
 }

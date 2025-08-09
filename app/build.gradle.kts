@@ -60,6 +60,8 @@ dependencies {
 
     //gson convert
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //print pos
+    implementation ("com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.3.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

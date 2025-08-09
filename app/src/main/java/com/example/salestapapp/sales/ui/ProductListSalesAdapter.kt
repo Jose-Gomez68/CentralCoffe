@@ -59,6 +59,7 @@ class SalesDetailVH(view: View): RecyclerView.ViewHolder(view){
     private val nameProduct = view.findViewById<TextView>(R.id.tvNameProductSalesList)
     private val quantity = view.findViewById<TextView>(R.id.tvQuantityProductSalesList)
     private val idProduct = view.findViewById<TextView>(R.id.tvIdProductSalesList)
+    private val unitPrice = view.findViewById<TextView>(R.id.tvUnitPriceSalesList)
     private val btnAdd = view.findViewById<ImageButton>(R.id.btnAddProductSalesList)
     private val etQuantity = view.findViewById<EditText>(R.id.etQuantityProductSalesList)
     private val btnMinusProduct = view.findViewById<ImageButton>(R.id.btnMinusProductSalesList)
@@ -74,6 +75,7 @@ class SalesDetailVH(view: View): RecyclerView.ViewHolder(view){
         nameProduct.text = salesDetailsModel.productName
         quantity.text = "Cantidad: ${salesDetailsModel.quantity}"
         idProduct.text = "No Producto: ${salesDetailsModel.productId}"
+        unitPrice.text = "Precio Unitario: $${salesDetailsModel.unitPrice}"
         currentTextWatcher?.let { etQuantity.removeTextChangedListener(it) }
         etQuantity.setText(salesDetailsModel.quantity.toString())
         etQuantity.setSelection(etQuantity.text.length)
@@ -82,7 +84,7 @@ class SalesDetailVH(view: View): RecyclerView.ViewHolder(view){
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val newQty = s.toString().toIntOrNull() ?: 0
-                if (newQty >= 0 && newQty != salesDetailsModel.quantity) {
+                if (newQty >= 0 &&newQty != salesDetailsModel.quantity) {
                     onQuantityChanged(salesDetailsModel, newQty)
                 }
             }
@@ -95,6 +97,11 @@ class SalesDetailVH(view: View): RecyclerView.ViewHolder(view){
             onMinusQuantity(salesDetailsModel)
         }
 
+    }
+
+    fun editQuantityEt(quantity: Int) : Int {
+        etQuantity.setText(quantity.toString())
+        return quantity
     }
 
 }

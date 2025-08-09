@@ -68,21 +68,35 @@ class SalesRepository(private var db: CyberCoffeDatabase) {
     suspend fun insertSaleAndDetailsTransaction(
         sale: SalesEntity,
         details: List<SalesDetailEntity>
-    ): Boolean {
+    ): Int?  {
         return try {
+            var saleIdResult: Int? = null
             db.withTransaction {
                 val saleId = db.salesDao().insertOne(sale)
                 if (saleId <= 0) throw Exception("Error al insertar venta")
 
-                val insertedIds = db.salesDetailDao().insertAllDetails(details)
+                val detailsWithSaleId = details.map {
+                    SalesDetailEntity(
+                        id = it.id, // normalmente es 0 porque es autogenerado
+                        saleId = saleId.toInt(), // Asignar el ID de la venta insertada
+                        productId = it.productId,
+                        productName = it.productName,
+                        quantity = it.quantity,
+                        unitPrice = it.unitPrice,
+                        totalPrice = it.totalPrice
+                    )
+                }
+
+                val insertedIds = db.salesDetailDao().insertAllDetails(detailsWithSaleId)
                 if (insertedIds.size != details.size) {
                     throw Exception("Error al insertar algunos detalles")
                 }
+                saleIdResult = saleId.toInt()
             }
-            true // todo correcto
+            saleIdResult // todo correcto
         } catch (e: Exception) {
             e.printStackTrace()
-            false // hubo rollback
+            null // hubo rollback
         }
     }
 

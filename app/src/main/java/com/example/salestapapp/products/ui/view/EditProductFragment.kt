@@ -121,7 +121,6 @@ class EditProductFragment : Fragment() {
                 val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
                 binding.ivSelectImageEditProd.setImageBitmap(bitmap)
 
-                // 🔁 IMPORTANTE: también guardas esta imagen como actual
                 imageProduct = product.image
             }
 

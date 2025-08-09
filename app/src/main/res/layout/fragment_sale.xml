@@ -58,17 +58,19 @@
             </LinearLayout>
 
             <!-- Sección de productos -->
-            <TextView
-                android:text="Productos"
-                android:textSize="18sp"
-                android:textColor="#121417"
-                android:textStyle="bold"
-                android:paddingTop="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
 
             <!-- Puedes repetir el bloque de producto cambiando los textos -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingStart="10dp"
+                android:text="Productos"
+                android:textColor="#121417"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSalesProductList"
@@ -109,7 +111,7 @@
 
                     <TextView
                         android:id="@+id/subTotalSalesFrag"
-                        android:text="$100.00"
+                        android:text="$0.00"
                         android:textColor="#121417"
                         android:textSize="14sp"
                         android:gravity="end"
@@ -133,7 +135,7 @@
 
                     <TextView
                         android:id="@+id/totalSalesFrag"
-                        android:text="$100.00"
+                        android:text="$0.00"
                         android:textColor="#121417"
                         android:textSize="14sp"
                         android:gravity="end"
@@ -145,6 +147,7 @@
 
             <!-- Botón de Finalizar compra -->
             <Button
+                android:id="@+id/btnSaveSale"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"

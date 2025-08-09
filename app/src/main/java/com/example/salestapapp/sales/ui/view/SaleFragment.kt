@@ -1,5 +1,8 @@
 package com.example.salestapapp.sales.ui.view
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -11,6 +14,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -25,8 +30,10 @@ import com.example.salestapapp.products.data.model.ProductModel
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.sales.data.SalesRepository
+import com.example.salestapapp.sales.data.domain.GetSalesWithDetailsUseCase
 import com.example.salestapapp.sales.data.domain.InsertSalesUseCase
 import com.example.salestapapp.sales.data.model.SalesDetailsModel
+import com.example.salestapapp.sales.data.model.SalesModel
 import com.example.salestapapp.sales.ui.ProductListSalesAdapter
 import com.example.salestapapp.sales.ui.viewmodel.NewSalesViewModel
 import com.example.salestapapp.sales.ui.viewmodel.NewSalesViewModelFactory
@@ -58,6 +65,7 @@ class SaleFragment : Fragment() {
         val repositoryProduct = ProductsRepository(db)
         val viewModelProviderFactory = NewSalesViewModelFactory(
             InsertSalesUseCase(repository),
+            GetSalesWithDetailsUseCase(repository),
             GetProductsUseCase(repositoryProduct)
         )
 
@@ -68,25 +76,23 @@ class SaleFragment : Fragment() {
         viewModel.getALlProducts()
 
         binding.btnReturnSalesFrag.setOnClickListener {
-            requireActivity().onBackPressed()
+            util.showConfirmDialog(requireActivity(),
+                getString(R.string.title_message_return_view_util),
+                getString(R.string.message_return_view_util),
+                getString(R.string.exit_message_return_view_util),
+                getString(R.string.cancel_message_return_view_util),
+                onConfirm = {
+                    requireActivity().onBackPressed()
+                },
+                onCancel = {
+
+                }
+            )
         }
 
         viewModel.productModel.observe(viewLifecycleOwner) { result ->
 
             productList = result
-
-            /* salesDetailAdap = ProductListSalesAdapter(
-                 sampleSalesDetails,
-                 onMinusQuantity = {
-                     Log.e("AQUI MINUS", "")
-                 },
-                 onAddQueantity = {
-                     Log.e("AQUI ADD", "")
-                 },
-                 onItemRemove = {
-                     Log.e("AQUI DELETE", "")
-                 }
-             )*/
 
         }
 
@@ -95,13 +101,10 @@ class SaleFragment : Fragment() {
                 context = requireContext(),
                 productList = productList,
                 onSelectedProd = { selectProd, quantity ->
-                    Toast.makeText(requireContext(), "Aceptado", Toast.LENGTH_SHORT).show()
-
                     val existingProduct = productListSalesDetail.find { it.productId == selectProd.id }
                     if (existingProduct != null && verifyQuantityProductList(selectProd.id, existingProduct!!.quantity + quantity)){
                         existingProduct.quantity += quantity
                         existingProduct.totalPrice = existingProduct.quantity*existingProduct.unitPrice
-                        Log.e("DENTRO DEL IF EXIST", existingProduct.toString())
                         salesDetailAdap.notifyAdapter()
                     } else if (existingProduct == null){
                         val newItem = SalesDetailsModel(
@@ -119,59 +122,63 @@ class SaleFragment : Fragment() {
                         salesDetailAdap.updateList(productListSalesDetail.toList())
                         if (productListSalesDetail.count() == 1) {
                             salesDetailAdap.notifyAdapter()
-                            Log.e("DENTRO DEL IF", productListSalesDetail.count().toString())
                         }
-
-                        Log.e("SELECCIONADO", selectProd.toString())
-                        Log.e("SELECCIONADO2", quantity.toString())
-                        Log.e("SELECCIONADO3", productListSalesDetail.toString())
                     }
 
                     totalProducts(productListSalesDetail)
 
                 },
                 onCancel = {
-                    Toast.makeText(requireContext(), "Cancelado", Toast.LENGTH_SHORT).show()
                 }
             )
             dialog.show()
         }
 
 
-
+/*VERIFICAR LAS CANTIDADES CON LOS BOTONES DE DISMINUIR Y AUMENTAR*/
         salesDetailAdap = ProductListSalesAdapter(
             productListSalesDetail,
             onMinusQuantity = { item ->
-                if (item.quantity >= 2) {
+                val currentItem = salesDetailAdap.currentList()
+                    .firstOrNull { it.productId == item.productId }
+
+                // Aquí validas que ya sea mayor a 1 antes de restar
+                if (currentItem != null && currentItem.quantity > 1) {
+                    val minusItem = (currentItem.quantity - 1).coerceAtLeast(1) // nunca menos de 1
+
                     val newList = salesDetailAdap.currentList().map {
                         if (it.productId == item.productId) {
-                            val minusItem = it.quantity - 1
                             it.copy(
                                 quantity = minusItem,
                                 totalPrice = minusItem * it.unitPrice
                             )
                         } else it
                     }
-                    Log.e("MENOS", newList.toString())
                     salesDetailAdap.updateList(newList)
                     productListSalesDetail = newList.toMutableList()
                     totalProducts(productListSalesDetail)
                 }
             },
             onAddQueantity = { item ->
-                val newList = salesDetailAdap.currentList().map {
-                    if (it.productId == item.productId) {
-                        val addItem = it.quantity + 1
-                        it.copy(
-                            quantity = addItem,
-                            totalPrice = addItem * it.unitPrice
-                        )
-                    }else it
+                val prod = productList.find { it.id == item.productId }
+                val currentItem = salesDetailAdap.currentList().find { it.productId == item.productId }
+
+                if (prod != null && currentItem != null && prod.quantity > currentItem.quantity) {
+                    val newList = salesDetailAdap.currentList().map {
+                        if (it.productId == item.productId) {
+                            val addItem = it.quantity + 1
+                            it.copy(
+                                quantity = addItem,
+                                totalPrice = addItem * it.unitPrice
+                            )
+                        } else it
+                    }
+
+                    salesDetailAdap.updateList(newList)
+                    productListSalesDetail = newList.toMutableList()
+                    totalProducts(productListSalesDetail)
                 }
-                Log.e("MAS", newList.toString())
-                salesDetailAdap.updateList(newList)
-                productListSalesDetail = newList.toMutableList()
-                totalProducts(productListSalesDetail)
+
             },
             onItemRemove = { itemToRemove ->
                 val newList = salesDetailAdap.currentList().toMutableList().apply {
@@ -182,6 +189,16 @@ class SaleFragment : Fragment() {
                 totalProducts(productListSalesDetail)
             },
             onQuantityChanged = { item, newQuantity ->
+                val prod = productList.find {
+                    it.id == item.productId
+
+                }
+
+                Log.e("AQUI", prod!!.name.toString())
+                Log.e("AQUI", prod!!.quantity.toString())
+                Log.e("AQUI", item.quantity.toString())
+
+                //if (prod!!.quantity > newQuantity)
                 // Actualiza la lista con la nueva cantidad que el usuario escribió
                 val newList = salesDetailAdap.currentList().map {
                     if (it.productId == item.productId)
@@ -190,7 +207,6 @@ class SaleFragment : Fragment() {
                             totalPrice = newQuantity * it.unitPrice
                         ) else it
                 }
-                Log.e("CHANGE", newList.toString())
                 salesDetailAdap.updateList(newList)
                 productListSalesDetail = newList.toMutableList()
                 totalProducts(productListSalesDetail)
@@ -202,6 +218,53 @@ class SaleFragment : Fragment() {
         binding.rvSalesProductList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = salesDetailAdap
+        }
+
+        binding.btnSaveSale.setOnClickListener {
+            if (validationsForm()){
+                showPaymentDialog(requireContext())
+
+            }
+        }
+
+        viewModel.insertResult.observe(viewLifecycleOwner) { saleId ->
+           /* if (result){
+                util.generatePosTicket()
+                binding.subTotalSalesFrag.setText("0")
+                binding.totalSalesFrag.setText("0")
+                salesDetailAdap.updateList(emptyList())
+                productListSalesDetail = emptyList<SalesDetailsModel>().toMutableList()
+            }*/
+            if (saleId != null && saleId > 0) {
+                viewModel.fetchSaleWithDetails(saleId)
+            } else {
+                Toast.makeText(requireContext(), "Error al guardar la venta", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        viewModel.saleModel.observe(viewLifecycleOwner) { sale ->
+            if (sale != null) {
+                val ticket = util.generatePosTicket(
+                    orderId = sale.sales.id.toString(),
+                    items = sale.salesDetails.map { it.productName to it.totalPrice },
+                    total = sale.sales.total
+                )
+
+                util.printViaBluetooth(requireContext(), ticket)
+                //showAfterPrintDialog(requireContext(), ticket)
+                showPrintDialog(requireContext(), ticket,
+                    reprintAction = {
+                        util.printViaBluetooth(requireContext(), ticket)
+                    }
+                )
+
+                binding.subTotalSalesFrag.text = "0"
+                binding.totalSalesFrag.text = "0"
+                salesDetailAdap.updateList(emptyList())
+                productListSalesDetail = mutableListOf()
+            } else {
+                Toast.makeText(requireContext(), "Error al cargar la venta", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Inflate the layout for this fragment
@@ -240,6 +303,73 @@ class SaleFragment : Fragment() {
         binding.totalSalesFrag.text = String.format("%.2f", totalAccount)
 
     }
+
+    private fun showPaymentDialog(context: Context) {
+        val paymentMethods = listOf("EFECTIVO", "TARJETA DÉBITO", "TARJETA CRÉDITO", "TRANSFERENCIA")
+
+        // Crear el spinner programáticamente
+        val spinner = Spinner(context).apply {
+            adapter = ArrayAdapter(
+                context,
+                android.R.layout.simple_spinner_dropdown_item,
+                paymentMethods
+            )
+        }
+
+        // Construir el diálogo
+        AlertDialog.Builder(context)
+            .setTitle("Selecciona método de pago")
+            .setView(spinner)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                val selectedMethod = spinner.selectedItem.toString()
+                Toast.makeText(context, "Seleccionaste: $selectedMethod", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                val sale = SalesModel(
+                    0,
+                    binding.subTotalSalesFrag.text.toString().toDouble(),
+                    binding.totalSalesFrag.text.toString().toDouble(),
+                    "COMPLETADA",
+                    selectedMethod,
+                    util.getCurrentFormattedDate()
+                )
+
+
+                viewModel.onCreate(sale, productListSalesDetail)
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+
+    private fun validationsForm(): Boolean {
+        if(productListSalesDetail.isEmpty())
+            return false
+
+        return true
+    }
+
+    fun showPrintDialog(context: Context, ticket: String, reprintAction: () -> Unit) {
+        AlertDialog.Builder(context)
+            .setTitle("Impresión finalizada")
+            .setMessage("¿Qué desea hacer?")
+            .setPositiveButton("Reimprimir") { _, _ ->
+                reprintAction()
+            }
+            .setNeutralButton("Compartir") { _, _ ->
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, ticket)
+                }
+                context.startActivity(Intent.createChooser(shareIntent, "Compartir ticket"))
+            }
+            .setNegativeButton("Salir") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 
     /*btn delete product list*/
     private fun attachSwipeToDelete(recyclerView: RecyclerView) {

@@ -9,15 +9,15 @@ class InsertSalesUseCase(
     private val repository: SalesRepository
 ) {
 
-    suspend operator fun invoke(salesModel: SalesModel, salesDetailsModel: List<SalesDetailsModel>): Boolean {
+    suspend operator fun invoke(salesModel: SalesModel, salesDetailsModel: List<SalesDetailsModel>): Int? {
 
-        val insertSales = repository.insertSaleAndDetailsTransaction(
+        val saleId = repository.insertSaleAndDetailsTransaction(
             salesModel.toDatabase(),
             salesDetailsModel.map { it.toDatabase() }
         )
 
-        if (insertSales) {
-            return true
+        if (saleId != null && saleId > 0) {
+            return saleId
         } else {
             throw Exception("Failed to insert sales into database")
         }
