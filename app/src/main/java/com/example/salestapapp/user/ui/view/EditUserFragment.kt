@@ -85,6 +85,7 @@ class EditUserFragment : Fragment() {
             binding.etNameEditUser.setText(result.name)
             binding.etApEditUser.setText(result.lastName)
             binding.etUserNameEditUser.setText(result.userName)
+            binding.etPasswordEditUser.setText(result.password)
             binding.etTelEditUser.setText(result.phone)
         }
 
@@ -150,6 +151,9 @@ class EditUserFragment : Fragment() {
         }else if (binding.etUserNameEditUser.text.toString().length <= 2){
             binding.etUserNameEditUser.error = "El nombre de usuario debe de ser mas de 2 caracteres"
             return false
+        }else if (binding.etPasswordEditUser.text.toString().length < 6){
+            binding.etPasswordEditUser.error = "La contraseña debe ser 6 caracteres"
+            return false
         }else if (binding.etTelEditUser.text.toString().isEmpty()){
             binding.etTelEditUser.error = etEmpty
             return false
@@ -161,6 +165,7 @@ class EditUserFragment : Fragment() {
         binding.etNameEditUser.error = null
         binding.etApEditUser.error = null
         binding.etUserNameEditUser.error = null
+        binding.etPasswordEditUser.error = null
         binding.etTelEditUser.error = null
 
         return true
@@ -173,6 +178,7 @@ class EditUserFragment : Fragment() {
             binding.etNameEditUser.text.toString(),
             binding.etApEditUser.text.toString(),
             binding.etUserNameEditUser.text.toString(),
+            binding.etPasswordEditUser.text.toString(),
             binding.etTelEditUser.text.toString(),
             createdDate,
             utilsFunctions.getCurrentFormattedDate()

@@ -105,6 +105,17 @@
                         />
 
                     <EditText
+                        android:id="@+id/etPasswordNewUser"
+                        style="@style/EditText_Rounded"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/hint_pass_new_user"
+                        android:paddingHorizontal="10dp"
+                        />
+
+                    <EditText
                         android:id="@+id/etPhoneNewUser"
                         style="@style/EditText_Rounded"
                         android:layout_width="match_parent"

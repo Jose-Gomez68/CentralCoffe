@@ -80,6 +80,7 @@
     <string name="hint_new_name_user2">Nombre</string>
     <string name="hint_new_lastname_user">Apellidos</string>
     <string name="hint_username_new_user">Nombre de Usuario</string>
+    <string name="hint_pass_new_user">Password</string>
 
     <string name="title_dialog_delete_user">Eliminar Usuario %1$s</string>
     <string name="message_dialog_delete_user">Una vez elimnado el usuario no se podra recuperar</string>

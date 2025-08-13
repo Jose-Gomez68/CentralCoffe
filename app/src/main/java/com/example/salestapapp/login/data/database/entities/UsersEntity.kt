@@ -17,6 +17,8 @@ data class UsersEntity(
     val lastName: String,
     @ColumnInfo("UserName")
     val userName: String,
+    @ColumnInfo("Password")
+    val password: String,
     @ColumnInfo("Phone")
     val phone: String,
     @ColumnInfo("CreateDate")
@@ -30,6 +32,7 @@ fun UsersModel.toDatabase() = UsersEntity(
     name = name,
     lastName = lastName,
     userName = userName,
+    password = password,
     phone = phone,
     createDate = createDate,
     updateDate = updateDate

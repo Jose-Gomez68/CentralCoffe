@@ -77,6 +77,7 @@ class NewUserFragment : Fragment() {
                 binding.etNameNewUser.setText("")
                 binding.etApNewUser.setText("")
                 binding.etUserNameNewUser.setText("")
+                binding.etPasswordNewUser.setText("")
                 binding.etPhoneNewUser.setText("")
             }
         }
@@ -144,6 +145,9 @@ class NewUserFragment : Fragment() {
         }else if (binding.etUserNameNewUser.text.toString().length <= 2){
             binding.etUserNameNewUser.error = "El nombre de usuario debe de ser mas de 2 caracteres"
             return false
+        }else if (binding.etPasswordNewUser.text.toString().length < 6){
+            binding.etPasswordNewUser.error = "La contraseña debe ser 6 caracteres"
+            return false
         }else if (binding.etPhoneNewUser.text.toString().isEmpty()){
             binding.etPhoneNewUser.error = etEmpty
             return false
@@ -155,6 +159,7 @@ class NewUserFragment : Fragment() {
         binding.etNameNewUser.error = null
         binding.etApNewUser.error = null
         binding.etUserNameNewUser.error = null
+        binding.etPasswordNewUser.error = null
         binding.etPhoneNewUser.error = null
 
         return true
@@ -168,6 +173,7 @@ class NewUserFragment : Fragment() {
                 binding.etNameNewUser.text.toString(),
                 binding.etApNewUser.text.toString(),
                 binding.etUserNameNewUser.text.toString(),
+                binding.etPasswordNewUser.text.toString(),
                 binding.etPhoneNewUser.text.toString(),
                 utilsFunctions.getCurrentFormattedDate(),
                 utilsFunctions.getCurrentFormattedDate()
