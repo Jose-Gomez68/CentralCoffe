@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentEditUserBinding

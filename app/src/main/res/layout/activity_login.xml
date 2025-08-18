@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_coffe"
+    android:background="@drawable/bg_gradient_pastel"
     tools:context=".login.view.ui.LoginActivity">
 
     <ImageView
@@ -76,22 +76,7 @@
             android:src="@drawable/baseline_remove_red_eye_24" />
     </RelativeLayout>
 
-    <!--<EditText
-        android:id="@+id/etPasswordLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="60dp"
-        android:drawableStart="@drawable/baseline_password_24"
-        android:drawablePadding="5dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColorHint="@color/gray"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUserLogin"
-        app:layout_constraintVertical_bias="0.04000002" />-->
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"

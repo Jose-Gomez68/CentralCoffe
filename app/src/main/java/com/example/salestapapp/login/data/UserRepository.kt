@@ -30,4 +30,8 @@ class UserRepository(private var db: CyberCoffeDatabase) {
         return db.usersDao().getAllUsers()
     }
 
+    suspend fun getUsersLogin(userName: String, password: String): UsersEntity? {
+        return db.usersDao().getUserLogin(userName, password)
+    }
+
 }

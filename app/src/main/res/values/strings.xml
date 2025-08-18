@@ -96,4 +96,7 @@
     <string name="exit_message_return_view_util">Salir</string>
     <string name="cancel_message_return_view_util">Cancelar</string>
 
+    <!--LOGIN-->
+    <string name="btn_logout">Cerrar Sesion</string>
+
 </resources>
