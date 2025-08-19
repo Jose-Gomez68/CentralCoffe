@@ -13,13 +13,13 @@ class GetUserLoginUseCase(
     suspend operator fun invoke(userName: String, password: String): UsersModel {
         return try {
             val result = repository.getUsersLogin(userName, password)
-            result?.toDomain() ?: UsersModel(0, "", "", "", "", "", "", "")
+            result?.toDomain() ?: UsersModel(0, "", "", "", "", "", "", "", "")
         } catch (e: SQLiteException) {
             Log.e("GetUserLoginUseCase", "Error de base de datos: ${e.message}", e)
-            UsersModel(0, "", "", "", "", "", "", "")
+            UsersModel(0, "", "", "", "", "","", "", "")
         } catch (e: Exception) {
             Log.e("GetUserLoginUseCase", "Error inesperado: ${e.message}", e)
-            UsersModel(0, "", "", "", "", "", "", "")
+            UsersModel(0, "", "", "","", "", "", "", "")
         }
     }
 

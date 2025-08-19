@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.R
 import com.example.salestapapp.databinding.FragmentEditUserBinding
@@ -37,6 +39,7 @@ class EditUserFragment : Fragment() {
     private var imageUser: String? = ""
     private var userID: Int = 0
     private var createdDate: String = ""
+    private var userTypeSelected = ""
 
     /*val imagePickerMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
@@ -82,6 +85,8 @@ class EditUserFragment : Fragment() {
             createdDate = result.createDate
             binding.etNameEditUser.setText(result.name)
             binding.etApEditUser.setText(result.lastName)
+            userTypeSelected = result.userType
+            spinnerUserType(result)
             binding.etUserNameEditUser.setText(result.userName)
             binding.etPasswordEditUser.setText(result.password)
             binding.etTelEditUser.setText(result.phone)
@@ -143,6 +148,8 @@ class EditUserFragment : Fragment() {
         }else if (binding.etApEditUser.text.toString().length <= 2){
             binding.etApEditUser.error = "El apellido debe de ser mas de 2 caracteres"
             return false
+        }else if (userTypeSelected == "Seleccione un tipo de usuario"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+            return false
         }else if (binding.etUserNameEditUser.text.toString().isEmpty()){
             binding.etUserNameEditUser.error = etEmpty
             return false
@@ -175,6 +182,7 @@ class EditUserFragment : Fragment() {
             userID,
             binding.etNameEditUser.text.toString(),
             binding.etApEditUser.text.toString(),
+            userTypeSelected,
             binding.etUserNameEditUser.text.toString(),
             binding.etPasswordEditUser.text.toString(),
             binding.etTelEditUser.text.toString(),
@@ -184,6 +192,46 @@ class EditUserFragment : Fragment() {
 
         viewModel.onUpdate(user)
     }
+
+    private fun spinnerUserType(result: UsersModel) {
+        // Lista de opciones
+        val userTypes = listOf("Seleccione un tipo de usuario", "Admin", "Vendedor")
+
+        // Adaptador
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            userTypes
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerUserType.adapter = adapter
+
+        // Seleccionar automáticamente el userType del resultado
+        val userIndex = userTypes.indexOf(result.userType)
+        val adjustedIndex = if (userIndex >= 0) userIndex else 0 // Si no lo encuentra, se queda en "Seleccione..."
+
+        binding.spinnerUserType.setSelection(adjustedIndex)
+
+        // Listener
+        binding.spinnerUserType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selected = userTypes[position]
+                if (position == 0) {
+                    // Opción por defecto, no hacer nada
+                } else {
+                    userTypeSelected = selected
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
 
     private fun convertImageToByteArray(uri: Uri): String? {
         var inputStream: InputStream? = null

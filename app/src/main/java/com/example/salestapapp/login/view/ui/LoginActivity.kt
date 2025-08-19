@@ -102,13 +102,13 @@ class LoginActivity : AppCompatActivity() {
             viewModel.getUser(userText, passwordText)
             viewModel.loginUserModel.observe(this) { result ->
                 if (result.id != 0) {
-                    Toast.makeText(this, "Inicio Sesion ${result.userName}", Toast.LENGTH_SHORT).show()
-                    sharedPref!!.saveSession(result.id, result.userName, "${result.name} ${result.lastName}")
+                    //Toast.makeText(this, "Inicio Sesion ${result.userName}", Toast.LENGTH_SHORT).show()
+                    sharedPref!!.saveSession(result.id, result.userName, "${result.name} ${result.lastName}", result.userType)
                     val intent = Intent(this, MenuActivity::class.java)
                     startActivity(intent)
                     finish() // cerrar login
                 } else {
-                    Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 }
             }
         }

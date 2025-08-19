@@ -16,7 +16,7 @@ import com.example.salestapapp.supplier.data.database.dao.SuppliersDao
 import com.example.salestapapp.supplier.data.database.entities.SupplierEntity
 
 @Database(entities = [ProductsEntity::class, SupplierEntity::class, UsersEntity::class,
-                     CategoryEntity::class, SalesEntity::class, SalesDetailEntity::class], version = 2)//recuerda subir la version con cada tabla nueva que agreges ó columnas nuevas
+                     CategoryEntity::class, SalesEntity::class, SalesDetailEntity::class], version = 3)//recuerda subir la version con cada tabla nueva que agreges ó columnas nuevas
 abstract class CyberCoffeDatabase : RoomDatabase() {
 
     abstract fun productsDao(): ProductsDao

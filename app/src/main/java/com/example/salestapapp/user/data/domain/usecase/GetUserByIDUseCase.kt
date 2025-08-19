@@ -25,6 +25,7 @@ class GetUserByIDUseCase(
                 "",
                 "",
                 "",
+                "",
                 ""
             )
         }catch (e: Exception){
@@ -32,6 +33,7 @@ class GetUserByIDUseCase(
             e.printStackTrace()
             UsersModel(
                 0,
+                "",
                 "",
                 "",
                 "",

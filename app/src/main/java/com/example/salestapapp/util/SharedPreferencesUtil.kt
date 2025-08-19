@@ -18,10 +18,11 @@ class SharedPreferencesUtil(context: Context) {
     /**
      * Guardar información de sesión
      */
-    fun saveSession(userId: Int, userName: String, name: String) {
+    fun saveSession(userId: Int, userName: String, name: String, userType: String) {
         editor.putInt(KEY_USER_ID, userId)
         editor.putString(KEY_USER_NAME, userName)
         editor.putString(KEY_NAME, name)
+        editor.putString(KEY_TYPE_USER, userType)
         editor.apply()
     }
 

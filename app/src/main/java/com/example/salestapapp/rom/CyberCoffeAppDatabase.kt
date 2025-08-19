@@ -39,6 +39,7 @@ class CyberCoffeAppDatabase: Application() {
                                             id = 1,
                                             name = "Jose",
                                             lastName = "Gomez",
+                                            userType = "Admin",
                                             userName = "admin",
                                             password = "1234",
                                             phone = "1234567899",

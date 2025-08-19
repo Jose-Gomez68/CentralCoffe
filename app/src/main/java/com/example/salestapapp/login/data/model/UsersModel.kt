@@ -10,6 +10,8 @@ data class UsersModel(
     val name: String,
     @SerializedName("LastName")
     val lastName: String,
+    @SerializedName("UserType")
+    val userType: String,
     @SerializedName("UserName")
     val userName: String,
     @SerializedName("Password")
@@ -26,6 +28,7 @@ fun UsersEntity.toDomain() = UsersModel(
     id = id,
     name = name,
     lastName = lastName,
+    userType = userType,
     userName = userName,
     password = password,
     phone = phone,

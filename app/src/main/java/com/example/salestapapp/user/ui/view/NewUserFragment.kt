@@ -1,5 +1,6 @@
 package com.example.salestapapp.user.ui.view
 
+import android.R
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -11,6 +12,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.salestapapp.databinding.FragmentNewUserBinding
 import com.example.salestapapp.login.data.UserRepository
@@ -32,6 +36,7 @@ class NewUserFragment : Fragment() {
     private lateinit var  viewModel: NewUserViewModel
     private lateinit var db: CyberCoffeDatabase
     private lateinit var utilsFunctions: UtilsFunctions
+    private var userTypeSelected = ""
 //    private var imageUser: String? = ""
 
     /*SI VA USART IMAGEN SOLO DEBES DESCOMENTAR EL CODIGO DEL IMAGE VIEW
@@ -63,6 +68,8 @@ class NewUserFragment : Fragment() {
             this,
             viewModelFactory
         )[NewUserViewModel::class.java]
+
+        spinnerUserType()
 
         binding.btnRegisterNewUser.setOnClickListener {
             saveUser()
@@ -139,6 +146,8 @@ class NewUserFragment : Fragment() {
         }else if (binding.etApNewUser.text.toString().length <= 2){
             binding.etApNewUser.error = "El apellido debe de ser mas de 2 caracteres"
             return false
+        }else if (userTypeSelected == "Seleccione un tipo de usuario"){//DESPUES DE ESTRA VA EL DE LA IMAGEN
+            return false
         }else if (binding.etUserNameNewUser.text.toString().isEmpty()){
             binding.etUserNameNewUser.error = etEmpty
             return false
@@ -172,6 +181,7 @@ class NewUserFragment : Fragment() {
                 0,
                 binding.etNameNewUser.text.toString(),
                 binding.etApNewUser.text.toString(),
+                userTypeSelected,
                 binding.etUserNameNewUser.text.toString(),
                 binding.etPasswordNewUser.text.toString(),
                 binding.etPhoneNewUser.text.toString(),
@@ -179,6 +189,45 @@ class NewUserFragment : Fragment() {
                 utilsFunctions.getCurrentFormattedDate()
             )
             viewModel.onCreate(user)
+        }
+    }
+
+    private fun spinnerUserType() {
+        // Lista de opciones
+        val userTypes = listOf("Seleccione un tipo de usuario", "Admin", "Vendedor")
+
+        // Adaptador con layout simple
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            userTypes
+        )
+
+        // Diseño del desplegable
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        binding.spinnerNewUserUserType.adapter = adapter
+
+        // Listener para capturar selección
+        binding.spinnerNewUserUserType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selected = userTypes[position]
+                if (position == 0) {
+                    // No hacer nada porque es el "Seleccione un tipo de usuario"
+                } else {
+                    userTypeSelected = selected
+                    Toast.makeText(requireContext(), "Seleccionaste: $selected", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Nada seleccionado
+            }
         }
     }
 
