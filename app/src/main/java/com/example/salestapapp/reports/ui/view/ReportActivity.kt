@@ -22,6 +22,10 @@ class ReportActivity : AppCompatActivity() {
             val intent = Intent(this, CashCutActivity::class.java)
             startActivity(intent)
         }
+        binding.btnReportSales.setOnClickListener {
+            val intent = Intent(this, SalesReportActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

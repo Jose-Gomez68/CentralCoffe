@@ -43,6 +43,10 @@ class SalesRepository(private var db: CyberCoffeDatabase) {
         return cashCut to sales
     }
 
+    suspend fun getSalesReport (startDate: String, endDate: String): List<SalesEntity>  {
+        return db.salesDao().getSalesBetweenDates(startDate,endDate)
+    }
+
     suspend fun getSalesByDate (date: String): List<SalesEntity> {
         return db.salesDao().getSalesByDate(date)
     }

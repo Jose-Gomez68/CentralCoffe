@@ -56,4 +56,14 @@ interface SalesDao {
 """)
     suspend fun getSalesByDate(date: String): List<SalesEntity>
 
+    @Query("""
+    SELECT * FROM Sales
+    WHERE CreateDate BETWEEN :startDate AND :endDate
+    ORDER BY CreateDate DESC
+""")
+    suspend fun getSalesBetweenDates(
+        startDate: String, // "20/08/2025 00:00:00"
+        endDate: String    // "20/08/2025 23:59:59"
+    ): List<SalesEntity>
+
 }

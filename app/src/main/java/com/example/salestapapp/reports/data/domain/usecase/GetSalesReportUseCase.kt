@@ -1,20 +1,20 @@
 package com.example.salestapapp.reports.data.domain.usecase
 
 import android.util.Log
-import com.example.salestapapp.reports.data.model.CashCutModel
 import com.example.salestapapp.sales.data.SalesRepository
 import com.example.salestapapp.sales.data.model.SalesModel
+import com.example.salestapapp.sales.data.model.toDomain
 
-class GetCashCutReportUseCase(
+class GetSalesReportUseCase(
     private val repository: SalesRepository
 ) {
 
-    suspend fun invoke(date: String, startTime: String, endTime: String): Pair<CashCutModel, List<SalesModel>>  {
+    suspend fun invoke(startDate: String, endDate: String): List<SalesModel>  {
         return try {
-            repository.getCashCut(date,startTime,endTime)
+            repository.getSalesReport(startDate,endDate).map { it.toDomain() }
         }catch (e: Exception) {
             e.printStackTrace()
-            Log.e("GetCashCutReportUseCase", "Error get CashCutReport", e)
+            Log.e("GetSalesReportUseCase", "Error get SalesReport", e)
             throw e
         }
     }
