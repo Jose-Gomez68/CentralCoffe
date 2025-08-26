@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.salestapapp.databinding.ActivitySalesReportBinding
 import com.example.salestapapp.reports.data.domain.usecase.GetSalesReportUseCase
+import com.example.salestapapp.reports.ui.SalesReportAdapter
 import com.example.salestapapp.reports.ui.viewmodel.SalesReportViewModel
 import com.example.salestapapp.reports.ui.viewmodel.SalesReportViewModelFactory
 import com.example.salestapapp.rom.CyberCoffeAppDatabase
@@ -23,6 +25,7 @@ class SalesReportActivity : AppCompatActivity() {
     private lateinit var viewModel: SalesReportViewModel
     private lateinit var db: CyberCoffeDatabase
     private lateinit var utilsFunctions: UtilsFunctions
+    private lateinit var saleReportAdap: SalesReportAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +45,19 @@ class SalesReportActivity : AppCompatActivity() {
         startDateSelected()
         endDateSelected()
 
+        saleReportAdap = SalesReportAdapter(emptyList())
+        binding.rvSalesReportList.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = saleReportAdap
+        }
+
         binding.btnReporSalesReport.setOnClickListener {
             viewModel.invoke(binding.etReportDateSalesReport.text.toString(), binding.etReportDate2SalesReport.text.toString())
         }
 
         viewModel.getSalesReportt.observe(this) { report ->
             Log.e("AQUIIII", ""+report)
+            saleReportAdap.updateLis(report)
         }
 
     }
