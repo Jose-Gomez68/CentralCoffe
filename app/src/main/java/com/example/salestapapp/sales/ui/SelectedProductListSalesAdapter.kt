@@ -21,11 +21,13 @@ class SelectedProductListSalesAdapter(
 ): RecyclerView.Adapter<SelectedProductsSalesVH>() {
 
     private lateinit var context: Context
+    private var filteredList: MutableList<ProductModel> = list.toMutableList()
 
     fun updateList (newList: List<ProductModel>){
         val productDiff = SelectProductListSalesDiffUtil(list, newList)
         val result = DiffUtil.calculateDiff(productDiff)
         list = newList
+        filteredList = newList.toMutableList()
         result.dispatchUpdatesTo(this)
     }
 
@@ -34,10 +36,22 @@ class SelectedProductListSalesAdapter(
         return SelectedProductsSalesVH(LayoutInflater.from(parent.context).inflate(R.layout.dialog_product_list_sales_cardview, parent, false))
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = filteredList.size
 
     override fun onBindViewHolder(holder: SelectedProductsSalesVH, position: Int) {
-        holder.render(list[position], onClickItem)
+        holder.render(filteredList[position], onClickItem)
+    }
+
+    fun filter(query: String) {
+        filteredList.clear()
+        if (query.isEmpty()) {
+            filteredList.addAll(list)
+        } else {
+            filteredList.addAll(list.filter {
+                it.name.contains(query, ignoreCase = true)
+            })
+        }
+        notifyDataSetChanged()
     }
 
 }

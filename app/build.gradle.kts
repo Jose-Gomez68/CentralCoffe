@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.salestapapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -62,6 +62,10 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //print pos
     implementation ("com.github.DantSu:ESCPOS-ThermalPrinter-Android:3.3.0")
+
+    //apache poi  paqueteria office libre
+    implementation ("org.apache.poi:poi:5.2.3")
+    implementation ("org.apache.poi:poi-ooxml:5.2.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

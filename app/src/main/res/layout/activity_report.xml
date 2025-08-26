@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/myBackground"
+    tools:context=".reports.ui.view.ReportActivity"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ReportLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btnReturnEditProduct"
+                        style="@style/AppCompatImageButton_Rounded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/baseline_arrow_back_ios_24"
+                        android:textAlignment="center" />
+
+
+                    <!-- TODO: Update blank fragment layout -->
+                    <TextView
+                        android:id="@+id/tvTitleEditProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="35dp"
+                        android:text="@string/title_edit_product"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/EditProductLinearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ReportLinearLayout"
+                    app:layout_constraintVertical_bias="0.060000002">
+
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnReportCaja"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Reporte Corte de Caja"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnReportSales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Reporte de Ventas"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnReportProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Reporte de Productos"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pgSaveEditProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

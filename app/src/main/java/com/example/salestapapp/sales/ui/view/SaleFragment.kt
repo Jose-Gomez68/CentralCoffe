@@ -32,6 +32,7 @@ import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.sales.data.SalesRepository
 import com.example.salestapapp.sales.data.domain.GetSalesWithDetailsUseCase
 import com.example.salestapapp.sales.data.domain.InsertSalesUseCase
+import com.example.salestapapp.sales.data.domain.UpdateStockProductUseCase
 import com.example.salestapapp.sales.data.model.SalesDetailsModel
 import com.example.salestapapp.sales.data.model.SalesModel
 import com.example.salestapapp.sales.ui.ProductListSalesAdapter
@@ -66,7 +67,8 @@ class SaleFragment : Fragment() {
         val viewModelProviderFactory = NewSalesViewModelFactory(
             InsertSalesUseCase(repository),
             GetSalesWithDetailsUseCase(repository),
-            GetProductsUseCase(repositoryProduct)
+            GetProductsUseCase(repositoryProduct),
+            UpdateStockProductUseCase(repositoryProduct)
         )
 
         viewModel = ViewModelProvider(
@@ -244,6 +246,10 @@ class SaleFragment : Fragment() {
 
         viewModel.saleModel.observe(viewLifecycleOwner) { sale ->
             if (sale != null) {
+                sale.salesDetails.map { product ->
+                    var prodSelectList = productList.find { it.id == product.productId }
+                    viewModel.updateStockProduct(product.productId, prodSelectList!!.quantity - product.quantity)
+                }
                 val ticket = util.generatePosTicket(
                     orderId = sale.sales.id.toString(),
                     items = sale.salesDetails.map { it.productName to it.totalPrice },
@@ -262,6 +268,7 @@ class SaleFragment : Fragment() {
                 binding.totalSalesFrag.text = "0"
                 salesDetailAdap.updateList(emptyList())
                 productListSalesDetail = mutableListOf()
+                viewModel.getALlProducts()
             } else {
                 Toast.makeText(requireContext(), "Error al cargar la venta", Toast.LENGTH_SHORT).show()
             }

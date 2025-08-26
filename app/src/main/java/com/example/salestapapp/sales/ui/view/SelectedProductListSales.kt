@@ -57,6 +57,18 @@ class SelectedProductListSales(
             adapter = adapterP
         }
 
+        binding.searchVProductSales.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterP.filter(newText.orEmpty())
+                return true
+            }
+        })
+
         binding.btnExitDialog.setOnClickListener {
             onCancel()
             dialog.dismiss()

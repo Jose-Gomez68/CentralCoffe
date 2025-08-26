@@ -9,6 +9,7 @@ import com.example.salestapapp.products.data.domain.GetProductsUseCase
 import com.example.salestapapp.products.data.model.ProductModel
 import com.example.salestapapp.sales.data.domain.GetSalesWithDetailsUseCase
 import com.example.salestapapp.sales.data.domain.InsertSalesUseCase
+import com.example.salestapapp.sales.data.domain.UpdateStockProductUseCase
 import com.example.salestapapp.sales.data.model.SaleWithDetailsModel
 import com.example.salestapapp.sales.data.model.SalesDetailsModel
 import com.example.salestapapp.sales.data.model.SalesModel
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 class NewSalesViewModel(
     private val insertUseCase: InsertSalesUseCase,
     private val getSalesWithDetail: GetSalesWithDetailsUseCase,
-    private val getAllProductsUseCase: GetProductsUseCase
+    private val getAllProductsUseCase: GetProductsUseCase,
+    private val updateStockProductUseCase: UpdateStockProductUseCase
 ): ViewModel() {
 
     private val _insertResult = MutableLiveData<Int?>()
@@ -29,6 +31,9 @@ class NewSalesViewModel(
     private val _saleModel = MutableLiveData<SaleWithDetailsModel?>()
     val saleModel: LiveData<SaleWithDetailsModel?> = _saleModel
 
+    private val _updateProductResult = MutableLiveData<ProductModel>()
+    val updateProductResult: LiveData<ProductModel> = _updateProductResult
+
     fun onCreate(salesModel: SalesModel, salesDetailsModel: List<SalesDetailsModel>){
         viewModelScope.launch {
             val result = insertUseCase.invoke(salesModel, salesDetailsModel)
@@ -39,7 +44,6 @@ class NewSalesViewModel(
     fun getALlProducts() {
         viewModelScope.launch {
             val products = getAllProductsUseCase.invoke()
-            Log.e("AQUI2", "AAAA"+products)
             _productModel.postValue(products)
         }
     }
@@ -53,6 +57,13 @@ class NewSalesViewModel(
                 e.printStackTrace()
                 _saleModel.postValue(null)
             }
+        }
+    }
+
+    fun updateStockProduct(productId: Int, quantity: Int) {
+        viewModelScope.launch {
+            val result = updateStockProductUseCase.invoke(productId, quantity)
+            _updateProductResult.postValue(result)
         }
     }
 

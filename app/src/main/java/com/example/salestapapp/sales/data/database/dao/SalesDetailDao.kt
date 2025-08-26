@@ -16,7 +16,7 @@ interface SalesDetailDao {
     @Query("SELECT *FROM SalesDetail WHERE ID = :salesDetailId")
     suspend fun  getSaleDetailByID(salesDetailId: Int): SalesDetailEntity
 
-    @Query("SELECT *FROM SalesDetail WHERE ID = :saleId")
+    @Query("SELECT *FROM SalesDetail WHERE saleId = :saleId")
     suspend fun  getSalesDetailsByID(saleId: Int): List<SalesDetailEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)//aqui le digo que si hay uno igual que lo remplaze

@@ -35,4 +35,8 @@ class ProductsRepository(private var db: CyberCoffeDatabase) {
         return db.productsDao().getAllProducts()
     }
 
+    suspend fun editProductStock (productId: Int, quantity: Int): Int{
+        return db.productsDao().updateStockProductById(productId, quantity)
+    }
+
 }

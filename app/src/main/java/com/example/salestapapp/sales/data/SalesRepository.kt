@@ -1,9 +1,13 @@
 package com.example.salestapapp.sales.data
 
+import android.util.Log
 import androidx.room.withTransaction
+import com.example.salestapapp.reports.data.model.CashCutModel
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.sales.data.database.entities.SalesDetailEntity
 import com.example.salestapapp.sales.data.database.entities.SalesEntity
+import com.example.salestapapp.sales.data.model.SalesModel
+import com.example.salestapapp.sales.data.model.toDomain
 
 class SalesRepository(private var db: CyberCoffeDatabase) {
 
@@ -31,6 +35,16 @@ class SalesRepository(private var db: CyberCoffeDatabase) {
 
     suspend fun getAllSales (): List<SalesEntity> {
         return db.salesDao().getAllSales()
+    }
+
+    suspend fun getCashCut (date: String, startTime: String, endTime: String): Pair<CashCutModel, List<SalesModel>>  {
+        var cashCut = db.salesDao().getCashCut(date,startTime,endTime)
+        val sales = db.salesDao().getCashCutSales(date,startTime,endTime).map { it.toDomain() }
+        return cashCut to sales
+    }
+
+    suspend fun getSalesByDate (date: String): List<SalesEntity> {
+        return db.salesDao().getSalesByDate(date)
     }
 
     /*DETAILS QUERYS*/
