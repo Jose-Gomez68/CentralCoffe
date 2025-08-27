@@ -1,124 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <TableLayout
-        android:id="@+id/tableSales"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:shrinkColumns="*"
-        android:padding="8dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#E0E0E0"
+    android:padding="6dp">
 
-        <!-- ENCABEZADO -->
-        <TableRow
-            android:background="#4CAF50"
-            android:padding="6dp">
+    <TextView
+        android:id="@+id/tvIdSalesReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="1"/>
 
-            <TextView
-                android:text="# Venta"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
+    <TextView
+        android:id="@+id/tvSubTotalSalesReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="150.50"/>
 
-            <TextView
-                android:text="SubTotal"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
+    <TextView
+        android:id="@+id/tvTotalSalesReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="174.00"/>
 
-            <TextView
-                android:text="Total"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
+    <TextView
+        android:id="@+id/tvStatusSalesReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="COMPLETADA"/>
 
-            <TextView
-                android:text="Estatus"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
+    <TextView
+        android:id="@+id/tvMethodSalesReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="TARJETA"/>
 
-            <TextView
-                android:text="Método"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
-
-            <TextView
-                android:text="Fecha"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:layout_margin="2dp"
-                android:padding="4dp" />
-        </TableRow>
-
-        <!-- FILA DE EJEMPLO -->
-        <TableRow
-            android:background="#E0E0E0"
-            android:padding="6dp">
-
-            <TextView
-                android:id="@+id/tvIdSalesReport"
-                android:text="1"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-
-            <TextView
-                android:id="@+id/tvSubTotalSalesReport"
-                android:text="150.50"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-
-            <TextView
-                android:id="@+id/tvTotalSalesReport"
-                android:text="174.00"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-
-            <TextView
-                android:id="@+id/tvStatusSalesReport"
-                android:text="COMPLETADA"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-
-            <TextView
-                android:id="@+id/tvMethodSalesReport"
-                android:text="TARJETA"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-
-            <TextView
-                android:id="@+id/tvCreateDateSalesReport"
-                android:text="2025-08-25"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="4dp" />
-        </TableRow>
-
-
-    </TableLayout>
-</ScrollView>
+    <TextView
+        android:id="@+id/tvCreateDateSalesReport"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="2025-08-25"/>
+</LinearLayout>
