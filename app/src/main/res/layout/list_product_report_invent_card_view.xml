@@ -23,7 +23,7 @@
         android:text="Cafe Chico"/>
 
     <TextView
-        android:id="@+id/tvCategoryProductSales"
+        android:id="@+id/tvCategoryProductReport"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:gravity="center"
