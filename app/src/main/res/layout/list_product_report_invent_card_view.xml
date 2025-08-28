@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#E0E0E0"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/tvCodProductProductReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="1"/>
+
+    <TextView
+        android:id="@+id/tvProductProductReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Cafe Chico"/>
+
+    <TextView
+        android:id="@+id/tvCategoryProductSales"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Bebidas"/>
+
+    <TextView
+        android:id="@+id/tvStcokProductReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="120"/>
+
+    <TextView
+        android:id="@+id/tvUnitPriceProductReport"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="$ 120"/>
+
+    <TextView
+        android:id="@+id/tvValorInventProductReport"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="$3000"/>
+
+    <TextView
+        android:id="@+id/tvUpdateDateProductReport"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="2025-08-25"/>
+</LinearLayout>

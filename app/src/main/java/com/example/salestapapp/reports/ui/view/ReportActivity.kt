@@ -27,5 +27,10 @@ class ReportActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnReportProduct.setOnClickListener {
+            val intent = Intent(this, ProductReportActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

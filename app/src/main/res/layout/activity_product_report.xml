@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/myBackground"
+    tools:context=".reports.ui.view.ProductReportActivity"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ReportLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btnReturnReportSalesReport"
+                        style="@style/AppCompatImageButton_Rounded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingLeft="10dp"
+                        android:src="@drawable/baseline_arrow_back_ios_24"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvTitleProductReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="35dp"
+                        android:text="Reporte de Productos"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/EditProductLinearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ReportLinearLayout"
+                    app:layout_constraintVertical_bias="0.060000002">
+
+                    <Spinner
+                        android:id="@+id/spSelectProductReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginHorizontal="30dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/etReportDateSalesReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="15dp"
+                        style="@style/EditText_Rounded"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:hint="Selecciona la Fecha de Inicio"
+                        android:inputType="date"
+                        android:focusable="true"
+                        android:editable="true"
+                        android:cursorVisible="false"
+                        android:paddingHorizontal="10dp" />
+
+                    <TextView
+                        android:id="@+id/etReportDate2SalesReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="10dp"
+                        style="@style/EditText_Rounded"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:hint="Selecciona la Fecha de Fin"
+                        android:inputType="date"
+                        android:focusable="true"
+                        android:editable="true"
+                        android:cursorVisible="false"
+                        android:paddingHorizontal="10dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnReportProductReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Cargar"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/scvTableSalesReport"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_marginTop="10dp"
+                        android:scrollbars="horizontal">
+
+                        <!-- ÚNICO hijo: un LinearLayout -->
+                        <LinearLayout
+                            android:id="@+id/lyHeaderProductReport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:visibility="visible"
+                            android:orientation="vertical">
+
+                            <!-- CABECERA REPORTE DE INVENTARIO -->
+                            <LinearLayout
+                                android:id="@+id/lyHeaderInventReportProduct"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:background="#4CAF50"
+                                android:visibility="visible"
+                                android:padding="6dp">
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Cod Producto"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Producto"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Categoria"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Stock"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Precio Unit"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Valor Inventario"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Fecha"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                            <!-- CABECERA REPORTE DE MAS VENDIDOS -->
+                            <LinearLayout
+                                android:id="@+id/lyReportMasVendidosProductReport"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:background="#4CAF50"
+                                android:padding="6dp"
+                                android:visibility="gone"
+                                >
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Cod Producto"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Producto"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Vendidas"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:layout_width="120dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="Ingresos"
+                                    android:textColor="@android:color/white"
+                                    android:textStyle="bold"/>
+
+
+                            </LinearLayout>
+
+
+                            <!-- LISTA DE REGISTROS -->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvSalesReportList"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"/>
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnExportarSalesReport"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/rounded_button"
+                        android:backgroundTint="@color/blue"
+                        android:paddingHorizontal="60dp"
+                        android:text="Exportar en Xml"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
