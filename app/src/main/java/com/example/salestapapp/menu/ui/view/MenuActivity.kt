@@ -30,6 +30,9 @@ class MenuActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val sharedPref = SharedPreferencesUtil(applicationContext)
+
+        binding.tvWelcomeTitle.text = "Bienvenido ${sharedPref.getUserName()}: ${sharedPref.getUserType()}"
+
         //add modules buttons to list// id, Name module, Icon Module, Activity Module
         val allMenu = listOf(
             MenuItemsModel(1,"Trabajadores", R.drawable.worker,  UserContainerActivity::class.java),

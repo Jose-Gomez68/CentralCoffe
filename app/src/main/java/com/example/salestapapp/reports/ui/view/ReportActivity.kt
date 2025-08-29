@@ -32,5 +32,9 @@ class ReportActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnReturnReports.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 }

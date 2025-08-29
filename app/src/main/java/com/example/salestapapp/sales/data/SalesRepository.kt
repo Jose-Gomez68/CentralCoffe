@@ -1,8 +1,8 @@
 package com.example.salestapapp.sales.data
 
-import android.util.Log
 import androidx.room.withTransaction
 import com.example.salestapapp.reports.data.model.CashCutModel
+import com.example.salestapapp.reports.data.model.ProductosMasVendidosModel
 import com.example.salestapapp.rom.CyberCoffeDatabase
 import com.example.salestapapp.sales.data.database.entities.SalesDetailEntity
 import com.example.salestapapp.sales.data.database.entities.SalesEntity
@@ -118,5 +118,8 @@ class SalesRepository(private var db: CyberCoffeDatabase) {
         }
     }
 
+    suspend fun getProductosMasVendidos(startDate: String, endDate:String): List<ProductosMasVendidosModel> {
+        return db.salesDetailDao().getProductosMasVendidosBetweenDates(startDate, endDate)
+    }
 
 }

@@ -66,4 +66,6 @@ interface SalesDao {
         endDate: String    // "20/08/2025 23:59:59"
     ): List<SalesEntity>
 
+
+
 }
