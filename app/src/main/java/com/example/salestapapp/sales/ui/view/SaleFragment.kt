@@ -252,15 +252,15 @@ class SaleFragment : Fragment() {
                 }
                 val ticket = util.generatePosTicket(
                     orderId = sale.sales.id.toString(),
-                    items = sale.salesDetails.map { it.productName to it.totalPrice },
+                    items = sale.salesDetails.map { Triple(it.quantity, it.productName, it.totalPrice) },
                     total = sale.sales.total
                 )
 
-                util.printViaBluetooth(requireContext(), ticket)
+                util.printViaTcpIp(requireContext(), ticket, "192.168.1.240")
                 //showAfterPrintDialog(requireContext(), ticket)
                 showPrintDialog(requireContext(), ticket,
                     reprintAction = {
-                        util.printViaBluetooth(requireContext(), ticket)
+                        util.printViaTcpIp(requireContext(), ticket, "192.168.1.240")
                     }
                 )
 

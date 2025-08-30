@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import com.dantsu.escposprinter.EscPosPrinter
-import com.dantsu.escposprinter.connection.bluetooth.BluetoothConnection
 import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections
 import com.dantsu.escposprinter.connection.tcp.TcpConnection
 import java.text.SimpleDateFormat
@@ -81,24 +80,45 @@ class UtilsFunctions {
 
     fun generatePosTicket(
         orderId: String,
-        items: List<Pair<String, Double>>,
+        items: List<Triple<Int, String, Double>>, // Cantidad, Nombre, Precio unitario
         total: Double
     ): String {
         val sb = StringBuilder()
-        sb.appendLine("[C]<b>*** TIENDA XYZ ***</b>")
+
+        // ===== Encabezado centrado =====
+        sb.appendLine("[C]*** CHARLY COFFE ***")
         sb.appendLine("[C]RFC: XXX-XXXX-XXX")
         sb.appendLine("[C]Fecha: ${java.time.LocalDateTime.now()}")
-        sb.appendLine("[C]-------------------------------")
-        items.forEach { (name, price) ->
-            sb.appendLine("[L]$name[R]$${"%.2f".format(price)}")
+        sb.appendLine("[C]--------------------------------")
+
+        // ===== Encabezados de tabla =====
+        sb.appendLine("[L]Cant   Descripción                [R]P.Unit")
+        sb.appendLine("[C]--------------------------------")
+
+        // ===== Lista de productos =====
+        items.forEach { (qty, name, price) ->
+            val qtyStr = qty.toString().padEnd(5) // ancho fijo para la cantidad
+            val nameStr = if (name.length > 22) name.take(22) else name.padEnd(22)
+            val priceStr = "%.2f".format(price)
+
+            sb.appendLine("[L]$qtyStr$nameStr[R]$priceStr")
         }
-        sb.appendLine("[C]-------------------------------")
-        sb.appendLine("[R]<b>TOTAL: $${"%.2f".format(total)}</b>")
+
+        // ===== Separador =====
+        sb.appendLine("[C]--------------------------------")
+
+        // ===== Total centrado =====
+        sb.appendLine("[C]TOTAL: $${"%.2f".format(total)}")
+
+        // ===== Mensaje de agradecimiento centrado =====
         sb.appendLine("[C]Gracias por su compra")
-        sb.appendLine("\n\n\n") // Espacios para corte
+
+        // ===== Saltos de línea antes del corte =====
+        sb.appendLine("\n\n\n\n")
+        sb.appendLine("[L]\n[L]\n[L]\n[L]")
+
         return sb.toString()
     }
-
 
     fun printViaBluetooth(context: Context, ticket: String) {
         Thread {
@@ -107,7 +127,7 @@ class UtilsFunctions {
                     BluetoothPrintersConnections.selectFirstPaired(),
                     203,
                     48f,
-                    32
+                    48 //32
                 )
                 printer.printFormattedText(ticket)
             } catch (e: Exception) {
@@ -116,20 +136,26 @@ class UtilsFunctions {
         }.start()
     }
 
-    fun printViaTcpIp(context: Context, ticket: String, ip: String, port: Int = 9100, timeout: Int = 5) {
+    fun printViaTcpIp(context: Context, ticket: String, ip: String, port: Int = 9100, timeout: Int = 5000) {
         Thread {
             try {
+                val conection = TcpConnection(ip, port, timeout)
                 val printer = EscPosPrinter(
-                    TcpConnection(ip, port, timeout),
+                    conection,
                     203,   // Resolución en DPI
-                    48f,   // Ancho en mm
-                    32     // Caracteres por línea
+                    58f,   // Ancho en mm
+                    48     // Caracteres por línea
                 )
-                printer.printFormattedText(ticket)
+                printer.printFormattedTextAndCut(ticket)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }.start()
+    }
+
+    fun manualCenter(text: String, lineWidth: Int = 38): String {
+        val spaces = ((lineWidth - text.length) / 2).coerceAtLeast(0)
+        return " ".repeat(spaces) + text
     }
 
 
