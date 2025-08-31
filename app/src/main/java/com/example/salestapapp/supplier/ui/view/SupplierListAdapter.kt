@@ -63,11 +63,21 @@ class SupplierVH(view: View):RecyclerView.ViewHolder(view){
         }else{
             ivImage.setImageResource(R.drawable.gallery)
         }
+
         tvName.text = supplierModel.name
+        val paramsCategory = tvCategory.layoutParams as ViewGroup.MarginLayoutParams
+        paramsCategory.topMargin = 10
+        tvCategory.layoutParams = paramsCategory
         tvCategory.text = supplierModel.address
+        val paramsSupplier = tvSupplier.layoutParams as ViewGroup.MarginLayoutParams
+        paramsSupplier.topMargin = 50
+        tvSupplier.layoutParams = paramsSupplier
         tvSupplier.text = supplierModel.phone
         tvStock1.text = "Fecha Alta"
         tvStock.text = supplierModel.createDate
+        val params = tvStock.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = 32 // margen en píxeles, puedes usar dp convirtiendo
+        tvStock.layoutParams = params
         tvPrice1.visibility = View.GONE
         tvPrice.visibility = View.GONE
         btnEdit.setOnClickListener {
